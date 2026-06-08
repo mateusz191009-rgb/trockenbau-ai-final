@@ -19,10 +19,16 @@
   body {
     @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100;
   }
+
+  /* Größere, gut lesbare Formularfelder als Standard */
+  input,
+  textarea,
+  select {
+    @apply text-base;
+  }
 }
 
 @layer utilities {
-  /* Thin, theme-aware scrollbars */
   .scrollbar-thin {
     scrollbar-width: thin;
     scrollbar-color: rgb(148 163 184 / 0.5) transparent;

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { DataProvider } from "@/store/DataContext";
 import { AppShell } from "@/components/layout/AppShell";
 import "./globals.css";
 
@@ -12,26 +13,28 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Trockenbau AI — Contractor Platform",
+    default: "Trockenbau AI",
     template: "%s · Trockenbau AI",
   },
   description:
-    "AI-powered operations dashboard for drywall contractors: projects, customers, scheduling, and insights.",
+    "Einfache Verwaltung für Trockenbau-Betriebe: Kunden, Baustellen, Dateien und Angebote.",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={inter.variable}>
-      <body className="font-sans antialiased">
+    <html lang="de" suppressHydrationWarning className={inter.variable}>
+      <body className="font-sans antialiased text-[15px] sm:text-base">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <AppShell>{children}</AppShell>
+          <DataProvider>
+            <AppShell>{children}</AppShell>
+          </DataProvider>
         </ThemeProvider>
       </body>
     </html>

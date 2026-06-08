@@ -1,57 +1,76 @@
-export type ProjectStatus =
-  | "planning"
-  | "in_progress"
-  | "on_hold"
-  | "completed";
+// Zentrale Datentypen der Anwendung.
+// Die Struktur ist bewusst flach gehalten, damit sie später 1:1 auf
+// Supabase-Tabellen abgebildet werden kann (siehe src/lib/db).
 
-export type CustomerType = "residential" | "commercial" | "industrial";
+export type ProjektStatus = "anfrage" | "angebot" | "in_arbeit" | "fertig";
 
-export interface Project {
+export type DateiTyp =
+  | "bild"
+  | "pdf"
+  | "grundriss"
+  | "sprachnachricht"
+  | "sonstige";
+
+export interface Kunde {
   id: string;
-  name: string;
-  customer: string;
-  status: ProjectStatus;
-  progress: number; // 0 - 100
-  budget: number;
-  spent: number;
-  area: number; // m² of drywall
-  startDate: string;
-  dueDate: string;
-  lead: string;
-}
-
-export interface Customer {
-  id: string;
-  name: string;
-  contact: string;
+  firmenname: string;
+  ansprechpartner: string;
+  telefon: string;
   email: string;
-  phone: string;
-  type: CustomerType;
-  location: string;
-  activeProjects: number;
-  totalValue: number;
-  joinedDate: string;
+  adresse: string;
+  notizen: string;
+  erstelltAm: string; // ISO-Datum
 }
 
-export interface Stat {
+export interface Massangaben {
+  wandflaeche: string;
+  deckenflaeche: string;
+  raumhoehe: string;
+  sonstige: string;
+}
+
+export interface Projekt {
   id: string;
-  label: string;
-  value: string;
-  delta: number; // percentage change vs previous period
-  trend: "up" | "down";
-  icon: "projects" | "revenue" | "customers" | "area";
+  projektname: string;
+  kundeId: string;
+  baustellenadresse: string;
+  beschreibung: string;
+  status: ProjektStatus;
+  startdatum: string;
+  masse: Massangaben;
+  notizen: string;
+  erstelltAm: string;
 }
 
-export interface ActivityItem {
+export interface Datei {
   id: string;
-  actor: string;
-  action: string;
-  target: string;
-  time: string;
-  type: "project" | "customer" | "invoice" | "ai";
+  projektId: string;
+  name: string;
+  typ: DateiTyp;
+  mimeType: string;
+  groesse: number; // Bytes
+  dataUrl: string; // Base64 Data-URL (lokal). Später: Supabase Storage URL.
+  erstelltAm: string;
 }
 
-export interface ChartPoint {
-  label: string;
-  value: number;
+export interface Aktivitaet {
+  id: string;
+  text: string;
+  typ: "kunde" | "projekt" | "datei" | "angebot";
+  zeit: string; // ISO
+}
+
+export interface Firmendaten {
+  firmenname: string;
+  telefon: string;
+  email: string;
+}
+
+/** Gesamter persistierter Zustand (eine localStorage-Einheit). */
+export interface DatenBestand {
+  kunden: Kunde[];
+  projekte: Projekt[];
+  dateien: Datei[];
+  aktivitaeten: Aktivitaet[];
+  firmendaten: Firmendaten;
 }

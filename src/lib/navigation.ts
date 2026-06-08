@@ -1,11 +1,10 @@
 import type { LucideIcon } from "lucide-react";
 import {
   LayoutDashboard,
-  HardHat,
   Users,
-  CalendarDays,
+  HardHat,
+  FolderOpen,
   FileText,
-  Sparkles,
   Settings,
 } from "lucide-react";
 
@@ -13,59 +12,13 @@ export interface NavItem {
   label: string;
   href: string;
   icon: LucideIcon;
-  badge?: string;
-  /** Routes that exist as real pages in this starter. */
-  enabled: boolean;
 }
 
-export interface NavSection {
-  title: string;
-  items: NavItem[];
-}
-
-export const navSections: NavSection[] = [
-  {
-    title: "Overview",
-    items: [
-      { label: "Dashboard", href: "/", icon: LayoutDashboard, enabled: true },
-      {
-        label: "Projects",
-        href: "/projects",
-        icon: HardHat,
-        badge: "28",
-        enabled: true,
-      },
-      { label: "Customers", href: "/customers", icon: Users, enabled: true },
-    ],
-  },
-  {
-    title: "Operations",
-    items: [
-      {
-        label: "Schedule",
-        href: "/schedule",
-        icon: CalendarDays,
-        enabled: false,
-      },
-      { label: "Invoices", href: "/invoices", icon: FileText, enabled: false },
-      {
-        label: "AI Assistant",
-        href: "/assistant",
-        icon: Sparkles,
-        badge: "New",
-        enabled: false,
-      },
-    ],
-  },
-  {
-    title: "System",
-    items: [
-      {
-        label: "Settings",
-        href: "/settings",
-        icon: Settings,
-        enabled: false,
-      },
-    ],
-  },
+export const navItems: NavItem[] = [
+  { label: "Dashboard", href: "/", icon: LayoutDashboard },
+  { label: "Kunden", href: "/kunden", icon: Users },
+  { label: "Projekte", href: "/projekte", icon: HardHat },
+  { label: "Dateien", href: "/dateien", icon: FolderOpen },
+  { label: "Angebote", href: "/angebote", icon: FileText },
+  { label: "Einstellungen", href: "/einstellungen", icon: Settings },
 ];
