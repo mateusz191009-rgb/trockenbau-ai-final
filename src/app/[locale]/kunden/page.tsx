@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { Plus, Users } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
@@ -14,6 +15,8 @@ import { useData } from "@/store/DataContext";
 import type { Kunde } from "@/types";
 
 export default function KundenPage() {
+  const t = useTranslations("customers");
+  const tc = useTranslations("common");
   const { kunden, kundeLoeschen } = useData();
   const [suche, setSuche] = React.useState("");
   const [formOffen, setFormOffen] = React.useState(false);
@@ -44,43 +47,33 @@ export default function KundenPage() {
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Kunden"
-        description="Alle Ihre Auftraggeber an einem Ort."
+        title={t("title")}
+        description={t("description")}
         actions={
           <Button size="lg" onClick={neu}>
             <Plus className="h-6 w-6" />
-            Kunde anlegen
+            {t("add")}
           </Button>
         }
       />
 
       <div className="max-w-xl">
-        <SearchField
-          value={suche}
-          onChange={setSuche}
-          placeholder="Kunde suchen…"
-        />
+        <SearchField value={suche} onChange={setSuche} placeholder={t("search")} />
       </div>
 
       {gefiltert.length === 0 ? (
         <Card>
           <EmptyState
             icon={Users}
-            title={
-              kunden.length === 0
-                ? "Noch keine Kunden"
-                : "Keine Treffer"
-            }
+            title={kunden.length === 0 ? t("empty") : tc("noResults")}
             description={
-              kunden.length === 0
-                ? "Legen Sie Ihren ersten Kunden an, um loszulegen."
-                : "Versuchen Sie einen anderen Suchbegriff."
+              kunden.length === 0 ? t("emptyDesc") : t("noResultsDesc")
             }
             action={
               kunden.length === 0 ? (
                 <Button size="lg" onClick={neu}>
                   <Plus className="h-6 w-6" />
-                  Kunde anlegen
+                  {t("add")}
                 </Button>
               ) : undefined
             }
@@ -107,8 +100,8 @@ export default function KundenPage() {
 
       <ConfirmDialog
         open={loeschen !== null}
-        title="Kunde löschen?"
-        message={`„${loeschen?.firmenname}“ und alle zugehörigen Projekte und Dateien werden gelöscht. Das kann nicht rückgängig gemacht werden.`}
+        title={t("deleteTitle")}
+        message={t("deleteMessage", { name: loeschen?.firmenname ?? "" })}
         onCancel={() => setLoeschen(null)}
         onConfirm={() => {
           if (loeschen) kundeLoeschen(loeschen.id);

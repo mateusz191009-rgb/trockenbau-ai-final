@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { Plus, HardHat } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
@@ -11,13 +12,17 @@ import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { ProjektForm } from "@/components/projekte/ProjektForm";
 import { ProjektKarte } from "@/components/projekte/ProjektKarte";
 import { useData } from "@/store/DataContext";
-import { projektStatusMeta, projektStatusReihenfolge } from "@/lib/status";
+import { useStatusLabels } from "@/hooks/useStatusLabels";
+import { projektStatusReihenfolge } from "@/lib/status";
 import { cn } from "@/lib/utils";
 import type { Projekt, ProjektStatus } from "@/types";
 
 type Filter = "alle" | ProjektStatus;
 
 export default function ProjektePage() {
+  const t = useTranslations("projects");
+  const tc = useTranslations("common");
+  const { projektStatusLabel } = useStatusLabels();
   const { projekte, kundenName, projektLoeschen } = useData();
   const [suche, setSuche] = React.useState("");
   const [filter, setFilter] = React.useState<Filter>("alle");
@@ -45,35 +50,30 @@ export default function ProjektePage() {
   };
 
   const filterTabs: { value: Filter; label: string }[] = [
-    { value: "alle", label: "Alle" },
+    { value: "alle", label: tc("all") },
     ...projektStatusReihenfolge.map((s) => ({
       value: s,
-      label: projektStatusMeta[s].label,
+      label: projektStatusLabel(s),
     })),
   ];
 
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Projekte"
-        description="Ihre Baustellen im Überblick."
+        title={t("title")}
+        description={t("description")}
         actions={
           <Button size="lg" onClick={neu}>
             <Plus className="h-6 w-6" />
-            Neue Baustelle
+            {t("add")}
           </Button>
         }
       />
 
       <div className="max-w-xl">
-        <SearchField
-          value={suche}
-          onChange={setSuche}
-          placeholder="Baustelle suchen…"
-        />
+        <SearchField value={suche} onChange={setSuche} placeholder={t("search")} />
       </div>
 
-      {/* Status-Filter */}
       <div className="flex flex-wrap gap-2">
         {filterTabs.map((tab) => {
           const aktiv = filter === tab.value;
@@ -112,19 +112,15 @@ export default function ProjektePage() {
         <Card>
           <EmptyState
             icon={HardHat}
-            title={
-              projekte.length === 0 ? "Noch keine Baustellen" : "Keine Treffer"
-            }
+            title={projekte.length === 0 ? t("empty") : tc("noResults")}
             description={
-              projekte.length === 0
-                ? "Legen Sie Ihre erste Baustelle an."
-                : "Andere Suche oder anderen Filter versuchen."
+              projekte.length === 0 ? t("emptyDesc") : t("noResultsDesc")
             }
             action={
               projekte.length === 0 ? (
                 <Button size="lg" onClick={neu}>
                   <Plus className="h-6 w-6" />
-                  Neue Baustelle
+                  {t("add")}
                 </Button>
               ) : undefined
             }
@@ -154,8 +150,8 @@ export default function ProjektePage() {
 
       <ConfirmDialog
         open={loeschen !== null}
-        title="Baustelle löschen?"
-        message={`„${loeschen?.projektname}“ und alle zugehörigen Dateien werden gelöscht. Das kann nicht rückgängig gemacht werden.`}
+        title={t("deleteTitle")}
+        message={t("deleteMessage", { name: loeschen?.projektname ?? "" })}
         onCancel={() => setLoeschen(null)}
         onConfirm={() => {
           if (loeschen) projektLoeschen(loeschen.id);

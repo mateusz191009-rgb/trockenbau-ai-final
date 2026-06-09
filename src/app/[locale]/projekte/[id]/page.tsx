@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useParams } from "next/navigation";
 import {
@@ -29,11 +30,16 @@ import { ProjektForm } from "@/components/projekte/ProjektForm";
 import { DateiUpload } from "@/components/dateien/DateiUpload";
 import { DateiListe } from "@/components/dateien/DateiListe";
 import { useData } from "@/store/DataContext";
-import { projektStatusMeta, projektStatusReihenfolge } from "@/lib/status";
+import { useStatusLabels } from "@/hooks/useStatusLabels";
+import { projektStatusReihenfolge } from "@/lib/status";
 import { cn, formatDatumKurz } from "@/lib/utils";
 import type { ProjektStatus } from "@/types";
 
 export default function ProjektDetailPage() {
+  const t = useTranslations("projectDetail");
+  const tp = useTranslations("projects");
+  const tc = useTranslations("common");
+  const { projektStatusLabel } = useStatusLabels();
   const params = useParams<{ id: string }>();
   const router = useRouter();
   const {
@@ -50,7 +56,6 @@ export default function ProjektDetailPage() {
   const [formOffen, setFormOffen] = React.useState(false);
   const [loeschenOffen, setLoeschenOffen] = React.useState(false);
 
-  // Lokale Eingaben (werden beim Verlassen des Feldes gespeichert).
   const [beschreibung, setBeschreibung] = React.useState("");
   const [notizen, setNotizen] = React.useState("");
   const [masse, setMasse] = React.useState({
@@ -66,12 +71,11 @@ export default function ProjektDetailPage() {
       setNotizen(projekt.notizen);
       setMasse(projekt.masse);
     }
-    // Nur bei Wechsel des Projekts neu setzen.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projekt?.id]);
 
   if (!geladen) {
-    return <p className="py-20 text-center text-slate-400">Lädt…</p>;
+    return <p className="py-20 text-center text-slate-400">{tc("loading")}</p>;
   }
 
   if (!projekt) {
@@ -79,11 +83,11 @@ export default function ProjektDetailPage() {
       <Card>
         <EmptyState
           icon={FileText}
-          title="Baustelle nicht gefunden"
-          description="Dieses Projekt existiert nicht (mehr)."
+          title={t("notFound")}
+          description={t("notFoundDesc")}
           action={
             <Link href="/projekte">
-              <Button size="lg">Zurück zur Übersicht</Button>
+              <Button size="lg">{t("backToList")}</Button>
             </Link>
           }
         />
@@ -100,16 +104,14 @@ export default function ProjektDetailPage() {
 
   return (
     <div className="space-y-6">
-      {/* Zurück */}
       <Link
         href="/projekte"
         className="inline-flex items-center gap-2 text-base font-semibold text-slate-500 hover:text-slate-900 dark:hover:text-white"
       >
         <ArrowLeft className="h-5 w-5" />
-        Alle Projekte
+        {t("allProjects")}
       </Link>
 
-      {/* Kopf */}
       <Card className="p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0">
@@ -129,7 +131,7 @@ export default function ProjektDetailPage() {
               ) : null}
               {projekt.startdatum ? (
                 <p className="text-sm">
-                  Start: {formatDatumKurz(projekt.startdatum)}
+                  {tc("start")} {formatDatumKurz(projekt.startdatum)}
                 </p>
               ) : null}
             </div>
@@ -141,12 +143,12 @@ export default function ProjektDetailPage() {
               onClick={() => setFormOffen(true)}
             >
               <Pencil className="h-5 w-5" />
-              Bearbeiten
+              {tc("edit")}
             </Button>
             <Button
               variant="ghost"
               size="icon"
-              aria-label="Löschen"
+              aria-label={tc("delete")}
               className="text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10"
               onClick={() => setLoeschenOffen(true)}
             >
@@ -155,10 +157,9 @@ export default function ProjektDetailPage() {
           </div>
         </div>
 
-        {/* Status schnell ändern */}
         <div className="mt-5 border-t border-slate-100 pt-5 dark:border-slate-800">
           <p className="mb-2 text-sm font-semibold text-slate-500 dark:text-slate-400">
-            Status
+            {tc("status")}
           </p>
           <div className="flex flex-wrap gap-2">
             {projektStatusReihenfolge.map((s) => {
@@ -176,7 +177,7 @@ export default function ProjektDetailPage() {
                       : "border-2 border-slate-200 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800",
                   )}
                 >
-                  {projektStatusMeta[s].label}
+                  {projektStatusLabel(s)}
                 </button>
               );
             })}
@@ -184,24 +185,20 @@ export default function ProjektDetailPage() {
         </div>
       </Card>
 
-      {/* Abschnitt 1: Beschreibung */}
-      <SektionKarte icon={FileText} titel="Beschreibung">
+      <SektionKarte icon={FileText} titel={tc("description")}>
         <Textarea
           value={beschreibung}
           onChange={(e) => setBeschreibung(e.target.value)}
           onBlur={() => projektAktualisieren(projekt.id, { beschreibung })}
           rows={4}
-          placeholder="Was soll auf dieser Baustelle gemacht werden?"
+          placeholder={t("descriptionPlaceholder")}
         />
-        <p className="mt-2 text-sm text-slate-400">
-          Wird automatisch gespeichert.
-        </p>
+        <p className="mt-2 text-sm text-slate-400">{tc("autoSaved")}</p>
       </SektionKarte>
 
-      {/* Abschnitt 2: Maße */}
-      <SektionKarte icon={Ruler} titel="Maße">
+      <SektionKarte icon={Ruler} titel={t("measurements")}>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-          <Field label="Wandfläche (m²)">
+          <Field label={t("wallArea")}>
             <Input
               inputMode="decimal"
               value={masse.wandflaeche}
@@ -209,10 +206,10 @@ export default function ProjektDetailPage() {
                 setMasse((m) => ({ ...m, wandflaeche: e.target.value }))
               }
               onBlur={() => speichereMasse("wandflaeche")}
-              placeholder="z. B. 180"
+              placeholder={t("wallPlaceholder")}
             />
           </Field>
-          <Field label="Deckenfläche (m²)">
+          <Field label={t("ceilingArea")}>
             <Input
               inputMode="decimal"
               value={masse.deckenflaeche}
@@ -220,10 +217,10 @@ export default function ProjektDetailPage() {
                 setMasse((m) => ({ ...m, deckenflaeche: e.target.value }))
               }
               onBlur={() => speichereMasse("deckenflaeche")}
-              placeholder="z. B. 95"
+              placeholder={t("ceilingPlaceholder")}
             />
           </Field>
-          <Field label="Raumhöhe (m)">
+          <Field label={t("roomHeight")}>
             <Input
               inputMode="decimal"
               value={masse.raumhoehe}
@@ -231,27 +228,26 @@ export default function ProjektDetailPage() {
                 setMasse((m) => ({ ...m, raumhoehe: e.target.value }))
               }
               onBlur={() => speichereMasse("raumhoehe")}
-              placeholder="z. B. 2,80"
+              placeholder={t("heightPlaceholder")}
             />
           </Field>
-          <Field label="Sonstige Maße">
+          <Field label={t("otherMeasurements")}>
             <Input
               value={masse.sonstige}
               onChange={(e) =>
                 setMasse((m) => ({ ...m, sonstige: e.target.value }))
               }
               onBlur={() => speichereMasse("sonstige")}
-              placeholder="z. B. 3 Türöffnungen"
+              placeholder={t("otherPlaceholder")}
             />
           </Field>
         </div>
       </SektionKarte>
 
-      {/* Abschnitt 3: Dateien */}
       <SektionKarte
         icon={FolderOpen}
-        titel="Dateien"
-        zusatz={`${dateien.length} ${dateien.length === 1 ? "Datei" : "Dateien"}`}
+        titel={tc("files")}
+        zusatz={tc("fileCount", { count: dateien.length })}
       >
         <DateiUpload projektId={projekt.id} />
         {dateien.length > 0 ? (
@@ -261,18 +257,15 @@ export default function ProjektDetailPage() {
         ) : null}
       </SektionKarte>
 
-      {/* Abschnitt 4: Notizen */}
-      <SektionKarte icon={StickyNote} titel="Notizen">
+      <SektionKarte icon={StickyNote} titel={tc("notes")}>
         <Textarea
           value={notizen}
           onChange={(e) => setNotizen(e.target.value)}
           onBlur={() => projektAktualisieren(projekt.id, { notizen })}
           rows={4}
-          placeholder="Eigene Notizen zur Baustelle…"
+          placeholder={t("notesPlaceholder")}
         />
-        <p className="mt-2 text-sm text-slate-400">
-          Wird automatisch gespeichert.
-        </p>
+        <p className="mt-2 text-sm text-slate-400">{tc("autoSaved")}</p>
       </SektionKarte>
 
       <ProjektForm
@@ -283,8 +276,8 @@ export default function ProjektDetailPage() {
 
       <ConfirmDialog
         open={loeschenOffen}
-        title="Baustelle löschen?"
-        message={`„${projekt.projektname}“ und alle zugehörigen Dateien werden gelöscht.`}
+        title={tp("deleteTitle")}
+        message={t("deleteMessage", { name: projekt.projektname })}
         onCancel={() => setLoeschenOffen(false)}
         onConfirm={() => {
           projektLoeschen(projekt.id);

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Phone, Mail, MapPin, Pencil, Trash2, HardHat } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Avatar } from "@/components/ui/Avatar";
@@ -13,6 +14,7 @@ interface KundeKarteProps {
 }
 
 export function KundeKarte({ kunde, onBearbeiten, onLoeschen }: KundeKarteProps) {
+  const t = useTranslations("common");
   const { projekte } = useData();
   const anzahlProjekte = projekte.filter((p) => p.kundeId === kunde.id).length;
 
@@ -68,19 +70,19 @@ export function KundeKarte({ kunde, onBearbeiten, onLoeschen }: KundeKarteProps)
       <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-slate-800">
         <span className="flex items-center gap-1.5 text-sm text-slate-400">
           <HardHat className="h-4 w-4" />
-          {anzahlProjekte} {anzahlProjekte === 1 ? "Projekt" : "Projekte"}
+          {t("projectCount", { count: anzahlProjekte })}
         </span>
         <div className="flex gap-1">
           <button
             onClick={() => onBearbeiten(kunde)}
-            aria-label="Bearbeiten"
+            aria-label={t("edit")}
             className="rounded-xl p-2.5 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
           >
             <Pencil className="h-5 w-5" />
           </button>
           <button
             onClick={() => onLoeschen(kunde)}
-            aria-label="Löschen"
+            aria-label={t("delete")}
             className="rounded-xl p-2.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10"
           >
             <Trash2 className="h-5 w-5" />

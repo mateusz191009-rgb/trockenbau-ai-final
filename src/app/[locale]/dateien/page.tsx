@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { FolderOpen } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card } from "@/components/ui/Card";
@@ -8,7 +9,7 @@ import { SearchField } from "@/components/ui/SearchField";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { DateiListe } from "@/components/dateien/DateiListe";
 import { useData } from "@/store/DataContext";
-import { dateiTypLabel } from "@/lib/status";
+import { useStatusLabels } from "@/hooks/useStatusLabels";
 import { cn } from "@/lib/utils";
 import type { DateiTyp } from "@/types";
 
@@ -22,6 +23,9 @@ const filterReihenfolge: DateiTyp[] = [
 ];
 
 export default function DateienPage() {
+  const t = useTranslations("files");
+  const tc = useTranslations("common");
+  const { dateiTypLabel } = useStatusLabels();
   const { dateien } = useData();
   const [suche, setSuche] = React.useState("");
   const [filter, setFilter] = React.useState<Filter>("alle");
@@ -36,26 +40,19 @@ export default function DateienPage() {
   }, [dateien, filter, suche]);
 
   const tabs: { value: Filter; label: string }[] = [
-    { value: "alle", label: "Alle" },
-    ...filterReihenfolge.map((t) => ({
-      value: t,
-      label: dateiTypLabel[t],
+    { value: "alle", label: tc("all") },
+    ...filterReihenfolge.map((typ) => ({
+      value: typ,
+      label: dateiTypLabel(typ),
     })),
   ];
 
   return (
     <div className="space-y-6">
-      <PageHeader
-        title="Dateien"
-        description="Alle hochgeladenen Bilder, PDFs, Grundrisse und Sprachnachrichten."
-      />
+      <PageHeader title={t("title")} description={t("description")} />
 
       <div className="max-w-xl">
-        <SearchField
-          value={suche}
-          onChange={setSuche}
-          placeholder="Datei suchen…"
-        />
+        <SearchField value={suche} onChange={setSuche} placeholder={t("search")} />
       </div>
 
       <div className="flex flex-wrap gap-2">
@@ -96,13 +93,9 @@ export default function DateienPage() {
         <Card>
           <EmptyState
             icon={FolderOpen}
-            title={
-              dateien.length === 0 ? "Noch keine Dateien" : "Keine Treffer"
-            }
+            title={dateien.length === 0 ? t("empty") : tc("noResults")}
             description={
-              dateien.length === 0
-                ? "Dateien laden Sie direkt in einer Baustelle hoch."
-                : "Versuchen Sie einen anderen Suchbegriff oder Filter."
+              dateien.length === 0 ? t("emptyDesc") : t("noResultsDesc")
             }
           />
         </Card>

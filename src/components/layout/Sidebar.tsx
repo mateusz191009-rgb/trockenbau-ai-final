@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Layers, X, LogOut } from "lucide-react";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { navItems } from "@/lib/navigation";
@@ -12,6 +13,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ open, onClose }: SidebarProps) {
+  const t = useTranslations();
   const pathname = usePathname();
   const router = useRouter();
   const { abmelden } = useAuth();
@@ -52,16 +54,16 @@ export function Sidebar({ open, onClose }: SidebarProps) {
             </span>
             <span className="flex flex-col leading-tight">
               <span className="text-lg font-bold text-slate-900 dark:text-white">
-                Trockenbau AI
+                {t("common.appName")}
               </span>
               <span className="text-xs font-medium text-slate-400">
-                Einfach. Schnell.
+                {t("common.tagline")}
               </span>
             </span>
           </Link>
           <button
             onClick={onClose}
-            aria-label="Menü schließen"
+            aria-label={t("sidebar.closeMenu")}
             className="rounded-xl p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 lg:hidden"
           >
             <X className="h-6 w-6" />
@@ -88,7 +90,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
                 )}
               >
                 <Icon className="h-6 w-6 shrink-0" />
-                {item.label}
+                {t(`sidebar.${item.key}`)}
               </Link>
             );
           })}
@@ -100,7 +102,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
             className="flex w-full items-center gap-3.5 rounded-2xl px-4 py-3.5 text-base font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
           >
             <LogOut className="h-6 w-6 shrink-0" />
-            Abmelden
+            {t("sidebar.logout")}
           </button>
         </div>
       </aside>

@@ -9,16 +9,16 @@ import {
 } from "lucide-react";
 
 export interface NavItem {
-  label: string;
+  key: string;
   href: string;
   icon: LucideIcon;
 }
 
 export const navItems: NavItem[] = [
-  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Kunden", href: "/kunden", icon: Users },
-  { label: "Projekte", href: "/projekte", icon: HardHat },
-  { label: "Dateien", href: "/dateien", icon: FolderOpen },
-  { label: "Angebote", href: "/angebote", icon: FileText },
-  { label: "Einstellungen", href: "/einstellungen", icon: Settings },
+  { key: "dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { key: "customers", href: "/kunden", icon: Users },
+  { key: "projects", href: "/projekte", icon: HardHat },
+  { key: "files", href: "/dateien", icon: FolderOpen },
+  { key: "offers", href: "/angebote", icon: FileText },
+  { key: "settings", href: "/einstellungen", icon: Settings },
 ];

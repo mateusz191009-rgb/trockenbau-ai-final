@@ -32,9 +32,14 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(4px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
+        marquee: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
       },
       animation: {
         "fade-in": "fade-in 0.3s ease-out",
+        marquee: "marquee 30s linear infinite",
       },
     },
   },

@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { AlertTriangle } from "lucide-react";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
@@ -14,16 +15,17 @@ interface ConfirmDialogProps {
   onCancel: () => void;
 }
 
-/** Einfache Sicherheitsabfrage, z. B. vor dem Löschen. */
 export function ConfirmDialog({
   open,
   title,
   message,
-  confirmLabel = "Löschen",
-  cancelLabel = "Abbrechen",
+  confirmLabel,
+  cancelLabel,
   onConfirm,
   onCancel,
 }: ConfirmDialogProps) {
+  const t = useTranslations("common");
+
   return (
     <Modal
       open={open}
@@ -32,10 +34,10 @@ export function ConfirmDialog({
       footer={
         <>
           <Button variant="outline" size="lg" onClick={onCancel}>
-            {cancelLabel}
+            {cancelLabel ?? t("cancel")}
           </Button>
           <Button variant="danger" size="lg" onClick={onConfirm}>
-            {confirmLabel}
+            {confirmLabel ?? t("delete")}
           </Button>
         </>
       }

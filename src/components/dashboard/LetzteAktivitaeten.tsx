@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
   HardHat,
   Users,
@@ -44,17 +45,19 @@ const typMeta: Record<Aktivitaet["typ"], { icon: LucideIcon; className: string }
   };
 
 export function LetzteAktivitaeten({ items }: { items: Aktivitaet[] }) {
+  const t = useTranslations("dashboard");
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="text-lg">Letzte Aktivitäten</CardTitle>
+        <CardTitle className="text-lg">{t("recentActivity")}</CardTitle>
       </CardHeader>
       <CardContent className="pt-3">
         {items.length === 0 ? (
           <EmptyState
             icon={Clock}
-            title="Noch nichts passiert"
-            description="Neue Aktionen erscheinen hier automatisch."
+            title={t("noActivity")}
+            description={t("noActivityDesc")}
           />
         ) : (
           <ul className="space-y-1">

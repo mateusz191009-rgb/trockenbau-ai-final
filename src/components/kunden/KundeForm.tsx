@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { Modal } from "@/components/ui/Modal";
 import { Field } from "@/components/ui/Field";
 import { Input, Textarea } from "@/components/ui/Input";
@@ -11,7 +12,7 @@ import type { Kunde } from "@/types";
 interface KundeFormProps {
   open: boolean;
   onClose: () => void;
-  kunde: Kunde | null; // null = neuer Kunde
+  kunde: Kunde | null;
 }
 
 const leer = {
@@ -24,6 +25,8 @@ const leer = {
 };
 
 export function KundeForm({ open, onClose, kunde }: KundeFormProps) {
+  const t = useTranslations("customers");
+  const tc = useTranslations("common");
   const { kundeAnlegen, kundeAktualisieren } = useData();
   const [werte, setWerte] = React.useState(leer);
   const [laedt, setLaedt] = React.useState(false);
@@ -63,7 +66,7 @@ export function KundeForm({ open, onClose, kunde }: KundeFormProps) {
       onClose();
     } catch (err) {
       console.error(err);
-      setFehler("Speichern fehlgeschlagen. Bitte erneut versuchen.");
+      setFehler(tc("saveFailed"));
     } finally {
       setLaedt(false);
     }
@@ -73,41 +76,41 @@ export function KundeForm({ open, onClose, kunde }: KundeFormProps) {
     <Modal
       open={open}
       onClose={onClose}
-      title={kunde ? "Kunde bearbeiten" : "Neuer Kunde"}
+      title={kunde ? t("formEdit") : t("formNew")}
       size="lg"
       footer={
         <>
           <Button variant="outline" size="lg" onClick={onClose} type="button">
-            Abbrechen
+            {tc("cancel")}
           </Button>
           <Button size="lg" type="submit" form="kunde-form" disabled={laedt}>
-            {laedt ? "Speichern…" : "Speichern"}
+            {laedt ? tc("saving") : tc("save")}
           </Button>
         </>
       }
     >
       <form id="kunde-form" onSubmit={speichern} className="space-y-5">
-        <Field label="Firmenname" htmlFor="firmenname" required>
+        <Field label={tc("companyName")} htmlFor="firmenname" required>
           <Input
             id="firmenname"
             value={werte.firmenname}
             onChange={setFeld("firmenname")}
-            placeholder="z. B. Bauträger Sonnenhof GmbH"
+            placeholder={t("companyPlaceholder")}
             autoFocus
           />
         </Field>
 
-        <Field label="Ansprechpartner" htmlFor="ansprechpartner">
+        <Field label={t("contactPerson")} htmlFor="ansprechpartner">
           <Input
             id="ansprechpartner"
             value={werte.ansprechpartner}
             onChange={setFeld("ansprechpartner")}
-            placeholder="z. B. Michael Wagner"
+            placeholder={t("contactPlaceholder")}
           />
         </Field>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-          <Field label="Telefon" htmlFor="telefon">
+          <Field label={tc("phone")} htmlFor="telefon">
             <Input
               id="telefon"
               type="tel"
@@ -116,7 +119,7 @@ export function KundeForm({ open, onClose, kunde }: KundeFormProps) {
               placeholder="0151 23456789"
             />
           </Field>
-          <Field label="E-Mail" htmlFor="email">
+          <Field label={tc("email")} htmlFor="email">
             <Input
               id="email"
               type="email"
@@ -127,21 +130,21 @@ export function KundeForm({ open, onClose, kunde }: KundeFormProps) {
           </Field>
         </div>
 
-        <Field label="Adresse" htmlFor="adresse">
+        <Field label={t("address")} htmlFor="adresse">
           <Input
             id="adresse"
             value={werte.adresse}
             onChange={setFeld("adresse")}
-            placeholder="Straße, PLZ, Ort"
+            placeholder={tc("addressPlaceholder")}
           />
         </Field>
 
-        <Field label="Notizen" htmlFor="notizen">
+        <Field label={tc("notes")} htmlFor="notizen">
           <Textarea
             id="notizen"
             value={werte.notizen}
             onChange={setFeld("notizen")}
-            placeholder="Wichtige Infos zum Kunden…"
+            placeholder={t("notesPlaceholder")}
           />
         </Field>
 

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import {
   FileText,
@@ -15,7 +16,7 @@ import {
 import { Button } from "@/components/ui/Button";
 import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { useData } from "@/store/DataContext";
-import { dateiTypLabel } from "@/lib/status";
+import { useStatusLabels } from "@/hooks/useStatusLabels";
 import { cn, formatGroesse, formatDatumKurz } from "@/lib/utils";
 import type { Datei, DateiTyp } from "@/types";
 
@@ -29,16 +30,18 @@ const iconMap: Record<DateiTyp, LucideIcon> = {
 
 interface DateiListeProps {
   dateien: Datei[];
-  /** Auf der globalen Dateien-Seite zusätzlich das Projekt anzeigen. */
   zeigeProjekt?: boolean;
 }
 
 export function DateiListe({ dateien, zeigeProjekt = false }: DateiListeProps) {
+  const t = useTranslations("files");
+  const tc = useTranslations("common");
+  const { dateiTypLabel } = useStatusLabels();
   const { dateiLoeschen, projekte } = useData();
   const [loeschId, setLoeschId] = React.useState<string | null>(null);
 
   const projektName = (projektId: string) =>
-    projekte.find((p) => p.id === projektId)?.projektname ?? "Projekt";
+    projekte.find((p) => p.id === projektId)?.projektname ?? tc("project");
 
   return (
     <>
@@ -52,7 +55,6 @@ export function DateiListe({ dateien, zeigeProjekt = false }: DateiListeProps) {
               key={datei.id}
               className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft dark:border-slate-800 dark:bg-slate-900"
             >
-              {/* Vorschau */}
               {istBild && datei.mimeType.startsWith("image/") ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -74,7 +76,7 @@ export function DateiListe({ dateien, zeigeProjekt = false }: DateiListeProps) {
                       {datei.name}
                     </p>
                     <p className="text-sm text-slate-400">
-                      {dateiTypLabel[datei.typ]} · {formatGroesse(datei.groesse)}{" "}
+                      {dateiTypLabel(datei.typ)} · {formatGroesse(datei.groesse)}{" "}
                       · {formatDatumKurz(datei.erstelltAm)}
                     </p>
                   </div>
@@ -103,13 +105,13 @@ export function DateiListe({ dateien, zeigeProjekt = false }: DateiListeProps) {
                     )}
                   >
                     <Download className="h-4 w-4" />
-                    Öffnen
+                    {tc("open")}
                   </a>
                   <Button
                     type="button"
                     variant="ghost"
                     size="icon"
-                    aria-label="Datei löschen"
+                    aria-label={t("deleteAria")}
                     className="h-10 w-10 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10"
                     onClick={() => setLoeschId(datei.id)}
                   >
@@ -124,8 +126,8 @@ export function DateiListe({ dateien, zeigeProjekt = false }: DateiListeProps) {
 
       <ConfirmDialog
         open={loeschId !== null}
-        title="Datei löschen?"
-        message="Möchten Sie diese Datei wirklich löschen? Das kann nicht rückgängig gemacht werden."
+        title={t("deleteTitle")}
+        message={t("deleteMessage")}
         onCancel={() => setLoeschId(null)}
         onConfirm={() => {
           if (loeschId) dateiLoeschen(loeschId);

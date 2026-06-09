@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -10,7 +11,6 @@ interface ModalProps {
   title: string;
   description?: string;
   children: React.ReactNode;
-  /** Inhalt der Fußzeile (Buttons). */
   footer?: React.ReactNode;
   size?: "md" | "lg";
 }
@@ -24,7 +24,8 @@ export function Modal({
   footer,
   size = "md",
 }: ModalProps) {
-  // ESC schließt, Body-Scroll sperren, solange offen.
+  const t = useTranslations("common");
+
   React.useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -70,7 +71,7 @@ export function Modal({
           </div>
           <button
             onClick={onClose}
-            aria-label="Schließen"
+            aria-label={t("close")}
             className="rounded-xl p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
           >
             <X className="h-6 w-6" />

@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { MapPin, User, Pencil, Trash2, ChevronRight } from "lucide-react";
 import { Card } from "@/components/ui/Card";
@@ -20,6 +20,7 @@ export function ProjektKarte({
   onBearbeiten,
   onLoeschen,
 }: ProjektKarteProps) {
+  const t = useTranslations("common");
   const { kundenName } = useData();
 
   return (
@@ -52,15 +53,15 @@ export function ProjektKarte({
       <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4 dark:border-slate-800">
         <span className="text-sm text-slate-400">
           {projekt.startdatum
-            ? `Start: ${formatDatumKurz(projekt.startdatum)}`
-            : "Kein Startdatum"}
+            ? `${t("start")} ${formatDatumKurz(projekt.startdatum)}`
+            : t("noStartDate")}
         </span>
 
         <div className="flex items-center gap-1">
           {onBearbeiten ? (
             <button
               onClick={() => onBearbeiten(projekt)}
-              aria-label="Bearbeiten"
+              aria-label={t("edit")}
               className="rounded-xl p-2.5 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
             >
               <Pencil className="h-5 w-5" />
@@ -69,7 +70,7 @@ export function ProjektKarte({
           {onLoeschen ? (
             <button
               onClick={() => onLoeschen(projekt)}
-              aria-label="Löschen"
+              aria-label={t("delete")}
               className="rounded-xl p-2.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10"
             >
               <Trash2 className="h-5 w-5" />
@@ -77,7 +78,7 @@ export function ProjektKarte({
           ) : null}
           <Link
             href={`/projekte/${projekt.id}`}
-            aria-label="Öffnen"
+            aria-label={t("open")}
             className="rounded-xl p-2.5 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"
           >
             <ChevronRight className="h-5 w-5" />

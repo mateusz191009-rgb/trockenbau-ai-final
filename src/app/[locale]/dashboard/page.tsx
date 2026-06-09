@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Users, HardHat, FileText, Hammer, ArrowRight } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
@@ -17,6 +18,7 @@ import { Button } from "@/components/ui/Button";
 import { useData } from "@/store/DataContext";
 
 export default function DashboardPage() {
+  const t = useTranslations("dashboard");
   const { kunden, projekte, aktivitaeten, firmendaten } = useData();
 
   const offeneAngebote = projekte.filter((p) => p.status === "angebot").length;
@@ -29,35 +31,34 @@ export default function DashboardPage() {
     .slice(0, 4);
 
   const begruessung = firmendaten.firmenname
-    ? `Willkommen zurück bei ${firmendaten.firmenname}.`
-    : "Willkommen zurück.";
+    ? t("welcomeCompany", { company: firmendaten.firmenname })
+    : t("welcome");
 
   return (
     <div className="space-y-8">
-      <PageHeader title="Dashboard" description={begruessung} />
+      <PageHeader title={t("title")} description={begruessung} />
 
-      {/* 4 Kennzahlen */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
         <StatKachel
-          label="Kunden gesamt"
+          label={t("stats.customers")}
           wert={kunden.length}
           icon={Users}
           href="/kunden"
         />
         <StatKachel
-          label="Projekte gesamt"
+          label={t("stats.projects")}
           wert={projekte.length}
           icon={HardHat}
           href="/projekte"
         />
         <StatKachel
-          label="Offene Angebote"
+          label={t("stats.openOffers")}
           wert={offeneAngebote}
           icon={FileText}
           href="/angebote"
         />
         <StatKachel
-          label="Aktive Baustellen"
+          label={t("stats.activeSites")}
           wert={aktiveBaustellen}
           icon={Hammer}
           href="/projekte"
@@ -65,16 +66,15 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        {/* Letzte Projekte */}
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">Letzte Projekte</CardTitle>
+              <CardTitle className="text-lg">{t("recentProjects")}</CardTitle>
               <Link
                 href="/projekte"
                 className="inline-flex items-center gap-1 text-base font-semibold text-brand-600 hover:underline dark:text-brand-400"
               >
-                Alle ansehen
+                {t("viewAll")}
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </CardHeader>
@@ -82,11 +82,11 @@ export default function DashboardPage() {
               {letzteProjekte.length === 0 ? (
                 <EmptyState
                   icon={HardHat}
-                  title="Noch keine Projekte"
-                  description="Legen Sie Ihre erste Baustelle an."
+                  title={t("noProjects")}
+                  description={t("noProjectsDesc")}
                   action={
                     <Link href="/projekte">
-                      <Button size="lg">Zur Projektübersicht</Button>
+                      <Button size="lg">{t("toProjects")}</Button>
                     </Link>
                   }
                 />
@@ -101,7 +101,6 @@ export default function DashboardPage() {
           </Card>
         </div>
 
-        {/* Letzte Aktivitäten */}
         <LetzteAktivitaeten items={aktivitaeten} />
       </div>
     </div>

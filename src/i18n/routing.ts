@@ -9,6 +9,7 @@ export const locales = [
   "uk",
   "ru",
   "sr",
+  "sq",
 ] as const;
 
 export type Locale = (typeof locales)[number];
@@ -22,6 +23,7 @@ export const localeLabels: Record<Locale, string> = {
   uk: "Українська",
   ru: "Русский",
   sr: "Srpski",
+  sq: "Shqip",
 };
 
 export const routing = defineRouting({

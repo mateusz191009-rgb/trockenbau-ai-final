@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     "/",
-    "/(de|pl|ro|tr|ar|uk|ru|sr)/:path*",
+    "/(de|pl|ro|tr|ar|uk|ru|sr|sq)/:path*",
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
   ],
 };

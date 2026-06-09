@@ -1,7 +1,152 @@
 {
   "common": {
     "appName": "Trockenbau AI",
-    "tagline": "Einfach. Schnell."
+    "tagline": "Einfach. Schnell.",
+    "save": "Speichern",
+    "saving": "Speichern…",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "open": "Öffnen",
+    "all": "Alle",
+    "noResults": "Keine Treffer",
+    "saveFailed": "Speichern fehlgeschlagen. Bitte erneut versuchen.",
+    "close": "Schließen",
+    "search": "Suchen…",
+    "clearSearch": "Suche löschen",
+    "loading": "Lädt…",
+    "autoSaved": "Wird automatisch gespeichert.",
+    "addressPlaceholder": "Straße, PLZ, Ort",
+    "project": "Projekt",
+    "projects": "Projekte",
+    "file": "Datei",
+    "files": "Dateien",
+    "start": "Start:",
+    "noStartDate": "Kein Startdatum",
+    "plannedStart": "Geplanter Start:",
+    "pleaseSelect": "Bitte wählen…",
+    "status": "Status",
+    "notes": "Notizen",
+    "description": "Beschreibung",
+    "phone": "Telefon",
+    "email": "E-Mail",
+    "companyName": "Firmenname",
+    "projectCount": "{count, plural, one {# Projekt} other {# Projekte}}",
+    "fileCount": "{count, plural, one {# Datei} other {# Dateien}}"
+  },
+  "status": {
+    "anfrage": "Anfrage",
+    "angebot": "Angebot",
+    "in_arbeit": "In Arbeit",
+    "fertig": "Fertig"
+  },
+  "fileTypes": {
+    "bild": "Bild",
+    "pdf": "PDF",
+    "grundriss": "Grundriss",
+    "sprachnachricht": "Sprachnachricht",
+    "sonstige": "Datei"
+  },
+  "customers": {
+    "title": "Kunden",
+    "description": "Alle Ihre Auftraggeber an einem Ort.",
+    "add": "Kunde anlegen",
+    "search": "Kunde suchen…",
+    "empty": "Noch keine Kunden",
+    "emptyDesc": "Legen Sie Ihren ersten Kunden an, um loszulegen.",
+    "noResultsDesc": "Versuchen Sie einen anderen Suchbegriff.",
+    "deleteTitle": "Kunde löschen?",
+    "deleteMessage": "„{name}“ und alle zugehörigen Projekte und Dateien werden gelöscht. Das kann nicht rückgängig gemacht werden.",
+    "formEdit": "Kunde bearbeiten",
+    "formNew": "Neuer Kunde",
+    "contactPerson": "Ansprechpartner",
+    "address": "Adresse",
+    "notesPlaceholder": "Wichtige Infos zum Kunden…",
+    "companyPlaceholder": "z. B. Bauträger Sonnenhof GmbH",
+    "contactPlaceholder": "z. B. Michael Wagner"
+  },
+  "projects": {
+    "title": "Projekte",
+    "description": "Ihre Baustellen im Überblick.",
+    "add": "Neue Baustelle",
+    "search": "Baustelle suchen…",
+    "empty": "Noch keine Baustellen",
+    "emptyDesc": "Legen Sie Ihre erste Baustelle an.",
+    "noResultsDesc": "Andere Suche oder anderen Filter versuchen.",
+    "deleteTitle": "Baustelle löschen?",
+    "deleteMessage": "„{name}“ und alle zugehörigen Dateien werden gelöscht. Das kann nicht rückgängig gemacht werden.",
+    "formEdit": "Baustelle bearbeiten",
+    "formNew": "Neue Baustelle",
+    "name": "Projektname",
+    "namePlaceholder": "z. B. Trockenbau Bürogebäude 2. OG",
+    "customer": "Kunde",
+    "noCustomers": "Noch keine Kunden vorhanden.",
+    "addCustomerFirst": "Zuerst einen Kunden anlegen",
+    "siteAddress": "Baustellenadresse",
+    "descriptionPlaceholder": "Was soll gemacht werden?",
+    "startDate": "Startdatum",
+    "endDate": "Enddatum"
+  },
+  "projectDetail": {
+    "notFound": "Baustelle nicht gefunden",
+    "notFoundDesc": "Dieses Projekt existiert nicht (mehr).",
+    "backToList": "Zurück zur Übersicht",
+    "allProjects": "Alle Projekte",
+    "descriptionPlaceholder": "Was soll auf dieser Baustelle gemacht werden?",
+    "measurements": "Maße",
+    "wallArea": "Wandfläche (m²)",
+    "ceilingArea": "Deckenfläche (m²)",
+    "roomHeight": "Raumhöhe (m)",
+    "otherMeasurements": "Sonstige Maße",
+    "wallPlaceholder": "z. B. 180",
+    "ceilingPlaceholder": "z. B. 95",
+    "heightPlaceholder": "z. B. 2,80",
+    "otherPlaceholder": "z. B. 3 Türöffnungen",
+    "notesPlaceholder": "Eigene Notizen zur Baustelle…",
+    "deleteMessage": "„{name}“ und alle zugehörigen Dateien werden gelöscht."
+  },
+  "files": {
+    "title": "Dateien",
+    "description": "Alle hochgeladenen Bilder, PDFs, Grundrisse und Sprachnachrichten.",
+    "search": "Datei suchen…",
+    "empty": "Noch keine Dateien",
+    "emptyDesc": "Dateien laden Sie direkt in einer Baustelle hoch.",
+    "noResultsDesc": "Versuchen Sie einen anderen Suchbegriff oder Filter.",
+    "deleteTitle": "Datei löschen?",
+    "deleteMessage": "Möchten Sie diese Datei wirklich löschen? Das kann nicht rückgängig gemacht werden.",
+    "deleteAria": "Datei löschen",
+    "uploadTitle": "Dateien hochladen",
+    "uploadSubtitle": "Bilder, PDFs oder Grundrisse hierher ziehen oder tippen",
+    "selectFile": "Datei auswählen",
+    "recordVoice": "Sprachnachricht aufnehmen",
+    "stopRecording": "Aufnahme stoppen ({seconds}s)",
+    "recording": "Aufnahme läuft… ({seconds} Sekunden)",
+    "tooLarge": "„{name}“ ist zu groß (max. 25 MB).",
+    "uploadError": "Beim Hochladen ist ein Fehler aufgetreten.",
+    "voiceSaveError": "Die Sprachnachricht konnte nicht gespeichert werden.",
+    "voiceFileName": "Sprachnachricht {date}.webm"
+  },
+  "offers": {
+    "title": "Angebote",
+    "description": "Alle Baustellen, für die ein Angebot offen ist.",
+    "empty": "Keine offenen Angebote",
+    "emptyDesc": "Setzen Sie eine Baustelle auf den Status „Angebot“, damit sie hier erscheint.",
+    "toProjects": "Zu den Projekten",
+    "orderReceived": "Auftrag erhalten"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "description": "Passen Sie die App an Ihren Betrieb an.",
+    "appearance": "Darstellung",
+    "appearanceDesc": "Hell oder dunkel — ganz wie Sie mögen.",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "Automatisch",
+    "myCompany": "Meine Firma",
+    "companyPlaceholder": "z. B. Mustermann Trockenbau",
+    "saved": "Gespeichert",
+    "account": "Konto",
+    "signedInAs": "Angemeldet als"
   },
   "nav": {
     "features": "Funktionen",
@@ -47,9 +192,12 @@
         },
         "multilingual": {
           "title": "Mehrsprachigkeit",
-          "description": "App in 8 Sprachen für internationale Teams."
+          "description": "App in 9 Sprachen für internationale Teams."
         }
       }
+    },
+    "trustedBy": {
+      "title": "Vertraut von"
     },
     "howItWorks": {
       "title": "So funktioniert's",
@@ -81,6 +229,37 @@
       "subtitle": "Keine Kreditkarte nötig. In 2 Minuten eingerichtet.",
       "button": "Kostenlos testen"
     }
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "customers": "Kunden",
+    "projects": "Projekte",
+    "files": "Dateien",
+    "offers": "Angebote",
+    "settings": "Einstellungen",
+    "logout": "Abmelden",
+    "closeMenu": "Menü schließen",
+    "openMenu": "Menü öffnen",
+    "myBusiness": "Mein Betrieb"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Willkommen zurück.",
+    "welcomeCompany": "Willkommen zurück bei {company}.",
+    "stats": {
+      "customers": "Kunden gesamt",
+      "projects": "Projekte gesamt",
+      "openOffers": "Offene Angebote",
+      "activeSites": "Aktive Baustellen"
+    },
+    "recentProjects": "Letzte Projekte",
+    "viewAll": "Alle ansehen",
+    "noProjects": "Noch keine Projekte",
+    "noProjectsDesc": "Legen Sie Ihre erste Baustelle an.",
+    "toProjects": "Zur Projektübersicht",
+    "recentActivity": "Letzte Aktivitäten",
+    "noActivity": "Noch nichts passiert",
+    "noActivityDesc": "Neue Aktionen erscheinen hier automatisch."
   },
   "footer": {
     "rights": "Alle Rechte vorbehalten.",

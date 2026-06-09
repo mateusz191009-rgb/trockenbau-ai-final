@@ -18,8 +18,7 @@ export function CtaSection() {
         <Link href="/registrieren" className="mt-8 inline-block">
           <Button
             size="lg"
-            variant="secondary"
-            className="min-w-[220px] gap-2 bg-white text-brand-700 hover:bg-brand-50"
+            className="min-w-[220px] gap-2 bg-slate-900 text-white shadow-lg hover:bg-slate-800 dark:bg-white dark:text-brand-700 dark:hover:bg-brand-50"
           >
             {t("button")}
             <ArrowRight className="h-5 w-5" />

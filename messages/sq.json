@@ -1,0 +1,275 @@
+{
+  "common": {
+    "appName": "Trockenbau AI",
+    "tagline": "Thjeshtë. Shpejt.",
+    "save": "Ruaj",
+    "saving": "Duke ruajtur…",
+    "cancel": "Anulo",
+    "delete": "Fshi",
+    "edit": "Ndrysho",
+    "open": "Hap",
+    "all": "Të gjitha",
+    "noResults": "Nuk ka rezultate",
+    "saveFailed": "Ruajtja dështoi. Provoni përsëri.",
+    "close": "Mbyll",
+    "search": "Kërko…",
+    "clearSearch": "Pastro kërkimin",
+    "loading": "Duke u ngarkuar…",
+    "autoSaved": "Ruhet automatikisht.",
+    "addressPlaceholder": "Rruga, kodi postar, qyteti",
+    "project": "Projekt",
+    "projects": "Projekte",
+    "file": "Skedar",
+    "files": "Skedarë",
+    "start": "Fillimi:",
+    "noStartDate": "Pa datë fillimi",
+    "plannedStart": "Fillimi i planifikuar:",
+    "pleaseSelect": "Zgjidhni…",
+    "status": "Statusi",
+    "notes": "Shënime",
+    "description": "Përshkrimi",
+    "phone": "Telefoni",
+    "email": "E-mail",
+    "companyName": "Emri i kompanisë",
+    "projectCount": "{count, plural, one {# projekt} other {# projekte}}",
+    "fileCount": "{count, plural, one {# skedar} other {# skedarë}}"
+  },
+  "nav": {
+    "features": "Funksionet",
+    "howItWorks": "Si funksionon",
+    "login": "Hyrje",
+    "tryFree": "Provo falas"
+  },
+  "landing": {
+    "hero": {
+      "title": "Oferta për ndërtim të thatë në minuta, jo orë",
+      "subtitle": "Ngarko foto, matje dhe përshkrime — ofertat krijohen automatikisht.",
+      "cta": "Provo falas",
+      "login": "Hyrje",
+      "trusted": "Për profesionistët e ndërtimit të thatë në Gjermani"
+    },
+    "features": {
+      "title": "Gjithçka për biznesin tuaj",
+      "subtitle": "Mjete të thjeshta për përdorim të përditshëm në kantier.",
+      "items": {
+        "customers": { "title": "Menaxhimi i klientëve", "description": "Të gjithë klientët dhe kontaktet në një vend." },
+        "sites": { "title": "Menaxhimi i kantierëve", "description": "Projekte dhe kantierë të organizuar qartë." },
+        "photos": { "title": "Ngarkimi i fotove", "description": "Foto nga kantieri direkt nga telefoni." },
+        "ai": { "title": "Gjenerator ofertash AI", "description": "Oferta automatike nga të dhënat tuaja." },
+        "pdf": { "title": "Oferta PDF", "description": "Oferta profesionale të eksportuara si PDF." },
+        "invoices": { "title": "Faturat", "description": "Krijoni dhe dërgoni fatura shpejt." },
+        "multilingual": { "title": "Shumëgjuhësh", "description": "Aplikacioni në 9 gjuhë për ekipe ndërkombëtare." }
+      }
+    },
+    "howItWorks": {
+      "title": "Si funksionon",
+      "subtitle": "Ofertë e gatshme në tre hapa të thjeshtë.",
+      "steps": {
+        "1": { "title": "Krijo kantierin", "description": "Projekt i ri me klient dhe adresë." },
+        "2": { "title": "Ngarko foto dhe matje", "description": "Të dhëna dhe imazhe nga kantieri në kohë reale." },
+        "3": { "title": "Oferta krijohet automatikisht", "description": "AI krijon ofertën — ju kontrolloni dhe dërgoni." }
+      }
+    },
+    "screenshots": {
+      "title": "Lehtë për t'u përdorur",
+      "subtitle": "E qartë dhe e thjeshtë — edhe në kantier.",
+      "dashboard": "Paneli",
+      "projects": "Projektet",
+      "offers": "Ofertat"
+    },
+    "trustedBy": { "title": "Na besojnë" },
+    "cta": {
+      "title": "Fillo falas tani",
+      "subtitle": "Nuk nevojitet kartë krediti. Konfigurim në 2 minuta.",
+      "button": "Provo falas"
+    }
+  },
+  "sidebar": {
+    "dashboard": "Paneli",
+    "customers": "Klientët",
+    "projects": "Projektet",
+    "files": "Skedarët",
+    "offers": "Ofertat",
+    "settings": "Cilësimet",
+    "logout": "Dil",
+    "closeMenu": "Mbyll menunë",
+    "openMenu": "Hap menunë",
+    "myBusiness": "Biznesi im"
+  },
+  "dashboard": {
+    "title": "Paneli",
+    "welcome": "Mirë se u ktheve.",
+    "welcomeCompany": "Mirë se u ktheve te {company}.",
+    "stats": {
+      "customers": "Klientë gjithsej",
+      "projects": "Projekte gjithsej",
+      "openOffers": "Oferta të hapura",
+      "activeSites": "Kantierë aktivë"
+    },
+    "recentProjects": "Projektet e fundit",
+    "viewAll": "Shiko të gjitha",
+    "noProjects": "Ende pa projekte",
+    "noProjectsDesc": "Krijo kantierin tënd të parë.",
+    "toProjects": "Te projektet",
+    "recentActivity": "Aktiviteti i fundit",
+    "noActivity": "Ende asgjë",
+    "noActivityDesc": "Veprimet e reja shfaqen këtu automatikisht."
+  },
+  "status": {
+    "anfrage": "Kërkesë",
+    "angebot": "Ofertë",
+    "in_arbeit": "Në punë",
+    "fertig": "Përfunduar"
+  },
+  "fileTypes": {
+    "bild": "Imazh",
+    "pdf": "PDF",
+    "grundriss": "Plan",
+    "sprachnachricht": "Mesazh zanor",
+    "sonstige": "Skedar"
+  },
+  "customers": {
+    "title": "Klientët",
+    "description": "Të gjithë porositësit tuaj në një vend.",
+    "add": "Shto klient",
+    "search": "Kërko klient…",
+    "empty": "Ende pa klientë",
+    "emptyDesc": "Shtoni klientin e parë për të filluar.",
+    "noResultsDesc": "Provoni një term tjetër kërkimi.",
+    "deleteTitle": "Fshi klientin?",
+    "deleteMessage": "„{name}“ dhe të gjitha projektet dhe skedarët e lidhur do të fshihen. Ky veprim nuk mund të zhbëhet.",
+    "formEdit": "Ndrysho klientin",
+    "formNew": "Klient i ri",
+    "contactPerson": "Personi i kontaktit",
+    "address": "Adresa",
+    "notesPlaceholder": "Informacione të rëndësishme për klientin…",
+    "companyPlaceholder": "p.sh. Zhvillues Sonnenhof GmbH",
+    "contactPlaceholder": "p.sh. Mihal Wagner"
+  },
+  "projects": {
+    "title": "Projektet",
+    "description": "Përmbledhje e kantierëve tuaj.",
+    "add": "Kantier i ri",
+    "search": "Kërko kantier…",
+    "empty": "Ende pa kantierë",
+    "emptyDesc": "Krijoni kantierin tuaj të parë.",
+    "noResultsDesc": "Provoni një kërkim ose filtër tjetër.",
+    "deleteTitle": "Fshi kantierin?",
+    "deleteMessage": "„{name}“ dhe të gjithë skedarët e lidhur do të fshihen. Ky veprim nuk mund të zhbëhet.",
+    "formEdit": "Ndrysho kantierin",
+    "formNew": "Kantier i ri",
+    "name": "Emri i projektit",
+    "namePlaceholder": "p.sh. Ndërtim i thatë zyre kati 2",
+    "customer": "Klienti",
+    "noCustomers": "Ende pa klientë.",
+    "addCustomerFirst": "Shtoni fillimisht një klient",
+    "siteAddress": "Adresa e kantierit",
+    "descriptionPlaceholder": "Çfarë duhet bërë?",
+    "startDate": "Data e fillimit",
+    "endDate": "Data e përfundimit"
+  },
+  "projectDetail": {
+    "notFound": "Kantieri nuk u gjet",
+    "notFoundDesc": "Ky projekt nuk ekziston (më).",
+    "backToList": "Kthehu te lista",
+    "allProjects": "Të gjitha projektet",
+    "descriptionPlaceholder": "Çfarë duhet bërë në këtë kantier?",
+    "measurements": "Matjet",
+    "wallArea": "Sipërfaqja e mureve (m²)",
+    "ceilingArea": "Sipërfaqja e tavanit (m²)",
+    "roomHeight": "Lartësia e dhomës (m)",
+    "otherMeasurements": "Matje të tjera",
+    "wallPlaceholder": "p.sh. 180",
+    "ceilingPlaceholder": "p.sh. 95",
+    "heightPlaceholder": "p.sh. 2,80",
+    "otherPlaceholder": "p.sh. 3 hapje dyerash",
+    "notesPlaceholder": "Shënimet tuaja për kantierin…",
+    "deleteMessage": "„{name}“ dhe të gjithë skedarët e lidhur do të fshihen."
+  },
+  "files": {
+    "title": "Skedarët",
+    "description": "Të gjitha imazhet, PDF-të, planet dhe mesazhet zanore të ngarkuara.",
+    "search": "Kërko skedar…",
+    "empty": "Ende pa skedarë",
+    "emptyDesc": "Ngarkoni skedarët direkt në një kantier.",
+    "noResultsDesc": "Provoni një term kërkimi ose filtër tjetër.",
+    "deleteTitle": "Fshi skedarin?",
+    "deleteMessage": "A dëshironi vërtet ta fshini këtë skedar? Ky veprim nuk mund të zhbëhet.",
+    "deleteAria": "Fshi skedarin",
+    "uploadTitle": "Ngarko skedarë",
+    "uploadSubtitle": "Zvarrit ose prek për imazhe, PDF ose plane",
+    "selectFile": "Zgjidh skedar",
+    "recordVoice": "Regjistro mesazh zanor",
+    "stopRecording": "Ndalo regjistrimin ({seconds}s)",
+    "recording": "Regjistrim… ({seconds} sekonda)",
+    "tooLarge": "„{name}“ është shumë i madh (maks. 25 MB).",
+    "uploadError": "Ndodhi një gabim gjatë ngarkimit.",
+    "voiceSaveError": "Mesazhi zanor nuk mund të ruhej.",
+    "voiceFileName": "Mesazh zanor {date}.webm"
+  },
+  "offers": {
+    "title": "Ofertat",
+    "description": "Të gjithë kantierët me ofertë të hapur.",
+    "empty": "Nuk ka oferta të hapura",
+    "emptyDesc": "Vendosni një kantier në statusin „Ofertë“ që të shfaqet këtu.",
+    "toProjects": "Te projektet",
+    "orderReceived": "Porosia u mor"
+  },
+  "settings": {
+    "title": "Cilësimet",
+    "description": "Përshtatni aplikacionin me biznesin tuaj.",
+    "appearance": "Pamja",
+    "appearanceDesc": "E çelët ose e errët — si të preferoni.",
+    "light": "E çelët",
+    "dark": "E errët",
+    "system": "Automatik",
+    "myCompany": "Kompania ime",
+    "companyPlaceholder": "p.sh. Gjoka Ndërtim i Thatë",
+    "saved": "U ruajt",
+    "account": "Llogaria",
+    "signedInAs": "Identifikuar si"
+  },
+  "footer": {
+    "rights": "Të gjitha të drejtat e rezervuara.",
+    "impressum": "Impresum",
+    "privacy": "Privatësia",
+    "contact": "Kontakt"
+  },
+  "auth": {
+    "login": {
+      "title": "Hyrje",
+      "subtitle": "Mirë se u ktheve në Trockenbau AI",
+      "email": "E-mail",
+      "password": "Fjalëkalimi",
+      "forgotPassword": "Keni harruar fjalëkalimin?",
+      "submit": "Hyr",
+      "submitting": "Duke u identifikuar…",
+      "noAccount": "Nuk keni llogari?",
+      "register": "Regjistrohu"
+    },
+    "register": {
+      "title": "Regjistrim",
+      "subtitle": "Krijo llogarinë tënde falas",
+      "email": "E-mail",
+      "password": "Fjalëkalimi",
+      "passwordHint": "Të paktën 6 karaktere",
+      "passwordRepeat": "Përsërit fjalëkalimin",
+      "submit": "Krijo llogari",
+      "submitting": "Duke krijuar llogarinë…",
+      "hasAccount": "Keni tashmë llogari?",
+      "login": "Hyr",
+      "confirmationTitle": "Pothuajse gati!",
+      "confirmationText": "Ju dërguam një email në {email}. Konfirmoni adresën dhe identifikohuni.",
+      "toLogin": "Te hyrja"
+    },
+    "errors": {
+      "passwordMin": "Fjalëkalimi duhet të ketë të paktën 6 karaktere.",
+      "passwordMismatch": "Fjalëkalimet nuk përputhen."
+    }
+  },
+  "legal": {
+    "impressum": { "title": "Impresum", "content": "Të dhëna sipas § 5 TMG. Të dhënat e plota së shpejti." },
+    "privacy": { "title": "Privatësia", "content": "Informacion mbi përpunimin e të dhënave personale së shpejti." },
+    "contact": { "title": "Kontakt", "content": "Pyetje: kontakt@trockenbau-ai.de" }
+  }
+}

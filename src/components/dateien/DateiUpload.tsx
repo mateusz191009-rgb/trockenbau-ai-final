@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations, useLocale } from "next-intl";
 import { Mic, Square, Upload, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useData } from "@/store/DataContext";
@@ -11,10 +12,11 @@ interface DateiUploadProps {
   projektId: string;
 }
 
-// Begrenzung, damit Uploads zuverlässig durchlaufen.
-const MAX_BYTES = 25 * 1024 * 1024; // 25 MB
+const MAX_BYTES = 25 * 1024 * 1024;
 
 export function DateiUpload({ projektId }: DateiUploadProps) {
+  const t = useTranslations("files");
+  const locale = useLocale();
   const { dateiHochladen } = useData();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [laedt, setLaedt] = React.useState(false);
@@ -24,12 +26,12 @@ export function DateiUpload({ projektId }: DateiUploadProps) {
   const speichereBlob = React.useCallback(
     async (datei: Blob, name: string) => {
       if (datei.size > MAX_BYTES) {
-        setHinweis(`„${name}“ ist zu groß (max. 25 MB).`);
+        setHinweis(t("tooLarge", { name }));
         return;
       }
       await dateiHochladen(projektId, datei, name);
     },
-    [dateiHochladen, projektId],
+    [dateiHochladen, projektId, t],
   );
 
   const verarbeite = React.useCallback(
@@ -42,23 +44,24 @@ export function DateiUpload({ projektId }: DateiUploadProps) {
         }
       } catch (fehler) {
         console.error(fehler);
-        setHinweis("Beim Hochladen ist ein Fehler aufgetreten.");
+        setHinweis(t("uploadError"));
       } finally {
         setLaedt(false);
       }
     },
-    [speichereBlob],
+    [speichereBlob, t],
   );
 
   const recorder = useAudioRecorder(async (blob) => {
     setLaedt(true);
     setHinweis(null);
     try {
-      const name = `Sprachnachricht ${new Date().toLocaleString("de-DE")}.webm`;
+      const date = new Date().toLocaleString(locale);
+      const name = t("voiceFileName", { date });
       await speichereBlob(blob, name);
     } catch (fehler) {
       console.error(fehler);
-      setHinweis("Die Sprachnachricht konnte nicht gespeichert werden.");
+      setHinweis(t("voiceSaveError"));
     } finally {
       setLaedt(false);
     }
@@ -66,7 +69,6 @@ export function DateiUpload({ projektId }: DateiUploadProps) {
 
   return (
     <div className="space-y-4">
-      {/* Drag & Drop / Klick-Fläche */}
       <div
         onDragOver={(e) => {
           e.preventDefault();
@@ -94,10 +96,10 @@ export function DateiUpload({ projektId }: DateiUploadProps) {
           </span>
         )}
         <p className="mt-4 text-lg font-bold text-slate-900 dark:text-white">
-          Dateien hochladen
+          {t("uploadTitle")}
         </p>
         <p className="mt-1 text-base text-slate-500 dark:text-slate-400">
-          Bilder, PDFs oder Grundrisse hierher ziehen oder tippen
+          {t("uploadSubtitle")}
         </p>
         <input
           ref={inputRef}
@@ -112,7 +114,6 @@ export function DateiUpload({ projektId }: DateiUploadProps) {
         />
       </div>
 
-      {/* Datei auswählen + Sprachnachricht */}
       <div className="flex flex-col gap-3 sm:flex-row">
         <Button
           type="button"
@@ -123,7 +124,7 @@ export function DateiUpload({ projektId }: DateiUploadProps) {
           onClick={() => inputRef.current?.click()}
         >
           <Upload className="h-5 w-5" />
-          Datei auswählen
+          {t("selectFile")}
         </Button>
 
         {!recorder.laeuft ? (
@@ -136,7 +137,7 @@ export function DateiUpload({ projektId }: DateiUploadProps) {
             disabled={!recorder.unterstuetzt || laedt}
           >
             <Mic className="h-5 w-5" />
-            Sprachnachricht aufnehmen
+            {t("recordVoice")}
           </Button>
         ) : (
           <Button
@@ -147,7 +148,7 @@ export function DateiUpload({ projektId }: DateiUploadProps) {
             onClick={recorder.stoppen}
           >
             <Square className="h-5 w-5 fill-current" />
-            Aufnahme stoppen ({recorder.dauer}s)
+            {t("stopRecording", { seconds: recorder.dauer })}
           </Button>
         )}
       </div>
@@ -155,7 +156,7 @@ export function DateiUpload({ projektId }: DateiUploadProps) {
       {recorder.laeuft ? (
         <p className="flex items-center gap-2 text-base font-medium text-red-600 dark:text-red-400">
           <span className="h-3 w-3 animate-pulse rounded-full bg-red-500" />
-          Aufnahme läuft… ({recorder.dauer} Sekunden)
+          {t("recording", { seconds: recorder.dauer })}
         </p>
       ) : null}
 

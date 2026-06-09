@@ -1,12 +1,16 @@
+"use client";
+
 import { Badge } from "@/components/ui/Badge";
-import { projektStatusMeta } from "@/lib/status";
+import { projektStatusStyles } from "@/lib/status";
+import { useStatusLabels } from "@/hooks/useStatusLabels";
 import type { ProjektStatus } from "@/types";
 
 export function StatusBadge({ status }: { status: ProjektStatus }) {
-  const meta = projektStatusMeta[status];
+  const { projektStatusLabel } = useStatusLabels();
+  const style = projektStatusStyles[status];
   return (
-    <Badge className={meta.className} dot={meta.dot}>
-      {meta.label}
+    <Badge className={style.className} dot={style.dot}>
+      {projektStatusLabel(status)}
     </Badge>
   );
 }

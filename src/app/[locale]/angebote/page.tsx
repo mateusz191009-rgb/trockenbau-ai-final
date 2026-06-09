@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { FileText, User, MapPin, Check, ChevronRight } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
@@ -10,26 +11,25 @@ import { useData } from "@/store/DataContext";
 import { formatDatumKurz } from "@/lib/utils";
 
 export default function AngebotePage() {
+  const t = useTranslations("offers");
+  const tc = useTranslations("common");
   const { projekte, kundenName, projektAktualisieren } = useData();
 
   const offene = projekte.filter((p) => p.status === "angebot");
 
   return (
     <div className="space-y-6">
-      <PageHeader
-        title="Angebote"
-        description="Alle Baustellen, für die ein Angebot offen ist."
-      />
+      <PageHeader title={t("title")} description={t("description")} />
 
       {offene.length === 0 ? (
         <Card>
           <EmptyState
             icon={FileText}
-            title="Keine offenen Angebote"
-            description="Setzen Sie eine Baustelle auf den Status „Angebot“, damit sie hier erscheint."
+            title={t("empty")}
+            description={t("emptyDesc")}
             action={
               <Link href="/projekte">
-                <Button size="lg">Zu den Projekten</Button>
+                <Button size="lg">{t("toProjects")}</Button>
               </Link>
             }
           />
@@ -58,7 +58,7 @@ export default function AngebotePage() {
                 ) : null}
                 {projekt.startdatum ? (
                   <p className="text-sm">
-                    Geplanter Start: {formatDatumKurz(projekt.startdatum)}
+                    {tc("plannedStart")} {formatDatumKurz(projekt.startdatum)}
                   </p>
                 ) : null}
               </div>
@@ -72,11 +72,11 @@ export default function AngebotePage() {
                   }
                 >
                   <Check className="h-5 w-5" />
-                  Auftrag erhalten
+                  {t("orderReceived")}
                 </Button>
                 <Link href={`/projekte/${projekt.id}`} className="flex-1">
                   <Button size="lg" variant="outline" className="w-full">
-                    Öffnen
+                    {tc("open")}
                     <ChevronRight className="h-5 w-5" />
                   </Button>
                 </Link>
