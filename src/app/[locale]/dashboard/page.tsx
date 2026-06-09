@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { Users, HardHat, FileText, Hammer, ArrowRight } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { StatKachel } from "@/components/dashboard/StatKachel";

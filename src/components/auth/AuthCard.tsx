@@ -1,4 +1,5 @@
 import { Layers } from "lucide-react";
+import { LanguageSwitcher } from "@/components/i18n/LanguageSwitcher";
 
 interface AuthCardProps {
   title: string;
@@ -10,7 +11,11 @@ interface AuthCardProps {
 /** Zentrierte Karte für alle Anmelde-Seiten. */
 export function AuthCard({ title, subtitle, children, footer }: AuthCardProps) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-10 dark:bg-slate-950">
+    <div className="relative flex min-h-screen items-center justify-center bg-slate-50 px-4 py-10 dark:bg-slate-950">
+      <div className="absolute end-4 top-4 sm:end-6 sm:top-6">
+        <LanguageSwitcher />
+      </div>
+
       <div className="w-full max-w-md">
         <div className="mb-6 flex flex-col items-center text-center">
           <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-400 to-brand-600 text-white shadow-sm">

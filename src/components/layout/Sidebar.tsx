@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import { Layers, X, LogOut } from "lucide-react";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { navItems } from "@/lib/navigation";
 import { useAuth } from "@/store/AuthContext";
 import { cn } from "@/lib/utils";
@@ -25,7 +24,6 @@ export function Sidebar({ open, onClose }: SidebarProps) {
 
   return (
     <>
-      {/* Hintergrund-Overlay (mobil) */}
       <div
         aria-hidden
         onClick={onClose}
@@ -43,9 +41,12 @@ export function Sidebar({ open, onClose }: SidebarProps) {
           open ? "translate-x-0" : "-translate-x-full",
         )}
       >
-        {/* Logo */}
         <div className="flex h-20 items-center justify-between px-5">
-          <Link href="/" className="flex items-center gap-3" onClick={onClose}>
+          <Link
+            href="/dashboard"
+            className="flex items-center gap-3"
+            onClick={onClose}
+          >
             <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-400 to-brand-600 text-white shadow-sm">
               <Layers className="h-6 w-6" />
             </span>
@@ -67,12 +68,11 @@ export function Sidebar({ open, onClose }: SidebarProps) {
           </button>
         </div>
 
-        {/* Navigation — große, klare Einträge */}
         <nav className="scrollbar-thin flex-1 space-y-1.5 overflow-y-auto px-3 py-4">
           {navItems.map((item) => {
             const active =
-              item.href === "/"
-                ? pathname === "/"
+              item.href === "/dashboard"
+                ? pathname === "/dashboard"
                 : pathname.startsWith(item.href);
             const Icon = item.icon;
             return (

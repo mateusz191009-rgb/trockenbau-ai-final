@@ -1,0 +1,98 @@
+{
+  "common": {
+    "appName": "Trockenbau AI",
+    "tagline": "Prosto. Szybko."
+  },
+  "nav": {
+    "features": "Funkcje",
+    "howItWorks": "Jak to działa",
+    "login": "Logowanie",
+    "tryFree": "Wypróbuj za darmo"
+  },
+  "landing": {
+    "hero": {
+      "title": "Oferty na suche zabudowy w minuty, nie godziny",
+      "subtitle": "Prześlij zdjęcia, wymiary i opisy — oferty tworzą się automatycznie.",
+      "cta": "Wypróbuj za darmo",
+      "login": "Logowanie",
+      "trusted": "Dla profesjonalistów suchej zabudowy w Niemczech"
+    },
+    "features": {
+      "title": "Wszystko dla Twojej firmy",
+      "subtitle": "Proste narzędzia na co dzień na budowie.",
+      "items": {
+        "customers": { "title": "Zarządzanie klientami", "description": "Wszyscy klienci i kontakty w jednym miejscu." },
+        "sites": { "title": "Zarządzanie budowami", "description": "Przegląd projektów i budów." },
+        "photos": { "title": "Przesyłanie zdjęć", "description": "Zdjęcia z budowy prosto z telefonu." },
+        "ai": { "title": "Generator ofert AI", "description": "Automatyczne oferty z Twoich danych." },
+        "pdf": { "title": "Oferty PDF", "description": "Profesjonalne oferty w formacie PDF." },
+        "invoices": { "title": "Faktury", "description": "Szybkie tworzenie i wysyłanie faktur." },
+        "multilingual": { "title": "Wielojęzyczność", "description": "Aplikacja w 8 językach dla międzynarodowych zespołów." }
+      }
+    },
+    "howItWorks": {
+      "title": "Jak to działa",
+      "subtitle": "Gotowa oferta w trzech prostych krokach.",
+      "steps": {
+        "1": { "title": "Utwórz budowę", "description": "Nowy projekt z klientem i adresem." },
+        "2": { "title": "Prześlij zdjęcia i wymiary", "description": "Dane i zdjęcia z budowy na bieżąco." },
+        "3": { "title": "Oferta tworzy się automatycznie", "description": "AI tworzy ofertę — Ty sprawdzasz i wysyłasz." }
+      }
+    },
+    "screenshots": {
+      "title": "Łatwa obsługa",
+      "subtitle": "Przejrzyste i czytelne — także w drodze na budowę.",
+      "dashboard": "Panel",
+      "projects": "Projekty",
+      "offers": "Oferty"
+    },
+    "cta": {
+      "title": "Zacznij za darmo",
+      "subtitle": "Bez karty kredytowej. Konfiguracja w 2 minuty.",
+      "button": "Wypróbuj za darmo"
+    }
+  },
+  "footer": {
+    "rights": "Wszelkie prawa zastrzeżone.",
+    "impressum": "Impressum",
+    "privacy": "Ochrona danych",
+    "contact": "Kontakt"
+  },
+  "auth": {
+    "login": {
+      "title": "Logowanie",
+      "subtitle": "Witaj ponownie w Trockenbau AI",
+      "email": "E-mail",
+      "password": "Hasło",
+      "forgotPassword": "Zapomniałeś hasła?",
+      "submit": "Zaloguj się",
+      "submitting": "Logowanie…",
+      "noAccount": "Nie masz konta?",
+      "register": "Zarejestruj się"
+    },
+    "register": {
+      "title": "Rejestracja",
+      "subtitle": "Utwórz darmowe konto",
+      "email": "E-mail",
+      "password": "Hasło",
+      "passwordHint": "Minimum 6 znaków",
+      "passwordRepeat": "Powtórz hasło",
+      "submit": "Utwórz konto",
+      "submitting": "Tworzenie konta…",
+      "hasAccount": "Masz już konto?",
+      "login": "Zaloguj się",
+      "confirmationTitle": "Prawie gotowe!",
+      "confirmationText": "Wysłaliśmy e-mail na {email}. Potwierdź adres i zaloguj się.",
+      "toLogin": "Do logowania"
+    },
+    "errors": {
+      "passwordMin": "Hasło musi mieć co najmniej 6 znaków.",
+      "passwordMismatch": "Hasła nie są zgodne."
+    }
+  },
+  "legal": {
+    "impressum": { "title": "Impressum", "content": "Dane zgodnie z § 5 TMG. Pełne dane wkrótce." },
+    "privacy": { "title": "Ochrona danych", "content": "Informacje o przetwarzaniu danych osobowych wkrótce." },
+    "contact": { "title": "Kontakt", "content": "Pytania: kontakt@trockenbau-ai.de" }
+  }
+}

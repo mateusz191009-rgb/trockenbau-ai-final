@@ -1,9 +1,9 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { CheckCircle2 } from "lucide-react";
+import { Link, useRouter } from "@/i18n/navigation";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { Field } from "@/components/ui/Field";
 import { Input } from "@/components/ui/Input";
@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/store/AuthContext";
 
 export default function RegistrierenPage() {
+  const t = useTranslations("auth");
   const { registrieren } = useAuth();
   const router = useRouter();
   const [email, setEmail] = React.useState("");
@@ -25,11 +26,11 @@ export default function RegistrierenPage() {
     setFehler(null);
 
     if (passwort.length < 6) {
-      setFehler("Das Passwort muss mindestens 6 Zeichen haben.");
+      setFehler(t("errors.passwordMin"));
       return;
     }
     if (passwort !== passwort2) {
-      setFehler("Die Passwörter stimmen nicht überein.");
+      setFehler(t("errors.passwordMismatch"));
       return;
     }
 
@@ -45,22 +46,21 @@ export default function RegistrierenPage() {
       setBestaetigung(true);
       return;
     }
-    router.push("/");
+    router.push("/dashboard");
     router.refresh();
   };
 
   if (bestaetigung) {
     return (
-      <AuthCard title="Fast geschafft!">
+      <AuthCard title={t("register.confirmationTitle")}>
         <div className="flex flex-col items-center text-center">
           <CheckCircle2 className="h-14 w-14 text-emerald-500" />
           <p className="mt-4 text-base text-slate-600 dark:text-slate-300">
-            Wir haben dir eine E-Mail an <strong>{email}</strong> geschickt.
-            Bitte bestätige deine Adresse und melde dich anschließend an.
+            {t("register.confirmationText", { email })}
           </p>
           <Link href="/login" className="mt-6 w-full">
             <Button size="lg" className="w-full">
-              Zur Anmeldung
+              {t("register.toLogin")}
             </Button>
           </Link>
         </div>
@@ -70,22 +70,22 @@ export default function RegistrierenPage() {
 
   return (
     <AuthCard
-      title="Registrieren"
-      subtitle="Lege dein kostenloses Konto an"
+      title={t("register.title")}
+      subtitle={t("register.subtitle")}
       footer={
         <>
-          Schon ein Konto?{" "}
+          {t("register.hasAccount")}{" "}
           <Link
             href="/login"
             className="font-semibold text-brand-600 hover:underline dark:text-brand-400"
           >
-            Jetzt anmelden
+            {t("register.login")}
           </Link>
         </>
       }
     >
       <form onSubmit={absenden} className="space-y-5">
-        <Field label="E-Mail" htmlFor="email">
+        <Field label={t("register.email")} htmlFor="email">
           <Input
             id="email"
             type="email"
@@ -98,7 +98,11 @@ export default function RegistrierenPage() {
           />
         </Field>
 
-        <Field label="Passwort" htmlFor="passwort" hint="Mindestens 6 Zeichen">
+        <Field
+          label={t("register.password")}
+          htmlFor="passwort"
+          hint={t("register.passwordHint")}
+        >
           <Input
             id="passwort"
             type="password"
@@ -110,7 +114,7 @@ export default function RegistrierenPage() {
           />
         </Field>
 
-        <Field label="Passwort wiederholen" htmlFor="passwort2">
+        <Field label={t("register.passwordRepeat")} htmlFor="passwort2">
           <Input
             id="passwort2"
             type="password"
@@ -129,7 +133,7 @@ export default function RegistrierenPage() {
         ) : null}
 
         <Button type="submit" size="lg" className="w-full" disabled={laedt}>
-          {laedt ? "Konto wird erstellt…" : "Konto erstellen"}
+          {laedt ? t("register.submitting") : t("register.submit")}
         </Button>
       </form>
     </AuthCard>

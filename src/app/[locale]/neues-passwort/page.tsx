@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { Field } from "@/components/ui/Field";
 import { Input } from "@/components/ui/Input";
@@ -36,7 +36,7 @@ export default function NeuesPasswortPage() {
       setFehler(error);
       return;
     }
-    router.push("/");
+    router.push("/dashboard");
     router.refresh();
   };
 

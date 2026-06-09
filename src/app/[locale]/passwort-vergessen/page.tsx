@@ -1,50 +1,64 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { Link } from "@/i18n/navigation";
+import { MailCheck } from "lucide-react";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { Field } from "@/components/ui/Field";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "@/store/AuthContext";
 
-export default function LoginPage() {
-  const { anmelden } = useAuth();
-  const router = useRouter();
+export default function PasswortVergessenPage() {
+  const { passwortVergessen } = useAuth();
   const [email, setEmail] = React.useState("");
-  const [passwort, setPasswort] = React.useState("");
   const [fehler, setFehler] = React.useState<string | null>(null);
   const [laedt, setLaedt] = React.useState(false);
+  const [gesendet, setGesendet] = React.useState(false);
 
   const absenden = async (e: React.FormEvent) => {
     e.preventDefault();
     setFehler(null);
     setLaedt(true);
-    const { error } = await anmelden(email, passwort);
+    const { error } = await passwortVergessen(email);
     setLaedt(false);
     if (error) {
       setFehler(error);
       return;
     }
-    router.push("/");
-    router.refresh();
+    setGesendet(true);
   };
+
+  if (gesendet) {
+    return (
+      <AuthCard title="E-Mail unterwegs">
+        <div className="flex flex-col items-center text-center">
+          <MailCheck className="h-14 w-14 text-emerald-500" />
+          <p className="mt-4 text-base text-slate-600 dark:text-slate-300">
+            Falls ein Konto mit <strong>{email}</strong> existiert, haben wir
+            einen Link zum Zurücksetzen des Passworts geschickt.
+          </p>
+          <Link href="/login" className="mt-6 w-full">
+            <Button size="lg" className="w-full">
+              Zurück zur Anmeldung
+            </Button>
+          </Link>
+        </div>
+      </AuthCard>
+    );
+  }
 
   return (
     <AuthCard
-      title="Anmelden"
-      subtitle="Willkommen zurück bei Trockenbau AI"
+      title="Passwort vergessen"
+      subtitle="Wir senden dir einen Link zum Zurücksetzen"
       footer={
-        <>
-          Noch kein Konto?{" "}
-          <Link
-            href="/registrieren"
-            className="font-semibold text-brand-600 hover:underline dark:text-brand-400"
-          >
-            Jetzt registrieren
-          </Link>
-        </>
+        <Link
+          href="/login"
+          className="font-semibold text-brand-600 hover:underline dark:text-brand-400"
+        >
+          Zurück zur Anmeldung
+        </Link>
       }
     >
       <form onSubmit={absenden} className="space-y-5">
@@ -61,27 +75,6 @@ export default function LoginPage() {
           />
         </Field>
 
-        <Field label="Passwort" htmlFor="passwort">
-          <Input
-            id="passwort"
-            type="password"
-            value={passwort}
-            onChange={(e) => setPasswort(e.target.value)}
-            placeholder="••••••••"
-            autoComplete="current-password"
-            required
-          />
-        </Field>
-
-        <div className="text-right">
-          <Link
-            href="/passwort-vergessen"
-            className="text-sm font-semibold text-brand-600 hover:underline dark:text-brand-400"
-          >
-            Passwort vergessen?
-          </Link>
-        </div>
-
         {fehler ? (
           <p className="rounded-xl bg-red-50 p-3 text-base text-red-600 dark:bg-red-500/10 dark:text-red-400">
             {fehler}
@@ -89,7 +82,7 @@ export default function LoginPage() {
         ) : null}
 
         <Button type="submit" size="lg" className="w-full" disabled={laedt}>
-          {laedt ? "Wird angemeldet…" : "Anmelden"}
+          {laedt ? "Wird gesendet…" : "Link senden"}
         </Button>
       </form>
     </AuthCard>

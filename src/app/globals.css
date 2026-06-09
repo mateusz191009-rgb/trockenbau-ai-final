@@ -20,6 +20,10 @@
     @apply bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100;
   }
 
+  [dir="rtl"] {
+    text-align: right;
+  }
+
   /* Größere, gut lesbare Formularfelder als Standard */
   input,
   textarea,

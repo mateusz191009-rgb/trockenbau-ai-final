@@ -1,17 +1,21 @@
 "use client";
 
 import * as React from "react";
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/i18n/navigation";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Topbar } from "@/components/layout/Topbar";
 
-// Seiten ohne Sidebar/Topbar (Anmeldung etc.).
+// Seiten ohne Sidebar/Topbar (Landing, Anmeldung, Rechtliches).
 const OHNE_RAHMEN = [
+  "/",
   "/login",
   "/registrieren",
   "/passwort-vergessen",
   "/neues-passwort",
   "/auth",
+  "/impressum",
+  "/datenschutz",
+  "/kontakt",
 ];
 
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -22,7 +26,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     (p) => pathname === p || pathname.startsWith(`${p}/`),
   );
 
-  // Mobiles Menü bei Seitenwechsel schließen.
   React.useEffect(() => {
     setSidebarOpen(false);
   }, [pathname]);

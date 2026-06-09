@@ -1,0 +1,98 @@
+{
+  "common": {
+    "appName": "Trockenbau AI",
+    "tagline": "Basit. Hızlı."
+  },
+  "nav": {
+    "features": "Özellikler",
+    "howItWorks": "Nasıl çalışır",
+    "login": "Giriş",
+    "tryFree": "Ücretsiz dene"
+  },
+  "landing": {
+    "hero": {
+      "title": "Alçıpan teklifleri saatler değil, dakikalar içinde",
+      "subtitle": "Fotoğraf, ölçü ve açıklamaları yükleyin — teklifler otomatik oluşsun.",
+      "cta": "Ücretsiz dene",
+      "login": "Giriş",
+      "trusted": "Almanya'daki alçıpan profesyonelleri için"
+    },
+    "features": {
+      "title": "İşletmeniz için her şey",
+      "subtitle": "Şantiyede günlük kullanım için basit araçlar.",
+      "items": {
+        "customers": { "title": "Müşteri yönetimi", "description": "Tüm müşteriler ve kişiler tek yerde." },
+        "sites": { "title": "Şantiye yönetimi", "description": "Projeler ve şantiyeler düzenli yönetim." },
+        "photos": { "title": "Fotoğraf yükleme", "description": "Şantiye fotoğrafları doğrudan telefondan." },
+        "ai": { "title": "Yapay zeka teklif oluşturucu", "description": "Verilerinizden otomatik teklifler." },
+        "pdf": { "title": "PDF teklifler", "description": "Profesyonel teklifleri PDF olarak dışa aktarın." },
+        "invoices": { "title": "Faturalar", "description": "Faturaları hızlıca oluşturun ve gönderin." },
+        "multilingual": { "title": "Çok dilli", "description": "Uluslararası ekipler için 8 dilde uygulama." }
+      }
+    },
+    "howItWorks": {
+      "title": "Nasıl çalışır",
+      "subtitle": "Üç basit adımda hazır teklif.",
+      "steps": {
+        "1": { "title": "Şantiye oluştur", "description": "Müşteri ve adresle yeni proje." },
+        "2": { "title": "Fotoğraf ve ölçü yükle", "description": "Şantiye verilerini ve görselleri kaydedin." },
+        "3": { "title": "Teklif otomatik oluşsun", "description": "Yapay zeka teklifi oluşturur — siz kontrol edip gönderin." }
+      }
+    },
+    "screenshots": {
+      "title": "Kullanımı kolay",
+      "subtitle": "Net ve anlaşılır — şantiyede de.",
+      "dashboard": "Panel",
+      "projects": "Projeler",
+      "offers": "Teklifler"
+    },
+    "cta": {
+      "title": "Şimdi ücretsiz başlayın",
+      "subtitle": "Kredi kartı gerekmez. 2 dakikada kurulum.",
+      "button": "Ücretsiz dene"
+    }
+  },
+  "footer": {
+    "rights": "Tüm hakları saklıdır.",
+    "impressum": "Künye",
+    "privacy": "Gizlilik",
+    "contact": "İletişim"
+  },
+  "auth": {
+    "login": {
+      "title": "Giriş",
+      "subtitle": "Trockenbau AI'ya tekrar hoş geldiniz",
+      "email": "E-posta",
+      "password": "Şifre",
+      "forgotPassword": "Şifrenizi mi unuttunuz?",
+      "submit": "Giriş yap",
+      "submitting": "Giriş yapılıyor…",
+      "noAccount": "Hesabınız yok mu?",
+      "register": "Kayıt ol"
+    },
+    "register": {
+      "title": "Kayıt ol",
+      "subtitle": "Ücretsiz hesabınızı oluşturun",
+      "email": "E-posta",
+      "password": "Şifre",
+      "passwordHint": "En az 6 karakter",
+      "passwordRepeat": "Şifreyi tekrarla",
+      "submit": "Hesap oluştur",
+      "submitting": "Hesap oluşturuluyor…",
+      "hasAccount": "Zaten hesabınız var mı?",
+      "login": "Giriş yap",
+      "confirmationTitle": "Neredeyse tamam!",
+      "confirmationText": "{email} adresine bir e-posta gönderdik. Adresinizi onaylayın ve giriş yapın.",
+      "toLogin": "Girişe git"
+    },
+    "errors": {
+      "passwordMin": "Şifre en az 6 karakter olmalıdır.",
+      "passwordMismatch": "Şifreler eşleşmiyor."
+    }
+  },
+  "legal": {
+    "impressum": { "title": "Künye", "content": "§ 5 TMG uyarınca bilgiler. Tam bilgiler yakında." },
+    "privacy": { "title": "Gizlilik", "content": "Kişisel veri işleme bilgileri yakında." },
+    "contact": { "title": "İletişim", "content": "Sorularınız: kontakt@trockenbau-ai.de" }
+  }
+}

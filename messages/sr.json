@@ -1,0 +1,98 @@
+{
+  "common": {
+    "appName": "Trockenbau AI",
+    "tagline": "Jednostavno. Brzo."
+  },
+  "nav": {
+    "features": "Funkcije",
+    "howItWorks": "Kako radi",
+    "login": "Prijava",
+    "tryFree": "Probaj besplatno"
+  },
+  "landing": {
+    "hero": {
+      "title": "Ponude za suvu gradnju za minute, ne sate",
+      "subtitle": "Otpremite fotografije, mere i opise — ponude se automatski kreiraju.",
+      "cta": "Probaj besplatno",
+      "login": "Prijava",
+      "trusted": "Za profesionalce suve gradnje u Nemačkoj"
+    },
+    "features": {
+      "title": "Sve za vaš posao",
+      "subtitle": "Jednostavni alati za svakodnevni rad na gradilištu.",
+      "items": {
+        "customers": { "title": "Upravljanje klijentima", "description": "Svi klijenti i kontakti na jednom mestu." },
+        "sites": { "title": "Upravljanje gradilištima", "description": "Projekti i gradilišta pregledno organizovani." },
+        "photos": { "title": "Otpremanje fotografija", "description": "Fotografije sa gradilišta direktno sa telefona." },
+        "ai": { "title": "AI generator ponuda", "description": "Automatske ponude iz vaših podataka." },
+        "pdf": { "title": "PDF ponude", "description": "Profesionalne ponude u PDF formatu." },
+        "invoices": { "title": "Fakture", "description": "Brzo kreiranje i slanje faktura." },
+        "multilingual": { "title": "Višejezičnost", "description": "Aplikacija na 8 jezika za međunarodne timove." }
+      }
+    },
+    "howItWorks": {
+      "title": "Kako radi",
+      "subtitle": "Gotova ponuda u tri jednostavna koraka.",
+      "steps": {
+        "1": { "title": "Kreiraj gradilište", "description": "Novi projekat sa klijentom i adresom." },
+        "2": { "title": "Otpremi fotografije i mere", "description": "Podaci i slike sa gradilišta u realnom vremenu." },
+        "3": { "title": "Ponuda se automatski kreira", "description": "AI kreira ponudu — vi proverite i pošaljete." }
+      }
+    },
+    "screenshots": {
+      "title": "Lako za korišćenje",
+      "subtitle": "Pregledno i jasno — i na gradilištu.",
+      "dashboard": "Kontrolna tabla",
+      "projects": "Projekti",
+      "offers": "Ponude"
+    },
+    "cta": {
+      "title": "Počnite besplatno sada",
+      "subtitle": "Kreditna kartica nije potrebna. Podešavanje za 2 minuta.",
+      "button": "Probaj besplatno"
+    }
+  },
+  "footer": {
+    "rights": "Sva prava zadržana.",
+    "impressum": "Impresum",
+    "privacy": "Zaštita podataka",
+    "contact": "Kontakt"
+  },
+  "auth": {
+    "login": {
+      "title": "Prijava",
+      "subtitle": "Dobrodošli nazad u Trockenbau AI",
+      "email": "E-pošta",
+      "password": "Lozinka",
+      "forgotPassword": "Zaboravili ste lozinku?",
+      "submit": "Prijavi se",
+      "submitting": "Prijavljivanje…",
+      "noAccount": "Nemate nalog?",
+      "register": "Registrujte se"
+    },
+    "register": {
+      "title": "Registracija",
+      "subtitle": "Kreirajte besplatan nalog",
+      "email": "E-pošta",
+      "password": "Lozinka",
+      "passwordHint": "Najmanje 6 karaktera",
+      "passwordRepeat": "Ponovite lozinku",
+      "submit": "Kreiraj nalog",
+      "submitting": "Kreiranje naloga…",
+      "hasAccount": "Već imate nalog?",
+      "login": "Prijavi se",
+      "confirmationTitle": "Skoro gotovo!",
+      "confirmationText": "Poslali smo e-poštu na {email}. Potvrdite adresu i prijavite se.",
+      "toLogin": "Na prijavu"
+    },
+    "errors": {
+      "passwordMin": "Lozinka mora imati najmanje 6 karaktera.",
+      "passwordMismatch": "Lozinke se ne poklapaju."
+    }
+  },
+  "legal": {
+    "impressum": { "title": "Impresum", "content": "Podaci prema § 5 TMG. Potpuni podaci uskoro." },
+    "privacy": { "title": "Zaštita podataka", "content": "Informacije o obradi ličnih podataka uskoro." },
+    "contact": { "title": "Kontakt", "content": "Pitanja: kontakt@trockenbau-ai.de" }
+  }
+}

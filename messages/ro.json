@@ -1,0 +1,98 @@
+{
+  "common": {
+    "appName": "Trockenbau AI",
+    "tagline": "Simplu. Rapid."
+  },
+  "nav": {
+    "features": "Funcții",
+    "howItWorks": "Cum funcționează",
+    "login": "Autentificare",
+    "tryFree": "Testează gratuit"
+  },
+  "landing": {
+    "hero": {
+      "title": "Oferte pentru construcții uscate în minute, nu ore",
+      "subtitle": "Încarcă fotografii, măsuri și descrieri — ofertele se creează automat.",
+      "cta": "Testează gratuit",
+      "login": "Autentificare",
+      "trusted": "Pentru profesioniști în construcții uscate din Germania"
+    },
+    "features": {
+      "title": "Tot ce ai nevoie pentru afacerea ta",
+      "subtitle": "Instrumente simple pentru șantier.",
+      "items": {
+        "customers": { "title": "Gestionare clienți", "description": "Toți clienții și contactele într-un singur loc." },
+        "sites": { "title": "Gestionare șantiere", "description": "Proiecte și șantiere organizate clar." },
+        "photos": { "title": "Încărcare fotografii", "description": "Fotografii de pe șantier direct de pe telefon." },
+        "ai": { "title": "Generator oferte AI", "description": "Oferte automate din datele tale." },
+        "pdf": { "title": "Oferte PDF", "description": "Oferte profesionale exportate ca PDF." },
+        "invoices": { "title": "Facturi", "description": "Creează și trimite facturi rapid." },
+        "multilingual": { "title": "Multilingv", "description": "Aplicație în 8 limbi pentru echipe internaționale." }
+      }
+    },
+    "howItWorks": {
+      "title": "Cum funcționează",
+      "subtitle": "Ofertă gata în trei pași simpli.",
+      "steps": {
+        "1": { "title": "Creează șantierul", "description": "Proiect nou cu client și adresă." },
+        "2": { "title": "Încarcă fotografii și măsuri", "description": "Date și imagini de pe șantier în timp real." },
+        "3": { "title": "Ofertă creată automat", "description": "AI creează oferta — tu verifici și trimiți." }
+      }
+    },
+    "screenshots": {
+      "title": "Ușor de folosit",
+      "subtitle": "Clar și simplu — și pe șantier.",
+      "dashboard": "Panou",
+      "projects": "Proiecte",
+      "offers": "Oferte"
+    },
+    "cta": {
+      "title": "Începe gratuit acum",
+      "subtitle": "Fără card de credit. Configurare în 2 minute.",
+      "button": "Testează gratuit"
+    }
+  },
+  "footer": {
+    "rights": "Toate drepturile rezervate.",
+    "impressum": "Impressum",
+    "privacy": "Confidențialitate",
+    "contact": "Contact"
+  },
+  "auth": {
+    "login": {
+      "title": "Autentificare",
+      "subtitle": "Bine ai revenit la Trockenbau AI",
+      "email": "E-mail",
+      "password": "Parolă",
+      "forgotPassword": "Ai uitat parola?",
+      "submit": "Autentificare",
+      "submitting": "Se autentifică…",
+      "noAccount": "Nu ai cont?",
+      "register": "Înregistrează-te"
+    },
+    "register": {
+      "title": "Înregistrare",
+      "subtitle": "Creează-ți contul gratuit",
+      "email": "E-mail",
+      "password": "Parolă",
+      "passwordHint": "Minimum 6 caractere",
+      "passwordRepeat": "Repetă parola",
+      "submit": "Creează cont",
+      "submitting": "Se creează contul…",
+      "hasAccount": "Ai deja cont?",
+      "login": "Autentificare",
+      "confirmationTitle": "Aproape gata!",
+      "confirmationText": "Am trimis un e-mail la {email}. Confirmă adresa și autentifică-te.",
+      "toLogin": "La autentificare"
+    },
+    "errors": {
+      "passwordMin": "Parola trebuie să aibă cel puțin 6 caractere.",
+      "passwordMismatch": "Parolele nu se potrivesc."
+    }
+  },
+  "legal": {
+    "impressum": { "title": "Impressum", "content": "Date conform § 5 TMG. Date complete în curând." },
+    "privacy": { "title": "Confidențialitate", "content": "Informații despre prelucrarea datelor în curând." },
+    "contact": { "title": "Contact", "content": "Întrebări: kontakt@trockenbau-ai.de" }
+  }
+}

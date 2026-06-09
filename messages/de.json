@@ -1,0 +1,137 @@
+{
+  "common": {
+    "appName": "Trockenbau AI",
+    "tagline": "Einfach. Schnell."
+  },
+  "nav": {
+    "features": "Funktionen",
+    "howItWorks": "So funktioniert's",
+    "login": "Login",
+    "tryFree": "Kostenlos testen"
+  },
+  "landing": {
+    "hero": {
+      "title": "Angebote für Trockenbau in Minuten statt Stunden",
+      "subtitle": "Fotos, Maße und Beschreibungen hochladen und automatisch Angebote erstellen.",
+      "cta": "Kostenlos testen",
+      "login": "Login",
+      "trusted": "Für Trockenbau-Profis in Deutschland"
+    },
+    "features": {
+      "title": "Alles für Ihren Betrieb",
+      "subtitle": "Einfache Tools für den Alltag auf der Baustelle.",
+      "items": {
+        "customers": {
+          "title": "Kundenverwaltung",
+          "description": "Alle Kunden und Kontakte an einem Ort."
+        },
+        "sites": {
+          "title": "Baustellenverwaltung",
+          "description": "Projekte und Baustellen übersichtlich verwalten."
+        },
+        "photos": {
+          "title": "Foto Upload",
+          "description": "Baustellenfotos direkt vom Handy hochladen."
+        },
+        "ai": {
+          "title": "KI-Angebotsgenerator",
+          "description": "Automatische Angebote aus Ihren Daten."
+        },
+        "pdf": {
+          "title": "PDF Angebote",
+          "description": "Professionelle Angebote als PDF exportieren."
+        },
+        "invoices": {
+          "title": "Rechnungen",
+          "description": "Rechnungen schnell erstellen und versenden."
+        },
+        "multilingual": {
+          "title": "Mehrsprachigkeit",
+          "description": "App in 8 Sprachen für internationale Teams."
+        }
+      }
+    },
+    "howItWorks": {
+      "title": "So funktioniert's",
+      "subtitle": "In drei einfachen Schritten zum fertigen Angebot.",
+      "steps": {
+        "1": {
+          "title": "Baustelle anlegen",
+          "description": "Neues Projekt mit Kunde und Adresse erstellen."
+        },
+        "2": {
+          "title": "Fotos und Maße hochladen",
+          "description": "Baustellendaten und Bilder direkt erfassen."
+        },
+        "3": {
+          "title": "Angebot automatisch erstellen",
+          "description": "KI erstellt Ihr Angebot – Sie prüfen und senden."
+        }
+      }
+    },
+    "screenshots": {
+      "title": "Einfach zu bedienen",
+      "subtitle": "Übersichtlich und klar – auch unterwegs auf der Baustelle.",
+      "dashboard": "Dashboard",
+      "projects": "Projekte",
+      "offers": "Angebote"
+    },
+    "cta": {
+      "title": "Jetzt kostenlos starten",
+      "subtitle": "Keine Kreditkarte nötig. In 2 Minuten eingerichtet.",
+      "button": "Kostenlos testen"
+    }
+  },
+  "footer": {
+    "rights": "Alle Rechte vorbehalten.",
+    "impressum": "Impressum",
+    "privacy": "Datenschutz",
+    "contact": "Kontakt"
+  },
+  "auth": {
+    "login": {
+      "title": "Anmelden",
+      "subtitle": "Willkommen zurück bei Trockenbau AI",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "forgotPassword": "Passwort vergessen?",
+      "submit": "Anmelden",
+      "submitting": "Wird angemeldet…",
+      "noAccount": "Noch kein Konto?",
+      "register": "Jetzt registrieren"
+    },
+    "register": {
+      "title": "Registrieren",
+      "subtitle": "Lege dein kostenloses Konto an",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "passwordHint": "Mindestens 6 Zeichen",
+      "passwordRepeat": "Passwort wiederholen",
+      "submit": "Konto erstellen",
+      "submitting": "Konto wird erstellt…",
+      "hasAccount": "Schon ein Konto?",
+      "login": "Jetzt anmelden",
+      "confirmationTitle": "Fast geschafft!",
+      "confirmationText": "Wir haben dir eine E-Mail an {email} geschickt. Bitte bestätige deine Adresse und melde dich anschließend an.",
+      "toLogin": "Zur Anmeldung"
+    },
+    "errors": {
+      "passwordMin": "Das Passwort muss mindestens 6 Zeichen haben.",
+      "passwordMismatch": "Die Passwörter stimmen nicht überein."
+    }
+  },
+  "legal": {
+    "impressum": {
+      "title": "Impressum",
+      "content": "Angaben gemäß § 5 TMG. Vollständige Impressumsdaten folgen in Kürze."
+    },
+    "privacy": {
+      "title": "Datenschutz",
+      "content": "Informationen zur Verarbeitung personenbezogener Daten folgen in Kürze."
+    },
+    "contact": {
+      "title": "Kontakt",
+      "content": "Bei Fragen erreichen Sie uns unter kontakt@trockenbau-ai.de"
+    }
+  }
+}
