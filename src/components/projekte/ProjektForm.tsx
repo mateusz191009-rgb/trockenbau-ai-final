@@ -14,7 +14,6 @@ interface ProjektFormProps {
   open: boolean;
   onClose: () => void;
   projekt: Projekt | null;
-  /** Kunde vorbelegen (z. B. von der Kundenseite aus). */
   vorgabeKundeId?: string;
 }
 
@@ -25,6 +24,7 @@ interface FormWerte {
   beschreibung: string;
   status: ProjektStatus;
   startdatum: string;
+  enddatum: string;
 }
 
 const leer: FormWerte = {
@@ -34,6 +34,7 @@ const leer: FormWerte = {
   beschreibung: "",
   status: "anfrage",
   startdatum: "",
+  enddatum: "",
 };
 
 export function ProjektForm({
@@ -44,9 +45,12 @@ export function ProjektForm({
 }: ProjektFormProps) {
   const { kunden, projektAnlegen, projektAktualisieren } = useData();
   const [werte, setWerte] = React.useState<FormWerte>(leer);
+  const [laedt, setLaedt] = React.useState(false);
+  const [fehler, setFehler] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     if (!open) return;
+    setFehler(null);
     if (projekt) {
       setWerte({
         projektname: projekt.projektname,
@@ -55,26 +59,40 @@ export function ProjektForm({
         beschreibung: projekt.beschreibung,
         status: projekt.status,
         startdatum: projekt.startdatum ? projekt.startdatum.slice(0, 10) : "",
+        enddatum: projekt.enddatum ? projekt.enddatum.slice(0, 10) : "",
       });
     } else {
       setWerte({ ...leer, kundeId: vorgabeKundeId ?? "" });
     }
   }, [open, projekt, vorgabeKundeId]);
 
-  const speichern = (e: React.FormEvent) => {
+  const speichern = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!werte.projektname.trim()) return;
-
-    if (projekt) {
-      projektAktualisieren(projekt.id, werte);
-    } else {
-      projektAnlegen({
-        ...werte,
-        masse: { wandflaeche: "", deckenflaeche: "", raumhoehe: "", sonstige: "" },
-        notizen: "",
-      });
+    setLaedt(true);
+    setFehler(null);
+    try {
+      if (projekt) {
+        await projektAktualisieren(projekt.id, werte);
+      } else {
+        await projektAnlegen({
+          ...werte,
+          masse: {
+            wandflaeche: "",
+            deckenflaeche: "",
+            raumhoehe: "",
+            sonstige: "",
+          },
+          notizen: "",
+        });
+      }
+      onClose();
+    } catch (err) {
+      console.error(err);
+      setFehler("Speichern fehlgeschlagen. Bitte erneut versuchen.");
+    } finally {
+      setLaedt(false);
     }
-    onClose();
   };
 
   return (
@@ -88,8 +106,8 @@ export function ProjektForm({
           <Button variant="outline" size="lg" onClick={onClose} type="button">
             Abbrechen
           </Button>
-          <Button size="lg" type="submit" form="projekt-form">
-            Speichern
+          <Button size="lg" type="submit" form="projekt-form" disabled={laedt}>
+            {laedt ? "Speichern…" : "Speichern"}
           </Button>
         </>
       }
@@ -156,26 +174,26 @@ export function ProjektForm({
           />
         </Field>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-          <Field label="Status" htmlFor="status">
-            <Select
-              id="status"
-              value={werte.status}
-              onChange={(e) =>
-                setWerte((w) => ({
-                  ...w,
-                  status: e.target.value as ProjektStatus,
-                }))
-              }
-            >
-              {projektStatusReihenfolge.map((s) => (
-                <option key={s} value={s}>
-                  {projektStatusMeta[s].label}
-                </option>
-              ))}
-            </Select>
-          </Field>
+        <Field label="Status" htmlFor="status">
+          <Select
+            id="status"
+            value={werte.status}
+            onChange={(e) =>
+              setWerte((w) => ({
+                ...w,
+                status: e.target.value as ProjektStatus,
+              }))
+            }
+          >
+            {projektStatusReihenfolge.map((s) => (
+              <option key={s} value={s}>
+                {projektStatusMeta[s].label}
+              </option>
+            ))}
+          </Select>
+        </Field>
 
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <Field label="Startdatum" htmlFor="startdatum">
             <Input
               id="startdatum"
@@ -186,7 +204,23 @@ export function ProjektForm({
               }
             />
           </Field>
+          <Field label="Enddatum" htmlFor="enddatum">
+            <Input
+              id="enddatum"
+              type="date"
+              value={werte.enddatum}
+              onChange={(e) =>
+                setWerte((w) => ({ ...w, enddatum: e.target.value }))
+              }
+            />
+          </Field>
         </div>
+
+        {fehler ? (
+          <p className="rounded-xl bg-red-50 p-3 text-base text-red-600 dark:bg-red-500/10 dark:text-red-400">
+            {fehler}
+          </p>
+        ) : null}
       </form>
     </Modal>
   );

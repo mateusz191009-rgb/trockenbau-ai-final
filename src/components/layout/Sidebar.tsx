@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Layers, X } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Layers, X, LogOut } from "lucide-react";
 import { navItems } from "@/lib/navigation";
+import { useAuth } from "@/store/AuthContext";
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
@@ -13,6 +14,14 @@ interface SidebarProps {
 
 export function Sidebar({ open, onClose }: SidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const { abmelden } = useAuth();
+
+  const ausloggen = async () => {
+    await abmelden();
+    router.push("/login");
+    router.refresh();
+  };
 
   return (
     <>
@@ -85,8 +94,14 @@ export function Sidebar({ open, onClose }: SidebarProps) {
           })}
         </nav>
 
-        <div className="px-5 py-4 text-xs text-slate-400">
-          Version 1.0
+        <div className="border-t border-slate-100 p-3 dark:border-slate-800">
+          <button
+            onClick={ausloggen}
+            className="flex w-full items-center gap-3.5 rounded-2xl px-4 py-3.5 text-base font-semibold text-slate-700 transition-colors hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+          >
+            <LogOut className="h-6 w-6 shrink-0" />
+            Abmelden
+          </button>
         </div>
       </aside>
     </>

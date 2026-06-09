@@ -1,16 +1,16 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import {
   Sun,
   Moon,
   Monitor,
   Building2,
-  Database,
+  UserCircle,
   Check,
-  RefreshCw,
-  Trash2,
+  LogOut,
 } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import {
@@ -23,8 +23,8 @@ import {
 import { Field } from "@/components/ui/Field";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
-import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { useData } from "@/store/DataContext";
+import { useAuth } from "@/store/AuthContext";
 import { cn } from "@/lib/utils";
 
 export default function EinstellungenPage() {
@@ -32,17 +32,12 @@ export default function EinstellungenPage() {
   const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => setMounted(true), []);
 
-  const {
-    firmendaten,
-    firmendatenSpeichern,
-    beispieldatenLaden,
-    alleDatenLoeschen,
-  } = useData();
+  const router = useRouter();
+  const { user, abmelden } = useAuth();
+  const { firmendaten, firmendatenSpeichern } = useData();
 
   const [werte, setWerte] = React.useState(firmendaten);
   const [gespeichert, setGespeichert] = React.useState(false);
-  const [resetOffen, setResetOffen] = React.useState(false);
-  const [seedOffen, setSeedOffen] = React.useState(false);
 
   React.useEffect(() => setWerte(firmendaten), [firmendaten]);
 
@@ -51,6 +46,12 @@ export default function EinstellungenPage() {
     firmendatenSpeichern(werte);
     setGespeichert(true);
     window.setTimeout(() => setGespeichert(false), 2500);
+  };
+
+  const ausloggen = async () => {
+    await abmelden();
+    router.push("/login");
+    router.refresh();
   };
 
   const themen = [
@@ -160,66 +161,34 @@ export default function EinstellungenPage() {
         </CardContent>
       </Card>
 
-      {/* Daten */}
+      {/* Konto */}
       <Card>
         <CardHeader>
-          <div>
-            <CardTitle className="flex items-center gap-2.5 text-lg">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
-                <Database className="h-5 w-5" />
-              </span>
-              Daten
-            </CardTitle>
-            <CardDescription className="mt-1">
-              Alle Daten werden lokal auf diesem Gerät gespeichert.
-            </CardDescription>
-          </div>
+          <CardTitle className="flex items-center gap-2.5 text-lg">
+            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+              <UserCircle className="h-5 w-5" />
+            </span>
+            Konto
+          </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
-          <Button
-            variant="outline"
-            size="lg"
-            className="w-full sm:w-auto"
-            onClick={() => setSeedOffen(true)}
-          >
-            <RefreshCw className="h-5 w-5" />
-            Beispieldaten laden
-          </Button>
+        <CardContent className="space-y-4">
+          <div>
+            <p className="text-sm text-slate-400">Angemeldet als</p>
+            <p className="text-base font-semibold text-slate-900 dark:text-white">
+              {user?.email ?? "—"}
+            </p>
+          </div>
           <Button
             variant="danger"
             size="lg"
             className="w-full sm:w-auto"
-            onClick={() => setResetOffen(true)}
+            onClick={ausloggen}
           >
-            <Trash2 className="h-5 w-5" />
-            Alle Daten löschen
+            <LogOut className="h-5 w-5" />
+            Abmelden
           </Button>
         </CardContent>
       </Card>
-
-      <ConfirmDialog
-        open={seedOffen}
-        title="Beispieldaten laden?"
-        message="Dadurch werden Ihre aktuellen Daten durch Beispieldaten ersetzt."
-        confirmLabel="Beispieldaten laden"
-        onCancel={() => setSeedOffen(false)}
-        onConfirm={() => {
-          beispieldatenLaden();
-          setSeedOffen(false);
-        }}
-      />
-
-      <ConfirmDialog
-        open={resetOffen}
-        title="Wirklich alle Daten löschen?"
-        message="Alle Kunden, Projekte und Dateien werden unwiderruflich gelöscht."
-        confirmLabel="Alles löschen"
-        onCancel={() => setResetOffen(false)}
-        onConfirm={() => {
-          alleDatenLoeschen();
-          setResetOffen(false);
-        }}
-      />
     </div>
   );
 }

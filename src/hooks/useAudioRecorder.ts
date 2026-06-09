@@ -99,13 +99,3 @@ export function useAudioRecorder(
 
   return { unterstuetzt, laeuft, dauer, fehler, starten, stoppen, abbrechen };
 }
-
-/** Wandelt einen Blob/File in eine Base64-Data-URL um. */
-export function dateiZuDataUrl(datei: Blob): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = () => reject(new Error("Datei konnte nicht gelesen werden"));
-    reader.readAsDataURL(datei);
-  });
-}

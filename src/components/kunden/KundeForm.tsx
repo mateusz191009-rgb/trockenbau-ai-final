@@ -26,10 +26,12 @@ const leer = {
 export function KundeForm({ open, onClose, kunde }: KundeFormProps) {
   const { kundeAnlegen, kundeAktualisieren } = useData();
   const [werte, setWerte] = React.useState(leer);
+  const [laedt, setLaedt] = React.useState(false);
+  const [fehler, setFehler] = React.useState<string | null>(null);
 
-  // Formular füllen, wenn ein Kunde bearbeitet wird.
   React.useEffect(() => {
     if (open) {
+      setFehler(null);
       setWerte(
         kunde
           ? {
@@ -45,16 +47,26 @@ export function KundeForm({ open, onClose, kunde }: KundeFormProps) {
     }
   }, [open, kunde]);
 
-  const setFeld = (feld: keyof typeof leer) => (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => setWerte((w) => ({ ...w, [feld]: e.target.value }));
+  const setFeld =
+    (feld: keyof typeof leer) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setWerte((w) => ({ ...w, [feld]: e.target.value }));
 
-  const speichern = (e: React.FormEvent) => {
+  const speichern = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!werte.firmenname.trim()) return;
-    if (kunde) kundeAktualisieren(kunde.id, werte);
-    else kundeAnlegen(werte);
-    onClose();
+    setLaedt(true);
+    setFehler(null);
+    try {
+      if (kunde) await kundeAktualisieren(kunde.id, werte);
+      else await kundeAnlegen(werte);
+      onClose();
+    } catch (err) {
+      console.error(err);
+      setFehler("Speichern fehlgeschlagen. Bitte erneut versuchen.");
+    } finally {
+      setLaedt(false);
+    }
   };
 
   return (
@@ -68,8 +80,8 @@ export function KundeForm({ open, onClose, kunde }: KundeFormProps) {
           <Button variant="outline" size="lg" onClick={onClose} type="button">
             Abbrechen
           </Button>
-          <Button size="lg" type="submit" form="kunde-form">
-            Speichern
+          <Button size="lg" type="submit" form="kunde-form" disabled={laedt}>
+            {laedt ? "Speichern…" : "Speichern"}
           </Button>
         </>
       }
@@ -132,6 +144,12 @@ export function KundeForm({ open, onClose, kunde }: KundeFormProps) {
             placeholder="Wichtige Infos zum Kunden…"
           />
         </Field>
+
+        {fehler ? (
+          <p className="rounded-xl bg-red-50 p-3 text-base text-red-600 dark:bg-red-500/10 dark:text-red-400">
+            {fehler}
+          </p>
+        ) : null}
       </form>
     </Modal>
   );

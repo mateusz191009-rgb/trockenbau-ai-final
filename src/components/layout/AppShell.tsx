@@ -5,14 +5,31 @@ import { usePathname } from "next/navigation";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Topbar } from "@/components/layout/Topbar";
 
+// Seiten ohne Sidebar/Topbar (Anmeldung etc.).
+const OHNE_RAHMEN = [
+  "/login",
+  "/registrieren",
+  "/passwort-vergessen",
+  "/neues-passwort",
+  "/auth",
+];
+
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const pathname = usePathname();
 
-  // Close the mobile drawer whenever the route changes.
+  const ohneRahmen = OHNE_RAHMEN.some(
+    (p) => pathname === p || pathname.startsWith(`${p}/`),
+  );
+
+  // Mobiles Menü bei Seitenwechsel schließen.
   React.useEffect(() => {
     setSidebarOpen(false);
   }, [pathname]);
+
+  if (ohneRahmen) {
+    return <>{children}</>;
+  }
 
   return (
     <div className="min-h-screen">

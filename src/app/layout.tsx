@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { AuthProvider } from "@/store/AuthContext";
 import { DataProvider } from "@/store/DataContext";
 import { AppShell } from "@/components/layout/AppShell";
 import "./globals.css";
@@ -32,9 +33,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <DataProvider>
-            <AppShell>{children}</AppShell>
-          </DataProvider>
+          <AuthProvider>
+            <DataProvider>
+              <AppShell>{children}</AppShell>
+            </DataProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

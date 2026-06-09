@@ -4,19 +4,18 @@ import * as React from "react";
 import { Mic, Square, Upload, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { useData } from "@/store/DataContext";
-import { useAudioRecorder, dateiZuDataUrl } from "@/hooks/useAudioRecorder";
-import { erkenneDateiTyp } from "@/lib/status";
+import { useAudioRecorder } from "@/hooks/useAudioRecorder";
 import { cn } from "@/lib/utils";
 
 interface DateiUploadProps {
   projektId: string;
 }
 
-// Großzügiges Limit, damit der lokale Speicher (localStorage) nicht überläuft.
-const MAX_BYTES = 8 * 1024 * 1024; // 8 MB
+// Begrenzung, damit Uploads zuverlässig durchlaufen.
+const MAX_BYTES = 25 * 1024 * 1024; // 25 MB
 
 export function DateiUpload({ projektId }: DateiUploadProps) {
-  const { dateiHinzufuegen } = useData();
+  const { dateiHochladen } = useData();
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [laedt, setLaedt] = React.useState(false);
   const [hinweis, setHinweis] = React.useState<string | null>(null);
@@ -25,22 +24,12 @@ export function DateiUpload({ projektId }: DateiUploadProps) {
   const speichereBlob = React.useCallback(
     async (datei: Blob, name: string) => {
       if (datei.size > MAX_BYTES) {
-        setHinweis(
-          `„${name}“ ist zu groß (max. 8 MB). Bitte kleinere Datei wählen.`,
-        );
+        setHinweis(`„${name}“ ist zu groß (max. 25 MB).`);
         return;
       }
-      const dataUrl = await dateiZuDataUrl(datei);
-      dateiHinzufuegen({
-        projektId,
-        name,
-        typ: erkenneDateiTyp(datei.type, name),
-        mimeType: datei.type || "application/octet-stream",
-        groesse: datei.size,
-        dataUrl,
-      });
+      await dateiHochladen(projektId, datei, name);
     },
-    [dateiHinzufuegen, projektId],
+    [dateiHochladen, projektId],
   );
 
   const verarbeite = React.useCallback(
@@ -51,8 +40,9 @@ export function DateiUpload({ projektId }: DateiUploadProps) {
         for (const f of Array.from(dateien)) {
           await speichereBlob(f, f.name);
         }
-      } catch {
-        setHinweis("Beim Speichern ist ein Fehler aufgetreten.");
+      } catch (fehler) {
+        console.error(fehler);
+        setHinweis("Beim Hochladen ist ein Fehler aufgetreten.");
       } finally {
         setLaedt(false);
       }
@@ -62,9 +52,13 @@ export function DateiUpload({ projektId }: DateiUploadProps) {
 
   const recorder = useAudioRecorder(async (blob) => {
     setLaedt(true);
+    setHinweis(null);
     try {
       const name = `Sprachnachricht ${new Date().toLocaleString("de-DE")}.webm`;
       await speichereBlob(blob, name);
+    } catch (fehler) {
+      console.error(fehler);
+      setHinweis("Die Sprachnachricht konnte nicht gespeichert werden.");
     } finally {
       setLaedt(false);
     }
@@ -118,13 +112,14 @@ export function DateiUpload({ projektId }: DateiUploadProps) {
         />
       </div>
 
-      {/* Sprachnachricht aufnehmen */}
+      {/* Datei auswählen + Sprachnachricht */}
       <div className="flex flex-col gap-3 sm:flex-row">
         <Button
           type="button"
           size="lg"
           variant="outline"
           className="flex-1"
+          disabled={laedt}
           onClick={() => inputRef.current?.click()}
         >
           <Upload className="h-5 w-5" />
@@ -138,7 +133,7 @@ export function DateiUpload({ projektId }: DateiUploadProps) {
             variant="outline"
             className="flex-1"
             onClick={recorder.starten}
-            disabled={!recorder.unterstuetzt}
+            disabled={!recorder.unterstuetzt || laedt}
           >
             <Mic className="h-5 w-5" />
             Sprachnachricht aufnehmen

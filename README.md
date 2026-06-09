@@ -1,67 +1,97 @@
 # Trockenbau AI
 
-Eine einfache Verwaltungs-App für kleine und mittlere Trockenbau-Betriebe.
-Gedacht für Handwerker: große Buttons, klare Navigation, wenige Klicks,
-komplett auf Deutsch. Gefühl: "WhatsApp + Notizblock für Handwerker".
+Einfache Verwaltungs-App für Trockenbau-Betriebe – mit Login und Supabase als
+Datenbank/Storage. Große Buttons, klare Navigation, komplett auf Deutsch.
 
 ## Funktionen
 
-- Dashboard: 4 Kennzahlen (Kunden, Projekte, offene Angebote, aktive
-  Baustellen), letzte Projekte und letzte Aktivitäten. Keine Diagramme.
-- Kunden: anlegen, bearbeiten, löschen, suchen.
-- Projekte / Baustellen: anlegen, bearbeiten, löschen, nach Status filtern.
-- Projektdetails: Beschreibung, Maße, Dateien, Notizen.
-- Dateien: Bilder, PDFs, Grundrisse und Sprachnachrichten (Aufnahme im Browser).
-- Angebote: alle Baustellen mit offenem Angebot.
-- Einstellungen: Hell-/Dunkelmodus, Firmendaten, Daten zurücksetzen.
+- Anmeldung: Login, Registrierung, Passwort vergessen, Abmelden (Supabase Auth)
+- Geschützte Routen (Middleware leitet nicht angemeldete Nutzer zum Login)
+- Kunden, Projekte/Baustellen, Projektdetails (Maße, Notizen), Dateien, Angebote
+- Datei-Upload (Bilder, PDFs, Grundrisse, Sprachnachrichten) in Supabase Storage
+- Dashboard mit echten Zahlen: Kunden, Projekte, aktive Baustellen, offene Angebote
+- Hell-/Dunkelmodus, responsiv
 
 ## Technik
 
 - Next.js 14 (App Router), TypeScript, Tailwind CSS 3
-- next-themes (Hell/Dunkel/Automatisch), lucide-react
-- Speicher: localStorage (vorbereitet für Supabase)
+- Supabase: `@supabase/supabase-js`, `@supabase/ssr`
+- Auth-Session per Cookies + Middleware-Refresh
 
-## Starten
+## Einrichtung
+
+### 1. Pakete installieren
 
 ```bash
 npm install
-npm run dev
-# http://localhost:3000 oeffnen
+# Supabase-Pakete (falls noch nicht vorhanden):
+npm install @supabase/supabase-js @supabase/ssr
 ```
 
-Weitere Befehle: `npm run build`, `npm run start`, `npm run lint`,
-`npm run type-check`.
+### 2. Umgebungsvariablen
 
-## Aufbau
+`.env.local` im Projekt-Root anlegen (Vorlage: `.env.example`):
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://DEIN-PROJEKT.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxxxxxxx
+```
+
+Beide Werte stehen im Supabase-Dashboard unter **Project Settings → API**.
+
+### 3. Datenbank & Storage einrichten
+
+Im Supabase-Dashboard den **SQL Editor** öffnen und den Inhalt von
+[`supabase/schema.sql`](supabase/schema.sql) ausführen. Das legt an:
+
+- Tabellen `customers`, `projects`, `project_files`
+- Row Level Security (jeder Nutzer sieht nur seine eigenen Daten)
+- Storage-Buckets `images`, `pdfs`, `audio`, `floorplans` inkl. Policies
+
+### 4. Auth-Redirect-URLs (Supabase-Dashboard)
+
+Unter **Authentication → URL Configuration**:
+
+- Site URL: `http://localhost:3000`
+- Redirect URLs: `http://localhost:3000/auth/callback`
+
+(für Produktion zusätzlich die echte Domain eintragen)
+
+### 5. Starten
+
+```bash
+npm run dev
+# http://localhost:3000
+```
+
+Beim ersten Besuch wirst du zur Anmeldung geleitet. Konto unter
+„Registrieren" anlegen (ggf. E-Mail bestätigen) und loslegen.
+
+## Architektur
 
 ```
 src/
-  app/                       Seiten (App Router)
-    page.tsx                 Dashboard
-    kunden/page.tsx          Kunden
-    projekte/page.tsx        Projektliste
-    projekte/[id]/page.tsx   Projektdetails
-    dateien/page.tsx         Datei-Uebersicht
-    angebote/page.tsx        Offene Angebote
-    einstellungen/page.tsx   Einstellungen
-  components/                layout, ui, dashboard, kunden, projekte, dateien
-  store/DataContext.tsx      zentraler Datenspeicher (CRUD + Persistenz)
-  lib/                       db (localStorage), utils, status, navigation
-  data/seed.ts               Beispieldaten
-  hooks/useAudioRecorder.ts  Sprachaufnahme
-  types/                     gemeinsame Typen
+  utils/supabase/        Supabase-Clients: client / server / middleware
+  middleware.ts          Session-Refresh + Schutz aller Routen
+  store/
+    AuthContext.tsx      Login, Registrierung, Logout, Passwort-Reset
+    DataContext.tsx      Laden + CRUD über Supabase (ersetzt localStorage)
+  lib/
+    database.ts          Tabellen-CRUD + Mapping Row <-> App-Typ
+    storage.ts           Upload / signierte URLs / Löschen (Buckets)
+  app/
+    login, registrieren, passwort-vergessen, neues-passwort
+    auth/callback/route.ts   verarbeitet E-Mail-Links (Code -> Session)
+    (Dashboard, kunden, projekte, dateien, angebote, einstellungen)
+  components/            UI, Layout, Auth-Karte, Module
+  types/                 gemeinsame App-Typen
+supabase/schema.sql      SQL-Schema (Tabellen, RLS, Storage)
 ```
 
-## Daten & Persistenz
+## Hinweise
 
-Alle Daten liegen lokal im Browser (localStorage). Dateien werden als Base64
-gespeichert (max. 8 MB pro Datei).
-
-### Vorbereitet für Supabase
-
-Alle Zugriffe laufen über `src/store/DataContext.tsx`, die Speicherung steckt
-gekapselt in `src/lib/db.ts` (`ladeBestand` / `speichereBestand`). Für eine
-echte Datenbank müssen nur diese Funktionen auf Supabase umgestellt werden
-(Tabellen kunden, projekte, dateien plus Supabase Storage). Die UI bleibt
-unverändert; die Typen in `src/types` sind bereits als flache Tabellen-Schemata
-angelegt.
+- Dateien liegen in privaten Buckets; angezeigt wird über zeitlich begrenzte
+  signierte URLs (1 Stunde).
+- Die Firmendaten in den Einstellungen sind eine lokale Einstellung
+  (Browser-Speicher), keine Nutzerdaten in der Datenbank.
+- Es werden keine Demodaten angelegt – die App startet leer.

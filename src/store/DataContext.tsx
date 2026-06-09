@@ -1,29 +1,28 @@
 "use client";
 
 import * as React from "react";
-import type {
-  Aktivitaet,
-  Datei,
-  DatenBestand,
-  Firmendaten,
-  Kunde,
-  Projekt,
-} from "@/types";
+import type { Aktivitaet, Datei, Firmendaten, Kunde, Projekt } from "@/types";
+import { useAuth } from "@/store/AuthContext";
 import {
-  ladeBestand,
-  leererBestand,
-  loescheBestand,
-  speichereBestand,
-} from "@/lib/db";
-import { seedDaten } from "@/data/seed";
-
-type KundeEingabe = Omit<Kunde, "id" | "erstelltAm">;
-type ProjektEingabe = Omit<Projekt, "id" | "erstelltAm">;
-type DateiEingabe = Omit<Datei, "id" | "erstelltAm">;
+  aktualisiereKunde,
+  aktualisiereProjekt,
+  erstelleDatei,
+  erstelleKunde,
+  erstelleProjekt,
+  ladeDateien,
+  ladeKunden,
+  ladeProjekte,
+  loescheDateiZeile,
+  loescheKunde,
+  loescheProjekt,
+  type KundeEingabe,
+  type ProjektEingabe,
+} from "@/lib/database";
+import { erkenneDateiTyp } from "@/lib/status";
+import { ladeHoch, loescheAusStorage, signierteUrl } from "@/lib/storage";
 
 interface DataContextWert {
   geladen: boolean;
-  speicherVoll: boolean;
   kunden: Kunde[];
   projekte: Projekt[];
   dateien: Datei[];
@@ -31,234 +30,235 @@ interface DataContextWert {
   firmendaten: Firmendaten;
 
   // Kunden
-  kundeAnlegen: (eingabe: KundeEingabe) => Kunde;
-  kundeAktualisieren: (id: string, eingabe: KundeEingabe) => void;
-  kundeLoeschen: (id: string) => void;
+  kundeAnlegen: (eingabe: KundeEingabe) => Promise<Kunde>;
+  kundeAktualisieren: (id: string, eingabe: KundeEingabe) => Promise<void>;
+  kundeLoeschen: (id: string) => Promise<void>;
   getKunde: (id: string) => Kunde | undefined;
   kundenName: (id: string) => string;
 
   // Projekte
-  projektAnlegen: (eingabe: ProjektEingabe) => Projekt;
-  projektAktualisieren: (id: string, eingabe: Partial<ProjektEingabe>) => void;
-  projektLoeschen: (id: string) => void;
+  projektAnlegen: (eingabe: ProjektEingabe) => Promise<Projekt>;
+  projektAktualisieren: (
+    id: string,
+    eingabe: Partial<ProjektEingabe>,
+  ) => Promise<void>;
+  projektLoeschen: (id: string) => Promise<void>;
   getProjekt: (id: string) => Projekt | undefined;
 
   // Dateien
-  dateiHinzufuegen: (eingabe: DateiEingabe) => void;
-  dateiLoeschen: (id: string) => void;
+  dateiHochladen: (projektId: string, datei: Blob, name: string) => Promise<void>;
+  dateiLoeschen: (id: string) => Promise<void>;
   getDateienVonProjekt: (projektId: string) => Datei[];
 
-  // Sonstiges
+  // Firmendaten (lokale Einstellung)
   firmendatenSpeichern: (daten: Firmendaten) => void;
-  beispieldatenLaden: () => void;
-  alleDatenLoeschen: () => void;
 }
 
 const DataContext = React.createContext<DataContextWert | null>(null);
 
-function neueId(): string {
-  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
-    return crypto.randomUUID();
+const FIRMA_KEY = "trockenbau-ai:firmendaten";
+const FIRMA_LEER: Firmendaten = { firmenname: "", telefon: "", email: "" };
+
+function ladeFirmendaten(): Firmendaten {
+  if (typeof window === "undefined") return FIRMA_LEER;
+  try {
+    const roh = window.localStorage.getItem(FIRMA_KEY);
+    return roh ? { ...FIRMA_LEER, ...JSON.parse(roh) } : FIRMA_LEER;
+  } catch {
+    return FIRMA_LEER;
   }
-  return `id-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
-  const [bestand, setBestand] = React.useState<DatenBestand>(leererBestand);
-  const [geladen, setGeladen] = React.useState(false);
-  const [speicherVoll, setSpeicherVoll] = React.useState(false);
+  const { supabase, user, loading: authLoading } = useAuth();
 
-  // Erst auf dem Client laden -> kein Hydration-Mismatch.
+  const [kunden, setKunden] = React.useState<Kunde[]>([]);
+  const [projekte, setProjekte] = React.useState<Projekt[]>([]);
+  const [dateien, setDateien] = React.useState<Datei[]>([]);
+  const [geladen, setGeladen] = React.useState(false);
+  const [firmendaten, setFirmendaten] = React.useState<Firmendaten>(FIRMA_LEER);
+
   React.useEffect(() => {
-    setBestand(ladeBestand());
-    setGeladen(true);
+    setFirmendaten(ladeFirmendaten());
   }, []);
 
-  // Bei jeder Änderung speichern (nach dem ersten Laden).
+  // Daten laden, sobald der Login-Status feststeht.
   React.useEffect(() => {
-    if (!geladen) return;
-    const ok = speichereBestand(bestand);
-    setSpeicherVoll(!ok);
-  }, [bestand, geladen]);
+    let aktiv = true;
 
-  const protokolliere = React.useCallback(
-    (text: string, typ: Aktivitaet["typ"]) => {
-      const eintrag: Aktivitaet = {
-        id: neueId(),
-        text,
-        typ,
-        zeit: new Date().toISOString(),
-      };
-      return eintrag;
-    },
-    [],
-  );
+    async function laden() {
+      if (authLoading) return;
+      if (!user) {
+        setKunden([]);
+        setProjekte([]);
+        setDateien([]);
+        setGeladen(true);
+        return;
+      }
+      setGeladen(false);
+      try {
+        const [k, p, d] = await Promise.all([
+          ladeKunden(supabase),
+          ladeProjekte(supabase),
+          ladeDateien(supabase),
+        ]);
+        if (!aktiv) return;
+        setKunden(k);
+        setProjekte(p);
+        setDateien(d);
+      } catch (fehler) {
+        console.error("Daten konnten nicht geladen werden:", fehler);
+      } finally {
+        if (aktiv) setGeladen(true);
+      }
+    }
+
+    laden();
+    return () => {
+      aktiv = false;
+    };
+  }, [supabase, user, authLoading]);
+
+  const userId = user?.id;
+
+  const aktivitaeten = React.useMemo<Aktivitaet[]>(() => {
+    const items: Aktivitaet[] = [];
+    kunden.forEach((k) =>
+      items.push({
+        id: `k-${k.id}`,
+        text: `Kunde „${k.firmenname}“ angelegt`,
+        typ: "kunde",
+        zeit: k.erstelltAm,
+      }),
+    );
+    projekte.forEach((p) =>
+      items.push({
+        id: `p-${p.id}`,
+        text: `Baustelle „${p.projektname}“ angelegt`,
+        typ: "projekt",
+        zeit: p.erstelltAm,
+      }),
+    );
+    dateien.forEach((d) =>
+      items.push({
+        id: `d-${d.id}`,
+        text: `Datei „${d.name}“ hochgeladen`,
+        typ: "datei",
+        zeit: d.erstelltAm,
+      }),
+    );
+    return items
+      .sort((a, b) => b.zeit.localeCompare(a.zeit))
+      .slice(0, 8);
+  }, [kunden, projekte, dateien]);
 
   const wert = React.useMemo<DataContextWert>(() => {
-    const getKunde = (id: string) => bestand.kunden.find((k) => k.id === id);
+    const getKunde = (id: string) => kunden.find((k) => k.id === id);
 
     return {
       geladen,
-      speicherVoll,
-      kunden: bestand.kunden,
-      projekte: bestand.projekte,
-      dateien: bestand.dateien,
-      aktivitaeten: bestand.aktivitaeten,
-      firmendaten: bestand.firmendaten,
+      kunden,
+      projekte,
+      dateien,
+      aktivitaeten,
+      firmendaten,
 
-      kundeAnlegen: (eingabe) => {
-        const kunde: Kunde = {
-          ...eingabe,
-          id: neueId(),
-          erstelltAm: new Date().toISOString(),
-        };
-        setBestand((b) => ({
-          ...b,
-          kunden: [kunde, ...b.kunden],
-          aktivitaeten: [
-            protokolliere(`Neuer Kunde „${kunde.firmenname}“ angelegt`, "kunde"),
-            ...b.aktivitaeten,
-          ].slice(0, 50),
-        }));
+      kundeAnlegen: async (eingabe) => {
+        if (!userId) throw new Error("Nicht angemeldet");
+        const kunde = await erstelleKunde(supabase, userId, eingabe);
+        setKunden((prev) => [kunde, ...prev]);
         return kunde;
       },
 
-      kundeAktualisieren: (id, eingabe) => {
-        setBestand((b) => ({
-          ...b,
-          kunden: b.kunden.map((k) => (k.id === id ? { ...k, ...eingabe } : k)),
-          aktivitaeten: [
-            protokolliere(`Kunde „${eingabe.firmenname}“ bearbeitet`, "kunde"),
-            ...b.aktivitaeten,
-          ].slice(0, 50),
-        }));
+      kundeAktualisieren: async (id, eingabe) => {
+        const kunde = await aktualisiereKunde(supabase, id, eingabe);
+        setKunden((prev) => prev.map((k) => (k.id === id ? kunde : k)));
       },
 
-      kundeLoeschen: (id) => {
-        setBestand((b) => {
-          const kunde = b.kunden.find((k) => k.id === id);
-          const projektIds = b.projekte
-            .filter((p) => p.kundeId === id)
-            .map((p) => p.id);
-          return {
-            ...b,
-            kunden: b.kunden.filter((k) => k.id !== id),
-            // Projekte des Kunden + deren Dateien mit entfernen.
-            projekte: b.projekte.filter((p) => p.kundeId !== id),
-            dateien: b.dateien.filter((d) => !projektIds.includes(d.projektId)),
-            aktivitaeten: [
-              protokolliere(
-                `Kunde „${kunde?.firmenname ?? ""}“ gelöscht`,
-                "kunde",
-              ),
-              ...b.aktivitaeten,
-            ].slice(0, 50),
-          };
-        });
+      kundeLoeschen: async (id) => {
+        await loescheKunde(supabase, id);
+        // Projekte + Dateien des Kunden werden per DB-Cascade entfernt.
+        const projektIds = projekte
+          .filter((p) => p.kundeId === id)
+          .map((p) => p.id);
+        setKunden((prev) => prev.filter((k) => k.id !== id));
+        setProjekte((prev) => prev.filter((p) => p.kundeId !== id));
+        setDateien((prev) =>
+          prev.filter((d) => !projektIds.includes(d.projektId)),
+        );
       },
 
       getKunde,
-      kundenName: (id) => getKunde(id)?.firmenname ?? "Unbekannter Kunde",
+      kundenName: (id) => getKunde(id)?.firmenname ?? "Kein Kunde",
 
-      projektAnlegen: (eingabe) => {
-        const projekt: Projekt = {
-          ...eingabe,
-          id: neueId(),
-          erstelltAm: new Date().toISOString(),
-        };
-        setBestand((b) => ({
-          ...b,
-          projekte: [projekt, ...b.projekte],
-          aktivitaeten: [
-            protokolliere(
-              `Neue Baustelle „${projekt.projektname}“ angelegt`,
-              "projekt",
-            ),
-            ...b.aktivitaeten,
-          ].slice(0, 50),
-        }));
+      projektAnlegen: async (eingabe) => {
+        if (!userId) throw new Error("Nicht angemeldet");
+        const projekt = await erstelleProjekt(supabase, userId, eingabe);
+        setProjekte((prev) => [projekt, ...prev]);
         return projekt;
       },
 
-      projektAktualisieren: (id, eingabe) => {
-        setBestand((b) => {
-          const vorher = b.projekte.find((p) => p.id === id);
-          return {
-            ...b,
-            projekte: b.projekte.map((p) =>
-              p.id === id ? { ...p, ...eingabe } : p,
-            ),
-            aktivitaeten: [
-              protokolliere(
-                `Baustelle „${eingabe.projektname ?? vorher?.projektname ?? ""}“ aktualisiert`,
-                "projekt",
-              ),
-              ...b.aktivitaeten,
-            ].slice(0, 50),
-          };
+      projektAktualisieren: async (id, eingabe) => {
+        const projekt = await aktualisiereProjekt(supabase, id, eingabe);
+        setProjekte((prev) => prev.map((p) => (p.id === id ? projekt : p)));
+      },
+
+      projektLoeschen: async (id) => {
+        await loescheProjekt(supabase, id);
+        setProjekte((prev) => prev.filter((p) => p.id !== id));
+        setDateien((prev) => prev.filter((d) => d.projektId !== id));
+      },
+
+      getProjekt: (id) => projekte.find((p) => p.id === id),
+
+      dateiHochladen: async (projektId, datei, name) => {
+        if (!userId) throw new Error("Nicht angemeldet");
+        const typ = erkenneDateiTyp(datei.type, name);
+        const pfad = await ladeHoch(supabase, userId, typ, datei, name);
+        const dataUrl = await signierteUrl(supabase, typ, pfad);
+        const neu = await erstelleDatei(supabase, userId, {
+          projektId,
+          name,
+          typ,
+          mimeType: datei.type || "application/octet-stream",
+          groesse: datei.size,
+          path: pfad,
+          dataUrl,
         });
+        setDateien((prev) => [neu, ...prev]);
       },
 
-      projektLoeschen: (id) => {
-        setBestand((b) => {
-          const projekt = b.projekte.find((p) => p.id === id);
-          return {
-            ...b,
-            projekte: b.projekte.filter((p) => p.id !== id),
-            dateien: b.dateien.filter((d) => d.projektId !== id),
-            aktivitaeten: [
-              protokolliere(
-                `Baustelle „${projekt?.projektname ?? ""}“ gelöscht`,
-                "projekt",
-              ),
-              ...b.aktivitaeten,
-            ].slice(0, 50),
-          };
-        });
-      },
-
-      getProjekt: (id) => bestand.projekte.find((p) => p.id === id),
-
-      dateiHinzufuegen: (eingabe) => {
-        const datei: Datei = {
-          ...eingabe,
-          id: neueId(),
-          erstelltAm: new Date().toISOString(),
-        };
-        setBestand((b) => ({
-          ...b,
-          dateien: [datei, ...b.dateien],
-          aktivitaeten: [
-            protokolliere(`Datei „${datei.name}“ hochgeladen`, "datei"),
-            ...b.aktivitaeten,
-          ].slice(0, 50),
-        }));
-      },
-
-      dateiLoeschen: (id) => {
-        setBestand((b) => ({
-          ...b,
-          dateien: b.dateien.filter((d) => d.id !== id),
-        }));
+      dateiLoeschen: async (id) => {
+        const datei = dateien.find((d) => d.id === id);
+        if (datei) {
+          await loescheAusStorage(supabase, datei.typ, datei.path);
+        }
+        await loescheDateiZeile(supabase, id);
+        setDateien((prev) => prev.filter((d) => d.id !== id));
       },
 
       getDateienVonProjekt: (projektId) =>
-        bestand.dateien.filter((d) => d.projektId === projektId),
+        dateien.filter((d) => d.projektId === projektId),
 
       firmendatenSpeichern: (daten) => {
-        setBestand((b) => ({ ...b, firmendaten: daten }));
-      },
-
-      beispieldatenLaden: () => {
-        setBestand(seedDaten());
-      },
-
-      alleDatenLoeschen: () => {
-        loescheBestand();
-        setBestand(leererBestand());
+        setFirmendaten(daten);
+        try {
+          window.localStorage.setItem(FIRMA_KEY, JSON.stringify(daten));
+        } catch {
+          /* Speicher voll – ignorieren */
+        }
       },
     };
-  }, [bestand, geladen, speicherVoll, protokolliere]);
+  }, [
+    supabase,
+    userId,
+    geladen,
+    kunden,
+    projekte,
+    dateien,
+    aktivitaeten,
+    firmendaten,
+  ]);
 
   return <DataContext.Provider value={wert}>{children}</DataContext.Provider>;
 }

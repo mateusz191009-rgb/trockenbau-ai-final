@@ -1,6 +1,6 @@
 // Zentrale Datentypen der Anwendung.
-// Die Struktur ist bewusst flach gehalten, damit sie später 1:1 auf
-// Supabase-Tabellen abgebildet werden kann (siehe src/lib/db).
+// Die Struktur ist flach gehalten und bildet die Supabase-Tabellen ab
+// (siehe src/lib/database.ts für die Umwandlung Row <-> App-Typ).
 
 export type ProjektStatus = "anfrage" | "angebot" | "in_arbeit" | "fertig";
 
@@ -19,7 +19,7 @@ export interface Kunde {
   email: string;
   adresse: string;
   notizen: string;
-  erstelltAm: string; // ISO-Datum
+  erstelltAm: string; // created_at
 }
 
 export interface Massangaben {
@@ -32,24 +32,26 @@ export interface Massangaben {
 export interface Projekt {
   id: string;
   projektname: string;
-  kundeId: string;
+  kundeId: string; // customer_id
   baustellenadresse: string;
   beschreibung: string;
   status: ProjektStatus;
   startdatum: string;
+  enddatum: string;
   masse: Massangaben;
   notizen: string;
-  erstelltAm: string;
+  erstelltAm: string; // created_at
 }
 
 export interface Datei {
   id: string;
-  projektId: string;
-  name: string;
-  typ: DateiTyp;
+  projektId: string; // project_id
+  name: string; // file_name
+  typ: DateiTyp; // file_type
   mimeType: string;
   groesse: number; // Bytes
-  dataUrl: string; // Base64 Data-URL (lokal). Später: Supabase Storage URL.
+  path: string; // Speicherpfad im Bucket (file_url)
+  dataUrl: string; // signierte Anzeige-URL aus dem Storage
   erstelltAm: string;
 }
 
@@ -64,13 +66,4 @@ export interface Firmendaten {
   firmenname: string;
   telefon: string;
   email: string;
-}
-
-/** Gesamter persistierter Zustand (eine localStorage-Einheit). */
-export interface DatenBestand {
-  kunden: Kunde[];
-  projekte: Projekt[];
-  dateien: Datei[];
-  aktivitaeten: Aktivitaet[];
-  firmendaten: Firmendaten;
 }
