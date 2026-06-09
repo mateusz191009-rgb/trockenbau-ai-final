@@ -1,5 +1,12 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Datei, DateiTyp, Kunde, Projekt, ProjektStatus } from "@/types";
+import type {
+  Datei,
+  DateiTyp,
+  Einstellungen,
+  Kunde,
+  Projekt,
+  ProjektStatus,
+} from "@/types";
 import { signierteUrl } from "@/lib/storage";
 
 /**
@@ -302,5 +309,237 @@ export async function loescheDateiZeile(
   id: string,
 ): Promise<void> {
   const { error } = await supabase.from("project_files").delete().eq("id", id);
+  if (error) throw error;
+}
+
+// ---------- Einstellungen (user_settings) ----------
+
+interface UserSettingsRow {
+  user_id: string;
+  firmenname: string | null;
+  inhaber: string | null;
+  ansprechpartner: string | null;
+  strasse: string | null;
+  hausnummer: string | null;
+  plz: string | null;
+  ort: string | null;
+  telefon: string | null;
+  mobil: string | null;
+  email: string | null;
+  website: string | null;
+  ust_id: string | null;
+  logo_path: string | null;
+  stundenlohn: number | null;
+  materialaufschlag: number | null;
+  gewinnmarge: number | null;
+  fahrtkosten_pro_km: number | null;
+  mindestanfahrt: number | null;
+  entsorgungspauschale: number | null;
+  mehrwertsteuer: number | null;
+  angebot_praefix: string | null;
+  angebot_nummer: number | null;
+  angebot_zahlungsziel: number | null;
+  angebot_gueltigkeit: number | null;
+  rechnung_praefix: string | null;
+  rechnung_nummer: number | null;
+  rechnung_zahlungsziel: number | null;
+  bankname: string | null;
+  iban: string | null;
+  bic: string | null;
+  ki_material: boolean | null;
+  ki_arbeitsstunden: boolean | null;
+  ki_preise: boolean | null;
+}
+
+/** Standard-Einstellungen — identisch zu den DB-Defaults der Migration. */
+export const EINSTELLUNGEN_STANDARD: Einstellungen = {
+  firma: {
+    firmenname: "",
+    inhaber: "",
+    ansprechpartner: "",
+    strasse: "",
+    hausnummer: "",
+    plz: "",
+    ort: "",
+    telefon: "",
+    mobil: "",
+    email: "",
+    website: "",
+    ustId: "",
+  },
+  logoPfad: null,
+  kalkulation: {
+    stundenlohn: 0,
+    materialaufschlag: 0,
+    gewinnmarge: 0,
+    fahrtkostenProKm: 0,
+    mindestanfahrt: 0,
+    entsorgungspauschale: 0,
+    mehrwertsteuer: 19,
+  },
+  angebot: {
+    praefix: "ANG-2026-",
+    aktuelleNummer: 1,
+    zahlungsziel: 14,
+    gueltigkeit: 30,
+  },
+  rechnung: {
+    praefix: "RE-2026-",
+    aktuelleNummer: 1,
+    zahlungsziel: 14,
+    bankname: "",
+    iban: "",
+    bic: "",
+  },
+  ki: {
+    materialSchaetzen: true,
+    arbeitsstundenSchaetzen: true,
+    preiseVorschlagen: true,
+  },
+};
+
+const num = (v: number | null, fallback: number) =>
+  v === null || v === undefined ? fallback : Number(v);
+const txt = (v: string | null) => v ?? "";
+const bool = (v: boolean | null) => (v === null || v === undefined ? true : v);
+
+function rowZuEinstellungen(r: UserSettingsRow): Einstellungen {
+  const s = EINSTELLUNGEN_STANDARD;
+  return {
+    firma: {
+      firmenname: txt(r.firmenname),
+      inhaber: txt(r.inhaber),
+      ansprechpartner: txt(r.ansprechpartner),
+      strasse: txt(r.strasse),
+      hausnummer: txt(r.hausnummer),
+      plz: txt(r.plz),
+      ort: txt(r.ort),
+      telefon: txt(r.telefon),
+      mobil: txt(r.mobil),
+      email: txt(r.email),
+      website: txt(r.website),
+      ustId: txt(r.ust_id),
+    },
+    logoPfad: r.logo_path,
+    kalkulation: {
+      stundenlohn: num(r.stundenlohn, 0),
+      materialaufschlag: num(r.materialaufschlag, 0),
+      gewinnmarge: num(r.gewinnmarge, 0),
+      fahrtkostenProKm: num(r.fahrtkosten_pro_km, 0),
+      mindestanfahrt: num(r.mindestanfahrt, 0),
+      entsorgungspauschale: num(r.entsorgungspauschale, 0),
+      mehrwertsteuer: num(r.mehrwertsteuer, 19),
+    },
+    angebot: {
+      praefix: r.angebot_praefix ?? s.angebot.praefix,
+      aktuelleNummer: num(r.angebot_nummer, 1),
+      zahlungsziel: num(r.angebot_zahlungsziel, 14),
+      gueltigkeit: num(r.angebot_gueltigkeit, 30),
+    },
+    rechnung: {
+      praefix: r.rechnung_praefix ?? s.rechnung.praefix,
+      aktuelleNummer: num(r.rechnung_nummer, 1),
+      zahlungsziel: num(r.rechnung_zahlungsziel, 14),
+      bankname: txt(r.bankname),
+      iban: txt(r.iban),
+      bic: txt(r.bic),
+    },
+    ki: {
+      materialSchaetzen: bool(r.ki_material),
+      arbeitsstundenSchaetzen: bool(r.ki_arbeitsstunden),
+      preiseVorschlagen: bool(r.ki_preise),
+    },
+  };
+}
+
+function einstellungenZuRow(e: Einstellungen): Omit<UserSettingsRow, "user_id"> {
+  return {
+    firmenname: e.firma.firmenname,
+    inhaber: e.firma.inhaber,
+    ansprechpartner: e.firma.ansprechpartner,
+    strasse: e.firma.strasse,
+    hausnummer: e.firma.hausnummer,
+    plz: e.firma.plz,
+    ort: e.firma.ort,
+    telefon: e.firma.telefon,
+    mobil: e.firma.mobil,
+    email: e.firma.email,
+    website: e.firma.website,
+    ust_id: e.firma.ustId,
+    logo_path: e.logoPfad,
+    stundenlohn: e.kalkulation.stundenlohn,
+    materialaufschlag: e.kalkulation.materialaufschlag,
+    gewinnmarge: e.kalkulation.gewinnmarge,
+    fahrtkosten_pro_km: e.kalkulation.fahrtkostenProKm,
+    mindestanfahrt: e.kalkulation.mindestanfahrt,
+    entsorgungspauschale: e.kalkulation.entsorgungspauschale,
+    mehrwertsteuer: e.kalkulation.mehrwertsteuer,
+    angebot_praefix: e.angebot.praefix,
+    angebot_nummer: e.angebot.aktuelleNummer,
+    angebot_zahlungsziel: e.angebot.zahlungsziel,
+    angebot_gueltigkeit: e.angebot.gueltigkeit,
+    rechnung_praefix: e.rechnung.praefix,
+    rechnung_nummer: e.rechnung.aktuelleNummer,
+    rechnung_zahlungsziel: e.rechnung.zahlungsziel,
+    bankname: e.rechnung.bankname,
+    iban: e.rechnung.iban,
+    bic: e.rechnung.bic,
+    ki_material: e.ki.materialSchaetzen,
+    ki_arbeitsstunden: e.ki.arbeitsstundenSchaetzen,
+    ki_preise: e.ki.preiseVorschlagen,
+  };
+}
+
+/**
+ * Lädt die Einstellungen des Nutzers. Existiert noch keine Zeile, wird
+ * eine mit den Standardwerten angelegt (RLS schützt nach user_id).
+ */
+export async function ladeEinstellungen(
+  supabase: SupabaseClient,
+  userId: string,
+): Promise<Einstellungen> {
+  const { data, error } = await supabase
+    .from("user_settings")
+    .select("*")
+    .eq("user_id", userId)
+    .maybeSingle();
+  if (error) throw error;
+
+  if (data) return rowZuEinstellungen(data as UserSettingsRow);
+
+  // Noch keine Einstellungen: Standardzeile anlegen.
+  const { data: neu, error: insertError } = await supabase
+    .from("user_settings")
+    .insert({ user_id: userId })
+    .select("*")
+    .single();
+  if (insertError) throw insertError;
+  return rowZuEinstellungen(neu as UserSettingsRow);
+}
+
+/** Speichert die Einstellungen des Nutzers (Upsert auf user_id). */
+export async function speichereEinstellungen(
+  supabase: SupabaseClient,
+  userId: string,
+  e: Einstellungen,
+): Promise<Einstellungen> {
+  const { data, error } = await supabase
+    .from("user_settings")
+    .upsert({ user_id: userId, ...einstellungenZuRow(e) }, { onConflict: "user_id" })
+    .select("*")
+    .single();
+  if (error) throw error;
+  return rowZuEinstellungen(data as UserSettingsRow);
+}
+
+/** Speichert nur den Logo-Pfad (oder null beim Löschen). */
+export async function speichereLogoPfad(
+  supabase: SupabaseClient,
+  userId: string,
+  logoPfad: string | null,
+): Promise<void> {
+  const { error } = await supabase
+    .from("user_settings")
+    .upsert({ user_id: userId, logo_path: logoPfad }, { onConflict: "user_id" });
   if (error) throw error;
 }

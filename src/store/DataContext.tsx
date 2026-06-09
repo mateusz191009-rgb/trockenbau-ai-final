@@ -1,25 +1,43 @@
 "use client";
 
 import * as React from "react";
-import type { Aktivitaet, Datei, Firmendaten, Kunde, Projekt } from "@/types";
+import type {
+  Aktivitaet,
+  Datei,
+  Einstellungen,
+  Firmendaten,
+  Kunde,
+  Projekt,
+} from "@/types";
 import { useAuth } from "@/store/AuthContext";
 import {
   aktualisiereKunde,
   aktualisiereProjekt,
+  EINSTELLUNGEN_STANDARD,
   erstelleDatei,
   erstelleKunde,
   erstelleProjekt,
   ladeDateien,
+  ladeEinstellungen,
   ladeKunden,
   ladeProjekte,
   loescheDateiZeile,
   loescheKunde,
   loescheProjekt,
+  speichereEinstellungen,
+  speichereLogoPfad,
   type KundeEingabe,
   type ProjektEingabe,
 } from "@/lib/database";
 import { erkenneDateiTyp } from "@/lib/status";
-import { ladeHoch, loescheAusStorage, signierteUrl } from "@/lib/storage";
+import {
+  ladeHoch,
+  ladeLogoHoch,
+  loescheAusStorage,
+  loescheLogo,
+  signierteLogoUrl,
+  signierteUrl,
+} from "@/lib/storage";
 
 interface DataContextWert {
   geladen: boolean;
@@ -50,24 +68,18 @@ interface DataContextWert {
   dateiLoeschen: (id: string) => Promise<void>;
   getDateienVonProjekt: (projektId: string) => Datei[];
 
-  // Firmendaten (lokale Einstellung)
-  firmendatenSpeichern: (daten: Firmendaten) => void;
+  // Einstellungen (pro Nutzer, in Supabase gespeichert)
+  einstellungen: Einstellungen;
+  logoUrl: string | null;
+  einstellungenSpeichern: (daten: Einstellungen) => Promise<void>;
+  logoHochladen: (datei: Blob, name: string) => Promise<void>;
+  logoLoeschen: () => Promise<void>;
+
+  // Abgeleitete Kurzform der Firmendaten (für Topbar/Dashboard).
+  firmendaten: Firmendaten;
 }
 
 const DataContext = React.createContext<DataContextWert | null>(null);
-
-const FIRMA_KEY = "trockenbau-ai:firmendaten";
-const FIRMA_LEER: Firmendaten = { firmenname: "", telefon: "", email: "" };
-
-function ladeFirmendaten(): Firmendaten {
-  if (typeof window === "undefined") return FIRMA_LEER;
-  try {
-    const roh = window.localStorage.getItem(FIRMA_KEY);
-    return roh ? { ...FIRMA_LEER, ...JSON.parse(roh) } : FIRMA_LEER;
-  } catch {
-    return FIRMA_LEER;
-  }
-}
 
 export function DataProvider({ children }: { children: React.ReactNode }) {
   const { supabase, user, loading: authLoading } = useAuth();
@@ -76,11 +88,10 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [projekte, setProjekte] = React.useState<Projekt[]>([]);
   const [dateien, setDateien] = React.useState<Datei[]>([]);
   const [geladen, setGeladen] = React.useState(false);
-  const [firmendaten, setFirmendaten] = React.useState<Firmendaten>(FIRMA_LEER);
-
-  React.useEffect(() => {
-    setFirmendaten(ladeFirmendaten());
-  }, []);
+  const [einstellungen, setEinstellungen] = React.useState<Einstellungen>(
+    EINSTELLUNGEN_STANDARD,
+  );
+  const [logoUrl, setLogoUrl] = React.useState<string | null>(null);
 
   // Daten laden, sobald der Login-Status feststeht.
   React.useEffect(() => {
@@ -92,20 +103,27 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         setKunden([]);
         setProjekte([]);
         setDateien([]);
+        setEinstellungen(EINSTELLUNGEN_STANDARD);
+        setLogoUrl(null);
         setGeladen(true);
         return;
       }
       setGeladen(false);
       try {
-        const [k, p, d] = await Promise.all([
+        const [k, p, d, e] = await Promise.all([
           ladeKunden(supabase),
           ladeProjekte(supabase),
           ladeDateien(supabase),
+          ladeEinstellungen(supabase, user.id),
         ]);
         if (!aktiv) return;
         setKunden(k);
         setProjekte(p);
         setDateien(d);
+        setEinstellungen(e);
+        setLogoUrl(
+          e.logoPfad ? await signierteLogoUrl(supabase, e.logoPfad) : null,
+        );
       } catch (fehler) {
         console.error("Daten konnten nicht geladen werden:", fehler);
       } finally {
@@ -161,7 +179,9 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       projekte,
       dateien,
       aktivitaeten,
-      firmendaten,
+      einstellungen,
+      logoUrl,
+      firmendaten: einstellungen.firma,
 
       kundeAnlegen: async (eingabe) => {
         if (!userId) throw new Error("Nicht angemeldet");
@@ -240,13 +260,35 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       getDateienVonProjekt: (projektId) =>
         dateien.filter((d) => d.projektId === projektId),
 
-      firmendatenSpeichern: (daten) => {
-        setFirmendaten(daten);
-        try {
-          window.localStorage.setItem(FIRMA_KEY, JSON.stringify(daten));
-        } catch {
-          /* Speicher voll – ignorieren */
+      einstellungenSpeichern: async (daten) => {
+        if (!userId) throw new Error("Nicht angemeldet");
+        const gespeichert = await speichereEinstellungen(
+          supabase,
+          userId,
+          daten,
+        );
+        setEinstellungen(gespeichert);
+      },
+
+      logoHochladen: async (datei, name) => {
+        if (!userId) throw new Error("Nicht angemeldet");
+        const alterPfad = einstellungen.logoPfad;
+        const pfad = await ladeLogoHoch(supabase, userId, datei, name);
+        await speichereLogoPfad(supabase, userId, pfad);
+        if (alterPfad && alterPfad !== pfad) {
+          await loescheLogo(supabase, alterPfad);
         }
+        setEinstellungen((prev) => ({ ...prev, logoPfad: pfad }));
+        setLogoUrl(await signierteLogoUrl(supabase, pfad));
+      },
+
+      logoLoeschen: async () => {
+        if (!userId) throw new Error("Nicht angemeldet");
+        const pfad = einstellungen.logoPfad;
+        await speichereLogoPfad(supabase, userId, null);
+        if (pfad) await loescheLogo(supabase, pfad);
+        setEinstellungen((prev) => ({ ...prev, logoPfad: null }));
+        setLogoUrl(null);
       },
     };
   }, [
@@ -257,7 +299,8 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     projekte,
     dateien,
     aktivitaeten,
-    firmendaten,
+    einstellungen,
+    logoUrl,
   ]);
 
   return <DataContext.Provider value={wert}>{children}</DataContext.Provider>;
