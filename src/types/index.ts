@@ -62,6 +62,48 @@ export interface Aktivitaet {
   zeit: string; // ISO
 }
 
+// ---------- Angebote (KI-Angebotserstellung) ----------
+
+/** Art einer Angebotsposition – steuert Gruppierung und Icons. */
+export type AngebotPositionArt = "material" | "arbeit" | "fahrt" | "sonstige";
+
+/** Eine einzelne, bearbeitbare Zeile im Angebot. */
+export interface AngebotPosition {
+  id: string;
+  art: AngebotPositionArt;
+  bezeichnung: string;
+  beschreibung: string;
+  menge: number;
+  einheit: string; // z. B. "m²", "Std.", "Stk.", "pauschal"
+  einzelpreis: number; // € netto pro Einheit
+}
+
+export type AngebotStatus =
+  | "entwurf"
+  | "versendet"
+  | "angenommen"
+  | "abgelehnt";
+
+/** Ein gespeichertes Angebot inkl. KI-Ergebnissen und Positionen. */
+export interface Angebot {
+  id: string;
+  projektId: string;
+  kundeId: string;
+  nummer: string; // z. B. "ANG-2026-001"
+  titel: string;
+  status: AngebotStatus;
+  zusammenfassung: string; // Projektzusammenfassung (KI)
+  leistungsbeschreibung: string; // Leistungsbeschreibung (KI)
+  positionen: AngebotPosition[];
+  arbeitsstunden: number; // geschätzte Gesamtstunden
+  mwstSatz: number; // %
+  zahlungsziel: number; // Tage
+  gueltigkeit: number; // Tage
+  notizen: string;
+  erstelltAm: string; // created_at
+  aktualisiertAm: string; // updated_at
+}
+
 /**
  * Firmendaten – Stammdaten des eigenen Betriebs.
  * (Früher nur firmenname/telefon/email; jetzt vollständig.)

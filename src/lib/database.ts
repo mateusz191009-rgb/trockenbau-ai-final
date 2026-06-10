@@ -1,5 +1,8 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type {
+  Angebot,
+  AngebotPosition,
+  AngebotStatus,
   Datei,
   DateiTyp,
   Einstellungen,
@@ -541,5 +544,142 @@ export async function speichereLogoPfad(
   const { error } = await supabase
     .from("user_settings")
     .upsert({ user_id: userId, logo_path: logoPfad }, { onConflict: "user_id" });
+  if (error) throw error;
+}
+
+// ---------- Angebote (offers) ----------
+
+interface OfferRow {
+  id: string;
+  user_id: string;
+  project_id: string;
+  customer_id: string | null;
+  nummer: string;
+  titel: string | null;
+  status: string | null;
+  zusammenfassung: string | null;
+  leistungsbeschreibung: string | null;
+  positionen: AngebotPosition[] | null;
+  arbeitsstunden: number | null;
+  mwst_satz: number | null;
+  zahlungsziel: number | null;
+  gueltigkeit: number | null;
+  notizen: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+function rowZuAngebot(r: OfferRow): Angebot {
+  return {
+    id: r.id,
+    projektId: r.project_id,
+    kundeId: r.customer_id ?? "",
+    nummer: r.nummer,
+    titel: r.titel ?? "",
+    status: (r.status as AngebotStatus) ?? "entwurf",
+    zusammenfassung: r.zusammenfassung ?? "",
+    leistungsbeschreibung: r.leistungsbeschreibung ?? "",
+    positionen: Array.isArray(r.positionen) ? r.positionen : [],
+    arbeitsstunden: num(r.arbeitsstunden, 0),
+    mwstSatz: num(r.mwst_satz, 19),
+    zahlungsziel: num(r.zahlungsziel, 14),
+    gueltigkeit: num(r.gueltigkeit, 30),
+    notizen: r.notizen ?? "",
+    erstelltAm: r.created_at,
+    aktualisiertAm: r.updated_at,
+  };
+}
+
+export async function ladeAngebote(
+  supabase: SupabaseClient,
+): Promise<Angebot[]> {
+  const { data, error } = await supabase
+    .from("offers")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return (data as OfferRow[]).map(rowZuAngebot);
+}
+
+/** Eingabe zum Anlegen eines Angebots (Nummer kommt aus der DB-Funktion). */
+export interface AngebotEingabe {
+  projektId: string;
+  kundeId: string;
+  nummer: string;
+  titel: string;
+  zusammenfassung: string;
+  leistungsbeschreibung: string;
+  positionen: AngebotPosition[];
+  arbeitsstunden: number;
+  mwstSatz: number;
+  zahlungsziel: number;
+  gueltigkeit: number;
+}
+
+export async function erstelleAngebot(
+  supabase: SupabaseClient,
+  userId: string,
+  e: AngebotEingabe,
+): Promise<Angebot> {
+  const { data, error } = await supabase
+    .from("offers")
+    .insert({
+      user_id: userId,
+      project_id: e.projektId,
+      customer_id: e.kundeId || null,
+      nummer: e.nummer,
+      titel: e.titel,
+      status: "entwurf",
+      zusammenfassung: e.zusammenfassung,
+      leistungsbeschreibung: e.leistungsbeschreibung,
+      positionen: e.positionen,
+      arbeitsstunden: e.arbeitsstunden,
+      mwst_satz: e.mwstSatz,
+      zahlungsziel: e.zahlungsziel,
+      gueltigkeit: e.gueltigkeit,
+    })
+    .select("*")
+    .single();
+  if (error) throw error;
+  return rowZuAngebot(data as OfferRow);
+}
+
+/** Wandelt App-Felder eines Angebots in DB-Spalten um (nur gesetzte Felder). */
+function angebotZuSpalten(e: Partial<Angebot>) {
+  const s: Record<string, unknown> = {};
+  if (e.titel !== undefined) s.titel = e.titel;
+  if (e.status !== undefined) s.status = e.status;
+  if (e.zusammenfassung !== undefined) s.zusammenfassung = e.zusammenfassung;
+  if (e.leistungsbeschreibung !== undefined)
+    s.leistungsbeschreibung = e.leistungsbeschreibung;
+  if (e.positionen !== undefined) s.positionen = e.positionen;
+  if (e.arbeitsstunden !== undefined) s.arbeitsstunden = e.arbeitsstunden;
+  if (e.mwstSatz !== undefined) s.mwst_satz = e.mwstSatz;
+  if (e.zahlungsziel !== undefined) s.zahlungsziel = e.zahlungsziel;
+  if (e.gueltigkeit !== undefined) s.gueltigkeit = e.gueltigkeit;
+  if (e.notizen !== undefined) s.notizen = e.notizen;
+  return s;
+}
+
+export async function aktualisiereAngebot(
+  supabase: SupabaseClient,
+  id: string,
+  e: Partial<Angebot>,
+): Promise<Angebot> {
+  const { data, error } = await supabase
+    .from("offers")
+    .update(angebotZuSpalten(e))
+    .eq("id", id)
+    .select("*")
+    .single();
+  if (error) throw error;
+  return rowZuAngebot(data as OfferRow);
+}
+
+export async function loescheAngebot(
+  supabase: SupabaseClient,
+  id: string,
+): Promise<void> {
+  const { error } = await supabase.from("offers").delete().eq("id", id);
   if (error) throw error;
 }

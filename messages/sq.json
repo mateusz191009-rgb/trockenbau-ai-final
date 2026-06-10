@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Trockenbau AI",
+    "appName": "HandwerkerOS",
     "tagline": "Thjeshtë. Shpejt.",
     "save": "Ruaj",
     "saving": "Duke ruajtur…",
@@ -37,16 +37,18 @@
   "nav": {
     "features": "Funksionet",
     "howItWorks": "Si funksionon",
+    "demo": "Demo",
+    "faq": "FAQ",
     "login": "Hyrje",
     "tryFree": "Provo falas"
   },
   "landing": {
     "hero": {
-      "title": "Oferta për ndërtim të thatë në minuta, jo orë",
+      "title": "Oferta për zanatçinë në minuta, jo orë",
       "subtitle": "Ngarko foto, matje dhe përshkrime — ofertat krijohen automatikisht.",
       "cta": "Provo falas",
       "login": "Hyrje",
-      "trusted": "Për profesionistët e ndërtimit të thatë në Gjermani"
+      "trusted": "Për bizneset e zanateve në Gjermani"
     },
     "features": {
       "title": "Gjithçka për biznesin tuaj",
@@ -76,6 +78,62 @@
       "dashboard": "Paneli",
       "projects": "Projektet",
       "offers": "Ofertat"
+    },
+    "calculator": {
+      "badge": "Demo live",
+      "title": "Provoje vetë",
+      "subtitle": "Lëviz rrëshqitësin — shiko menjëherë sa shpejt krijohet një ofertë.",
+      "projectScope": "Madhësia e projektit",
+      "projectScopeValue": "Niveli {scope}",
+      "jobType": "Lloji i punës",
+      "jobTypes": {
+        "residential": "Privat",
+        "commercial": "Komercial",
+        "renovation": "Renovim"
+      },
+      "includeMaterials": "Përfshi materialet",
+      "hourlyRate": "Paga juaj për orë",
+      "manualTime": "Manualisht",
+      "manualTimeValue": "~{hours} orë",
+      "withAi": "Me HandwerkerOS",
+      "withAiValue": "~{minutes} min",
+      "offerPreview": "Parapamje oferte live",
+      "offerLabel": "Numri i ofertës",
+      "lineMaterial": "Materiali (vlerësim)",
+      "lineLabor": "Koha e punës ({hours} orë × {rate} €/orë)",
+      "estimatedPrice": "Çmim orientues",
+      "disclaimer": "Vlerësim demo — vlerat reale pas regjistrimit nga cilësimet tuaja.",
+      "uploadImage": "Ngarko foto për vlerësim AI",
+      "uploadImageHint": "Foto nga kantieri — e disponueshme pas hyrjes",
+      "createPdf": "Krijo ofertën si PDF",
+      "locked": "E bllokuar",
+      "loginRequired": "Hyni për të përdorur këtë funksion.",
+      "loginAction": "Hyrje",
+      "registerAction": "Regjistrohu falas",
+      "cta": "Provo falas"
+    },
+    "faq": {
+      "badge": "FAQ",
+      "title": "Pyetje të shpeshta",
+      "subtitle": "Shkurt dhe qartë — gjithçka e rëndësishme.",
+      "items": {
+        "1": {
+          "q": "A është versioni provë vërtet falas?",
+          "a": "Po. Mund ta provosh HandwerkerOS falas — pa kartë krediti. Shto klientë dhe kantierë dhe provo të gjitha funksionet kryesore."
+        },
+        "2": {
+          "q": "A më duhen njohuri teknike?",
+          "a": "Jo. Aplikacioni është bërë për kantierin: butona të mëdhenj, tekste të qarta dhe hapa të thjeshtë — edhe nga telefoni."
+        },
+        "3": {
+          "q": "Cilat gjuhë mbështeten?",
+          "a": "Aplikacioni është në 9 gjuhë — përfshirë gjermanisht, polonisht, rumanisht, turqisht dhe arabisht. Ideal për ekipe ndërkombëtare."
+        },
+        "4": {
+          "q": "Si ndihmon IA-ja me ofertat?",
+          "a": "Mblidhni foto, matje dhe përshkrime në kantier. IA vlerëson materialin, orët e punës dhe çmimet — ju kontrolloni dhe rregulloni."
+        }
+      }
     },
     "trustedBy": { "title": "Na besojnë" },
     "cta": {
@@ -215,6 +273,92 @@
     "toProjects": "Te projektet",
     "orderReceived": "Porosia u mor"
   },
+  "angebote": {
+    "sectionTitle": "Ofertat",
+    "generateButton": "Krijo ofertë me AI",
+    "generating": "AI po krijon ofertën…",
+    "generatingHint": "Po analizohen fotot, përmasat dhe shënimet. Mund të zgjasë pak.",
+    "generateError": "Oferta nuk u krijua. Ju lutemi provoni përsëri.",
+    "untitled": "Pa titull",
+    "noneDesc": "Me një klik krijoni një ofertë me AI nga të dhënat e projektit.",
+    "openOffer": "Hap ofertën",
+    "listTitle": "Ofertat",
+    "listDescription": "Të gjitha ofertat e krijuara në një vend.",
+    "searchPlaceholder": "Kërko ofertë…",
+    "listEmpty": "Ende asnjë ofertë",
+    "listEmptyDesc": "Hapni një kantier dhe krijoni një ofertë me AI.",
+    "noResultsDesc": "Provoni një kërkim tjetër.",
+    "toProjects": "Te projektet",
+    "backToProject": "Kthehu te kantieri",
+    "notFound": "Oferta nuk u gjet",
+    "notFoundDesc": "Kjo ofertë nuk ekziston më.",
+    "title": "Titulli i ofertës",
+    "statusLabel": "Statusi",
+    "summary": "Përmbledhja e projektit",
+    "serviceDescription": "Përshkrimi i shërbimeve",
+    "positions": "Pozicionet",
+    "laborHours": "Orë pune të vlerësuara: {hours}",
+    "paymentTerm": "Afati i pagesës (ditë)",
+    "validity": "Vlefshmëria (ditë)",
+    "notes": "Shënime të brendshme",
+    "notesPlaceholder": "Vetëm për ju – nuk shfaqet në PDF.",
+    "saved": "U ruajt",
+    "deleteTitle": "Të fshihet oferta?",
+    "deleteMessage": "„{number}“ do të fshihet. Kjo nuk mund të zhbëhet.",
+    "colType": "Lloji",
+    "colDescription": "Përshkrimi",
+    "colQty": "Sasia",
+    "colUnit": "Njësia",
+    "colPrice": "Çmimi njësi",
+    "colTotal": "Shuma",
+    "detailPlaceholder": "Përshkrim shtesë (opsionale)",
+    "deletePosition": "Fshi pozicionin",
+    "addMaterial": "Material",
+    "addLabor": "Punë",
+    "addOther": "Pozicion tjetër",
+    "net": "Vlera neto",
+    "vat": "TVSH ({rate}%)",
+    "gross": "Totali",
+    "pdfSection": "Ofertë PDF",
+    "downloadPdf": "Shkarko PDF",
+    "preparingPdf": "PDF po përgatitet…",
+    "showPreview": "Shfaq parapamjen",
+    "hidePreview": "Fshih parapamjen",
+    "art": {
+      "material": "Material",
+      "arbeit": "Punë",
+      "fahrt": "Udhëtim",
+      "sonstige": "Të tjera"
+    },
+    "status": {
+      "entwurf": "Skicë",
+      "versendet": "Dërguar",
+      "angenommen": "Pranuar",
+      "abgelehnt": "Refuzuar"
+    },
+    "pdf": {
+      "offer": "Ofertë",
+      "offerNumber": "Numri i ofertës",
+      "date": "Data",
+      "customer": "Klienti",
+      "site": "Kantieri",
+      "pos": "Nr.",
+      "description": "Përshkrimi",
+      "qty": "Sasia",
+      "unit": "Njësia",
+      "unitPrice": "Çmimi njësi",
+      "total": "Totali",
+      "net": "Vlera neto",
+      "vat": "plus TVSH {rate}%",
+      "gross": "Totali për pagesë",
+      "serviceDescription": "Përshkrimi i shërbimeve",
+      "paymentTerms": "Kushtet e pagesës",
+      "paymentTermsText": "Paguhet brenda {days} ditësh pa zbritje.",
+      "validityText": "Kjo ofertë është e vlefshme {days} ditë.",
+      "thanks": "Faleminderit për kërkesën. Presim me kënaqësi bashkëpunimin.",
+      "vatId": "NIPT"
+    }
+  },
   "settings": {
     "title": "Cilësimet",
     "description": "Përshtatni aplikacionin me biznesin tuaj.",
@@ -288,7 +432,7 @@
   "auth": {
     "login": {
       "title": "Hyrje",
-      "subtitle": "Mirë se u ktheve në Trockenbau AI",
+      "subtitle": "Mirë se u ktheve në HandwerkerOS",
       "email": "E-mail",
       "password": "Fjalëkalimi",
       "forgotPassword": "Keni harruar fjalëkalimin?",
@@ -320,6 +464,6 @@
   "legal": {
     "impressum": { "title": "Impresum", "content": "Të dhëna sipas § 5 TMG. Të dhënat e plota së shpejti." },
     "privacy": { "title": "Privatësia", "content": "Informacion mbi përpunimin e të dhënave personale së shpejti." },
-    "contact": { "title": "Kontakt", "content": "Pyetje: kontakt@trockenbau-ai.de" }
+    "contact": { "title": "Kontakt", "content": "Pyetje: kontakt@handwerkeros.de" }
   }
 }

@@ -3,6 +3,7 @@
 import * as React from "react";
 import type {
   Aktivitaet,
+  Angebot,
   Datei,
   Einstellungen,
   Firmendaten,
@@ -11,16 +12,19 @@ import type {
 } from "@/types";
 import { useAuth } from "@/store/AuthContext";
 import {
+  aktualisiereAngebot,
   aktualisiereKunde,
   aktualisiereProjekt,
   EINSTELLUNGEN_STANDARD,
   erstelleDatei,
   erstelleKunde,
   erstelleProjekt,
+  ladeAngebote,
   ladeDateien,
   ladeEinstellungen,
   ladeKunden,
   ladeProjekte,
+  loescheAngebot,
   loescheDateiZeile,
   loescheKunde,
   loescheProjekt,
@@ -68,15 +72,20 @@ interface DataContextWert {
   dateiLoeschen: (id: string) => Promise<void>;
   getDateienVonProjekt: (projektId: string) => Datei[];
 
+  // Angebote (KI-generiert, danach bearbeitbar)
+  angebote: Angebot[];
+  getAngebot: (id: string) => Angebot | undefined;
+  getAngeboteVonProjekt: (projektId: string) => Angebot[];
+  angebotErstellenKi: (projektId: string) => Promise<Angebot>;
+  angebotAktualisieren: (id: string, patch: Partial<Angebot>) => Promise<void>;
+  angebotLoeschen: (id: string) => Promise<void>;
+
   // Einstellungen (pro Nutzer, in Supabase gespeichert)
   einstellungen: Einstellungen;
   logoUrl: string | null;
   einstellungenSpeichern: (daten: Einstellungen) => Promise<void>;
   logoHochladen: (datei: Blob, name: string) => Promise<void>;
   logoLoeschen: () => Promise<void>;
-
-  // Abgeleitete Kurzform der Firmendaten (für Topbar/Dashboard).
-  firmendaten: Firmendaten;
 }
 
 const DataContext = React.createContext<DataContextWert | null>(null);
@@ -87,6 +96,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
   const [kunden, setKunden] = React.useState<Kunde[]>([]);
   const [projekte, setProjekte] = React.useState<Projekt[]>([]);
   const [dateien, setDateien] = React.useState<Datei[]>([]);
+  const [angebote, setAngebote] = React.useState<Angebot[]>([]);
   const [geladen, setGeladen] = React.useState(false);
   const [einstellungen, setEinstellungen] = React.useState<Einstellungen>(
     EINSTELLUNGEN_STANDARD,
@@ -103,6 +113,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         setKunden([]);
         setProjekte([]);
         setDateien([]);
+        setAngebote([]);
         setEinstellungen(EINSTELLUNGEN_STANDARD);
         setLogoUrl(null);
         setGeladen(true);
@@ -110,16 +121,18 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
       }
       setGeladen(false);
       try {
-        const [k, p, d, e] = await Promise.all([
+        const [k, p, d, a, e] = await Promise.all([
           ladeKunden(supabase),
           ladeProjekte(supabase),
           ladeDateien(supabase),
+          ladeAngebote(supabase),
           ladeEinstellungen(supabase, user.id),
         ]);
         if (!aktiv) return;
         setKunden(k);
         setProjekte(p);
         setDateien(d);
+        setAngebote(a);
         setEinstellungen(e);
         setLogoUrl(
           e.logoPfad ? await signierteLogoUrl(supabase, e.logoPfad) : null,
@@ -165,10 +178,18 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         zeit: d.erstelltAm,
       }),
     );
+    angebote.forEach((a) =>
+      items.push({
+        id: `a-${a.id}`,
+        text: `Angebot „${a.nummer}“ erstellt`,
+        typ: "angebot",
+        zeit: a.erstelltAm,
+      }),
+    );
     return items
       .sort((a, b) => b.zeit.localeCompare(a.zeit))
       .slice(0, 8);
-  }, [kunden, projekte, dateien]);
+  }, [kunden, projekte, dateien, angebote]);
 
   const wert = React.useMemo<DataContextWert>(() => {
     const getKunde = (id: string) => kunden.find((k) => k.id === id);
@@ -206,6 +227,9 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         setDateien((prev) =>
           prev.filter((d) => !projektIds.includes(d.projektId)),
         );
+        setAngebote((prev) =>
+          prev.filter((a) => !projektIds.includes(a.projektId)),
+        );
       },
 
       getKunde,
@@ -227,6 +251,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
         await loescheProjekt(supabase, id);
         setProjekte((prev) => prev.filter((p) => p.id !== id));
         setDateien((prev) => prev.filter((d) => d.projektId !== id));
+        setAngebote((prev) => prev.filter((a) => a.projektId !== id));
       },
 
       getProjekt: (id) => projekte.find((p) => p.id === id),
@@ -259,6 +284,38 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
 
       getDateienVonProjekt: (projektId) =>
         dateien.filter((d) => d.projektId === projektId),
+
+      angebote,
+
+      getAngebot: (id) => angebote.find((a) => a.id === id),
+
+      getAngeboteVonProjekt: (projektId) =>
+        angebote.filter((a) => a.projektId === projektId),
+
+      angebotErstellenKi: async (projektId) => {
+        const res = await fetch("/api/angebote/generieren", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ projektId }),
+        });
+        const daten = await res.json().catch(() => null);
+        if (!res.ok || !daten?.angebot) {
+          throw new Error(daten?.error ?? "Angebotserstellung fehlgeschlagen.");
+        }
+        const angebot = daten.angebot as Angebot;
+        setAngebote((prev) => [angebot, ...prev]);
+        return angebot;
+      },
+
+      angebotAktualisieren: async (id, patch) => {
+        const angebot = await aktualisiereAngebot(supabase, id, patch);
+        setAngebote((prev) => prev.map((a) => (a.id === id ? angebot : a)));
+      },
+
+      angebotLoeschen: async (id) => {
+        await loescheAngebot(supabase, id);
+        setAngebote((prev) => prev.filter((a) => a.id !== id));
+      },
 
       einstellungenSpeichern: async (daten) => {
         if (!userId) throw new Error("Nicht angemeldet");
@@ -298,6 +355,7 @@ export function DataProvider({ children }: { children: React.ReactNode }) {
     kunden,
     projekte,
     dateien,
+    angebote,
     aktivitaeten,
     einstellungen,
     logoUrl,

@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Trockenbau AI",
+    "appName": "HandwerkerOS",
     "tagline": "Basit. Hızlı.",
     "save": "Kaydet",
     "saving": "Kaydediliyor…",
@@ -37,16 +37,18 @@
   "nav": {
     "features": "Özellikler",
     "howItWorks": "Nasıl çalışır",
+    "demo": "Demo",
+    "faq": "SSS",
     "login": "Giriş",
     "tryFree": "Ücretsiz dene"
   },
   "landing": {
     "hero": {
-      "title": "Alçıpan teklifleri saatler değil, dakikalar içinde",
+      "title": "Zanaatkârlar için teklifler dakikalar içinde",
       "subtitle": "Fotoğraf, ölçü ve açıklamaları yükleyin — teklifler otomatik oluşsun.",
       "cta": "Ücretsiz dene",
       "login": "Giriş",
-      "trusted": "Almanya'daki alçıpan profesyonelleri için"
+      "trusted": "Almanya'daki esnaf ve zanaatkârlar için"
     },
     "features": {
       "title": "İşletmeniz için her şey",
@@ -77,6 +79,62 @@
       "dashboard": "Panel",
       "projects": "Projeler",
       "offers": "Teklifler"
+    },
+    "calculator": {
+      "badge": "Canlı demo",
+      "title": "Kendiniz deneyin",
+      "subtitle": "Kaydırıcıyı hareket ettirin — bir teklifin ne kadar hızlı oluştuğunu hemen görün.",
+      "projectScope": "Proje boyutu",
+      "projectScopeValue": "Seviye {scope}",
+      "jobType": "İş tipi",
+      "jobTypes": {
+        "residential": "Konut",
+        "commercial": "Ticari",
+        "renovation": "Renovasyon"
+      },
+      "includeMaterials": "Malzemeyi dahil et",
+      "hourlyRate": "Saatlik ücretiniz",
+      "manualTime": "Manuel",
+      "manualTimeValue": "~{hours} saat",
+      "withAi": "HandwerkerOS ile",
+      "withAiValue": "~{minutes} dk",
+      "offerPreview": "Canlı teklif önizlemesi",
+      "offerLabel": "Teklif numarası",
+      "lineMaterial": "Malzeme (tahmini)",
+      "lineLabor": "Çalışma süresi ({hours} saat × {rate} €/sa)",
+      "estimatedPrice": "Tahmini fiyat",
+      "disclaimer": "Demo tahmini — gerçek değerler kayıttan sonra ayarlarınızdan gelir.",
+      "uploadImage": "Tahmin için fotoğraf yükle",
+      "uploadImageHint": "Şantiye fotoğrafı — girişten sonra kullanılabilir",
+      "createPdf": "Teklifi PDF olarak oluştur",
+      "locked": "Kilitli",
+      "loginRequired": "Bu özelliği kullanmak için lütfen giriş yapın.",
+      "loginAction": "Giriş yap",
+      "registerAction": "Ücretsiz kayıt ol",
+      "cta": "Ücretsiz dene"
+    },
+    "faq": {
+      "badge": "SSS",
+      "title": "Sık sorulan sorular",
+      "subtitle": "Kısa ve net — önemli olan her şey.",
+      "items": {
+        "1": {
+          "q": "Deneme sürümü gerçekten ücretsiz mi?",
+          "a": "Evet. HandwerkerOS'yi ücretsiz deneyebilirsiniz — kredi kartı gerekmez. Müşteri ve şantiye ekleyin, tüm temel özellikleri test edin."
+        },
+        "2": {
+          "q": "Teknik bilgi gerekir mi?",
+          "a": "Hayır. Uygulama şantiye için tasarlandı: büyük düğmeler, net metinler ve basit adımlar — telefondan da."
+        },
+        "3": {
+          "q": "Hangi diller destekleniyor?",
+          "a": "Uygulama 9 dilde mevcuttur — Almanca, Lehçe, Rumence, Türkçe ve Arapça dahil. Uluslararası ekipler için ideal."
+        },
+        "4": {
+          "q": "Yapay zeka tekliflerde nasıl yardımcı olur?",
+          "a": "Şantiyede fotoğraf, ölçü ve açıklama toplarsınız. Yapay zeka malzeme, çalışma süresi ve fiyatları tahmin eder — siz kontrol edip düzenlersiniz."
+        }
+      }
     },
     "cta": {
       "title": "Şimdi ücretsiz başlayın",
@@ -193,6 +251,92 @@
     "toProjects": "Projelere git",
     "orderReceived": "Sipariş alındı"
   },
+  "angebote": {
+    "sectionTitle": "Teklifler",
+    "generateButton": "AI ile teklif oluştur",
+    "generating": "AI teklif oluşturuyor…",
+    "generatingHint": "Fotoğraflar, ölçüler ve notlar değerlendiriliyor. Biraz sürebilir.",
+    "generateError": "Teklif oluşturulamadı. Lütfen tekrar deneyin.",
+    "untitled": "Başlıksız",
+    "noneDesc": "Proje verilerinden tek tıkla AI teklifi oluşturun.",
+    "openOffer": "Teklifi aç",
+    "listTitle": "Teklifler",
+    "listDescription": "Oluşturulan tüm teklifler tek bakışta.",
+    "searchPlaceholder": "Teklif ara…",
+    "listEmpty": "Henüz teklif yok",
+    "listEmptyDesc": "Bir şantiye açın ve AI ile teklif oluşturun.",
+    "noResultsDesc": "Farklı bir arama deneyin.",
+    "toProjects": "Projelere git",
+    "backToProject": "Şantiyeye dön",
+    "notFound": "Teklif bulunamadı",
+    "notFoundDesc": "Bu teklif artık mevcut değil.",
+    "title": "Teklif başlığı",
+    "statusLabel": "Durum",
+    "summary": "Proje özeti",
+    "serviceDescription": "Hizmet açıklaması",
+    "positions": "Kalemler",
+    "laborHours": "Tahmini çalışma saati: {hours}",
+    "paymentTerm": "Ödeme vadesi (gün)",
+    "validity": "Geçerlilik (gün)",
+    "notes": "Dahili notlar",
+    "notesPlaceholder": "Yalnızca size özel – PDF'de görünmez.",
+    "saved": "Kaydedildi",
+    "deleteTitle": "Teklif silinsin mi?",
+    "deleteMessage": "„{number}” silinecek. Bu işlem geri alınamaz.",
+    "colType": "Tür",
+    "colDescription": "Tanım",
+    "colQty": "Miktar",
+    "colUnit": "Birim",
+    "colPrice": "Birim fiyat",
+    "colTotal": "Tutar",
+    "detailPlaceholder": "Ek açıklama (isteğe bağlı)",
+    "deletePosition": "Kalemi sil",
+    "addMaterial": "Malzeme",
+    "addLabor": "İşçilik",
+    "addOther": "Diğer kalem",
+    "net": "Net tutar",
+    "vat": "KDV ({rate}%)",
+    "gross": "Genel toplam",
+    "pdfSection": "PDF teklifi",
+    "downloadPdf": "PDF indir",
+    "preparingPdf": "PDF hazırlanıyor…",
+    "showPreview": "Önizlemeyi göster",
+    "hidePreview": "Önizlemeyi gizle",
+    "art": {
+      "material": "Malzeme",
+      "arbeit": "İşçilik",
+      "fahrt": "Ulaşım",
+      "sonstige": "Diğer"
+    },
+    "status": {
+      "entwurf": "Taslak",
+      "versendet": "Gönderildi",
+      "angenommen": "Kabul edildi",
+      "abgelehnt": "Reddedildi"
+    },
+    "pdf": {
+      "offer": "Teklif",
+      "offerNumber": "Teklif numarası",
+      "date": "Tarih",
+      "customer": "Müşteri",
+      "site": "Şantiye",
+      "pos": "No.",
+      "description": "Tanım",
+      "qty": "Miktar",
+      "unit": "Birim",
+      "unitPrice": "Birim fiyat",
+      "total": "Toplam",
+      "net": "Net tutar",
+      "vat": "+ KDV {rate}%",
+      "gross": "Genel toplam",
+      "serviceDescription": "Hizmet açıklaması",
+      "paymentTerms": "Ödeme koşulları",
+      "paymentTermsText": "{days} gün içinde, kesintisiz ödenir.",
+      "validityText": "Bu teklif {days} gün geçerlidir.",
+      "thanks": "Talebiniz için teşekkür ederiz. İş birliği için sabırsızlanıyoruz.",
+      "vatId": "Vergi No"
+    }
+  },
   "settings": {
     "title": "Ayarlar",
     "description": "Uygulamayı işletmenize göre ayarlayın.",
@@ -266,7 +410,7 @@
   "auth": {
     "login": {
       "title": "Giriş",
-      "subtitle": "Trockenbau AI'ya tekrar hoş geldiniz",
+      "subtitle": "HandwerkerOS'ya tekrar hoş geldiniz",
       "email": "E-posta",
       "password": "Şifre",
       "forgotPassword": "Şifrenizi mi unuttunuz?",
@@ -298,6 +442,6 @@
   "legal": {
     "impressum": { "title": "Künye", "content": "§ 5 TMG uyarınca bilgiler. Tam bilgiler yakında." },
     "privacy": { "title": "Gizlilik", "content": "Kişisel veri işleme bilgileri yakında." },
-    "contact": { "title": "İletişim", "content": "Sorularınız: kontakt@trockenbau-ai.de" }
+    "contact": { "title": "İletişim", "content": "Sorularınız: kontakt@handwerkeros.de" }
   }
 }

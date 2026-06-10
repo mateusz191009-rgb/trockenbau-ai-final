@@ -14,6 +14,7 @@ import {
   Ruler,
   FolderOpen,
   StickyNote,
+  Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import {
@@ -29,17 +30,15 @@ import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { ProjektForm } from "@/components/projekte/ProjektForm";
 import { DateiUpload } from "@/components/dateien/DateiUpload";
 import { DateiListe } from "@/components/dateien/DateiListe";
+import { ProjektAngebote } from "@/components/angebote/ProjektAngebote";
 import { useData } from "@/store/DataContext";
-import { useStatusLabels } from "@/hooks/useStatusLabels";
-import { projektStatusReihenfolge } from "@/lib/status";
-import { cn, formatDatumKurz } from "@/lib/utils";
-import type { ProjektStatus } from "@/types";
+import { formatDatumKurz } from "@/lib/utils";
 
 export default function ProjektDetailPage() {
   const t = useTranslations("projectDetail");
   const tp = useTranslations("projects");
   const tc = useTranslations("common");
-  const { projektStatusLabel } = useStatusLabels();
+  const ta = useTranslations("angebote");
   const params = useParams<{ id: string }>();
   const router = useRouter();
   const {
@@ -156,33 +155,6 @@ export default function ProjektDetailPage() {
             </Button>
           </div>
         </div>
-
-        <div className="mt-5 border-t border-slate-100 pt-5 dark:border-slate-800">
-          <p className="mb-2 text-sm font-semibold text-slate-500 dark:text-slate-400">
-            {tc("status")}
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {projektStatusReihenfolge.map((s) => {
-              const aktiv = projekt.status === s;
-              return (
-                <button
-                  key={s}
-                  onClick={() =>
-                    projektAktualisieren(projekt.id, { status: s as ProjektStatus })
-                  }
-                  className={cn(
-                    "rounded-full px-4 py-2 text-base font-semibold transition-colors",
-                    aktiv
-                      ? "bg-brand-500 text-white"
-                      : "border-2 border-slate-200 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800",
-                  )}
-                >
-                  {projektStatusLabel(s)}
-                </button>
-              );
-            })}
-          </div>
-        </div>
       </Card>
 
       <SektionKarte icon={FileText} titel={tc("description")}>
@@ -194,6 +166,10 @@ export default function ProjektDetailPage() {
           placeholder={t("descriptionPlaceholder")}
         />
         <p className="mt-2 text-sm text-slate-400">{tc("autoSaved")}</p>
+      </SektionKarte>
+
+      <SektionKarte icon={Sparkles} titel={ta("sectionTitle")}>
+        <ProjektAngebote projektId={projekt.id} />
       </SektionKarte>
 
       <SektionKarte icon={Ruler} titel={t("measurements")}>

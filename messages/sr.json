@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Trockenbau AI",
+    "appName": "HandwerkerOS",
     "tagline": "Jednostavno. Brzo.",
     "save": "Sačuvaj",
     "saving": "Čuvanje…",
@@ -37,16 +37,18 @@
   "nav": {
     "features": "Funkcije",
     "howItWorks": "Kako radi",
+    "demo": "Demo",
+    "faq": "FAQ",
     "login": "Prijava",
     "tryFree": "Probaj besplatno"
   },
   "landing": {
     "hero": {
-      "title": "Ponude za suvu gradnju za minute, ne sate",
+      "title": "Ponude za majstore za minute, ne sate",
       "subtitle": "Otpremite fotografije, mere i opise — ponude se automatski kreiraju.",
       "cta": "Probaj besplatno",
       "login": "Prijava",
-      "trusted": "Za profesionalce suve gradnje u Nemačkoj"
+      "trusted": "Za zanatske firme u Nemačkoj"
     },
     "features": {
       "title": "Sve za vaš posao",
@@ -77,6 +79,62 @@
       "dashboard": "Kontrolna tabla",
       "projects": "Projekti",
       "offers": "Ponude"
+    },
+    "calculator": {
+      "badge": "Demo uživo",
+      "title": "Probajte sami",
+      "subtitle": "Pomerite klizač — odmah vidite koliko brzo nastaje ponuda.",
+      "projectScope": "Veličina projekta",
+      "projectScopeValue": "Nivo {scope}",
+      "jobType": "Tip posla",
+      "jobTypes": {
+        "residential": "Privatni",
+        "commercial": "Poslovni",
+        "renovation": "Renovacija"
+      },
+      "includeMaterials": "Uključi materijal",
+      "hourlyRate": "Vaša satnica",
+      "manualTime": "Ručno",
+      "manualTimeValue": "~{hours} č.",
+      "withAi": "Sa HandwerkerOS",
+      "withAiValue": "~{minutes} min",
+      "offerPreview": "Pregled ponude uživo",
+      "offerLabel": "Broj ponude",
+      "lineMaterial": "Materijal (procena)",
+      "lineLabor": "Radno vreme ({hours} č. × {rate} €/č)",
+      "estimatedPrice": "Orientaciona cena",
+      "disclaimer": "Demo procena — prave vrednosti posle registracije iz vaših podešavanja.",
+      "uploadImage": "Otpremi foto za AI procenu",
+      "uploadImageHint": "Foto sa gradilišta — dostupno posle prijave",
+      "createPdf": "Kreiraj ponudu kao PDF",
+      "locked": "Zaključano",
+      "loginRequired": "Prijavite se da biste koristili ovu funkciju.",
+      "loginAction": "Prijava",
+      "registerAction": "Besplatna registracija",
+      "cta": "Probaj besplatno"
+    },
+    "faq": {
+      "badge": "FAQ",
+      "title": "Česta pitanja",
+      "subtitle": "Kratko i jasno — sve što je važno.",
+      "items": {
+        "1": {
+          "q": "Da li je probna verzija zaista besplatna?",
+          "a": "Da. Možete besplatno testirati HandwerkerOS — bez kreditne kartice. Dodajte klijente i gradilišta i isprobajte sve glavne funkcije."
+        },
+        "2": {
+          "q": "Da li mi treba tehničko znanje?",
+          "a": "Ne. Aplikacija je napravljena za gradilište: velika dugmad, jasni tekstovi i jednostavni koraci — i sa telefona."
+        },
+        "3": {
+          "q": "Koji jezici su podržani?",
+          "a": "Aplikacija je dostupna na 9 jezika — uključujući nemački, poljski, rumunski, turski i arapski. Idealno za međunarodne timove."
+        },
+        "4": {
+          "q": "Kako VI pomaže kod ponuda?",
+          "a": "Skupljate fotografije, mere i opise na gradilištu. VI procenjuje materijal, radno vreme i cene — vi proveravate i prilagođavate."
+        }
+      }
     },
     "cta": {
       "title": "Počnite besplatno sada",
@@ -193,6 +251,92 @@
     "toProjects": "Ka projektima",
     "orderReceived": "Porudžbina primljena"
   },
+  "angebote": {
+    "sectionTitle": "Ponude",
+    "generateButton": "Napravi ponudu sa AI",
+    "generating": "AI pravi ponudu…",
+    "generatingHint": "Analiziramo fotografije, mere i beleške. To može potrajati trenutak.",
+    "generateError": "Ponuda nije mogla da se napravi. Pokušajte ponovo.",
+    "untitled": "Bez naslova",
+    "noneDesc": "Jednim klikom napravite AI ponudu iz podataka projekta.",
+    "openOffer": "Otvori ponudu",
+    "listTitle": "Ponude",
+    "listDescription": "Sve napravljene ponude na jednom mestu.",
+    "searchPlaceholder": "Pretraži ponudu…",
+    "listEmpty": "Još nema ponuda",
+    "listEmptyDesc": "Otvorite gradilište i napravite ponudu sa AI.",
+    "noResultsDesc": "Pokušajte drugu pretragu.",
+    "toProjects": "Na projekte",
+    "backToProject": "Nazad na gradilište",
+    "notFound": "Ponuda nije pronađena",
+    "notFoundDesc": "Ova ponuda više ne postoji.",
+    "title": "Naslov ponude",
+    "statusLabel": "Status",
+    "summary": "Rezime projekta",
+    "serviceDescription": "Opis usluga",
+    "positions": "Stavke",
+    "laborHours": "Procenjeni radni sati: {hours}",
+    "paymentTerm": "Rok plaćanja (dana)",
+    "validity": "Važenje (dana)",
+    "notes": "Interne beleške",
+    "notesPlaceholder": "Samo za vas – ne pojavljuje se u PDF-u.",
+    "saved": "Sačuvano",
+    "deleteTitle": "Obrisati ponudu?",
+    "deleteMessage": "„{number}“ će biti obrisana. Ovo se ne može poništiti.",
+    "colType": "Vrsta",
+    "colDescription": "Naziv",
+    "colQty": "Količina",
+    "colUnit": "Jedinica",
+    "colPrice": "Jed. cena",
+    "colTotal": "Iznos",
+    "detailPlaceholder": "Dodatni opis (opciono)",
+    "deletePosition": "Obriši stavku",
+    "addMaterial": "Materijal",
+    "addLabor": "Rad",
+    "addOther": "Ostala stavka",
+    "net": "Neto iznos",
+    "vat": "PDV ({rate}%)",
+    "gross": "Ukupno",
+    "pdfSection": "PDF ponuda",
+    "downloadPdf": "Preuzmi PDF",
+    "preparingPdf": "PDF se priprema…",
+    "showPreview": "Prikaži pregled",
+    "hidePreview": "Sakrij pregled",
+    "art": {
+      "material": "Materijal",
+      "arbeit": "Rad",
+      "fahrt": "Dolazak",
+      "sonstige": "Ostalo"
+    },
+    "status": {
+      "entwurf": "Nacrt",
+      "versendet": "Poslato",
+      "angenommen": "Prihvaćeno",
+      "abgelehnt": "Odbijeno"
+    },
+    "pdf": {
+      "offer": "Ponuda",
+      "offerNumber": "Broj ponude",
+      "date": "Datum",
+      "customer": "Klijent",
+      "site": "Gradilište",
+      "pos": "Rb.",
+      "description": "Naziv",
+      "qty": "Kol.",
+      "unit": "Jed.",
+      "unitPrice": "Jed. cena",
+      "total": "Ukupno",
+      "net": "Neto iznos",
+      "vat": "plus PDV {rate}%",
+      "gross": "Ukupno za plaćanje",
+      "serviceDescription": "Opis usluga",
+      "paymentTerms": "Uslovi plaćanja",
+      "paymentTermsText": "Plativo u roku od {days} dana bez umanjenja.",
+      "validityText": "Ova ponuda važi {days} dana.",
+      "thanks": "Hvala na upitu. Radujemo se saradnji.",
+      "vatId": "PIB"
+    }
+  },
   "settings": {
     "title": "Podešavanja",
     "description": "Prilagodite aplikaciju svom poslu.",
@@ -266,7 +410,7 @@
   "auth": {
     "login": {
       "title": "Prijava",
-      "subtitle": "Dobrodošli nazad u Trockenbau AI",
+      "subtitle": "Dobrodošli nazad u HandwerkerOS",
       "email": "E-pošta",
       "password": "Lozinka",
       "forgotPassword": "Zaboravili ste lozinku?",
@@ -298,6 +442,6 @@
   "legal": {
     "impressum": { "title": "Impresum", "content": "Podaci prema § 5 TMG. Potpuni podaci uskoro." },
     "privacy": { "title": "Zaštita podataka", "content": "Informacije o obradi ličnih podataka uskoro." },
-    "contact": { "title": "Kontakt", "content": "Pitanja: kontakt@trockenbau-ai.de" }
+    "contact": { "title": "Kontakt", "content": "Pitanja: kontakt@handwerkeros.de" }
   }
 }

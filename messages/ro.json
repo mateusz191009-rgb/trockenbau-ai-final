@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Trockenbau AI",
+    "appName": "HandwerkerOS",
     "tagline": "Simplu. Rapid.",
     "save": "Salvează",
     "saving": "Se salvează…",
@@ -37,16 +37,18 @@
   "nav": {
     "features": "Funcții",
     "howItWorks": "Cum funcționează",
+    "demo": "Demo",
+    "faq": "FAQ",
     "login": "Autentificare",
     "tryFree": "Testează gratuit"
   },
   "landing": {
     "hero": {
-      "title": "Oferte pentru construcții uscate în minute, nu ore",
+      "title": "Oferte pentru meseriași în minute, nu ore",
       "subtitle": "Încarcă fotografii, măsuri și descrieri — ofertele se creează automat.",
       "cta": "Testează gratuit",
       "login": "Autentificare",
-      "trusted": "Pentru profesioniști în construcții uscate din Germania"
+      "trusted": "Pentru firme de meșteșuguri din Germania"
     },
     "features": {
       "title": "Tot ce ai nevoie pentru afacerea ta",
@@ -77,6 +79,62 @@
       "dashboard": "Panou",
       "projects": "Proiecte",
       "offers": "Oferte"
+    },
+    "calculator": {
+      "badge": "Demo live",
+      "title": "Încearcă singur",
+      "subtitle": "Glisează cursorul — vezi imediat cât de repede poate apărea o ofertă.",
+      "projectScope": "Dimensiune proiect",
+      "projectScopeValue": "Nivel {scope}",
+      "jobType": "Tip lucrare",
+      "jobTypes": {
+        "residential": "Privat",
+        "commercial": "Comercial",
+        "renovation": "Renovare"
+      },
+      "includeMaterials": "Include materiale",
+      "hourlyRate": "Tariful dvs. orar",
+      "manualTime": "Manual",
+      "manualTimeValue": "~{hours} ore",
+      "withAi": "Cu HandwerkerOS",
+      "withAiValue": "~{minutes} min",
+      "offerPreview": "Previzualizare ofertă live",
+      "offerLabel": "Număr ofertă",
+      "lineMaterial": "Material (estimat)",
+      "lineLabor": "Timp de lucru ({hours} ore × {rate} €/h)",
+      "estimatedPrice": "Preț orientativ",
+      "disclaimer": "Estimare demo — valorile reale după înregistrare din setările tale.",
+      "uploadImage": "Încarcă foto pentru estimare AI",
+      "uploadImageHint": "Foto de pe șantier — disponibil după autentificare",
+      "createPdf": "Creează ofertă PDF",
+      "locked": "Blocat",
+      "loginRequired": "Autentificați-vă pentru a folosi această funcție.",
+      "loginAction": "Autentificare",
+      "registerAction": "Înregistrare gratuită",
+      "cta": "Testează gratuit"
+    },
+    "faq": {
+      "badge": "FAQ",
+      "title": "Întrebări frecvente",
+      "subtitle": "Scurt și clar — tot ce contează.",
+      "items": {
+        "1": {
+          "q": "Versiunea de test este cu adevărat gratuită?",
+          "a": "Da. Poți testa HandwerkerOS gratuit — fără card de credit. Adaugă clienți și șantiere și încearcă toate funcțiile principale."
+        },
+        "2": {
+          "q": "Am nevoie de cunoștințe tehnice?",
+          "a": "Nu. Aplicația este făcută pentru șantier: butoane mari, texte clare și pași simpli — și de pe telefon."
+        },
+        "3": {
+          "q": "Ce limbi sunt suportate?",
+          "a": "Aplicația este disponibilă în 9 limbi — inclusiv germană, poloneză, română, turcă și arabă. Ideal pentru echipe internaționale."
+        },
+        "4": {
+          "q": "Cum ajută AI-ul la oferte?",
+          "a": "Colectezi poze, măsuri și descrieri pe șantier. AI estimează materialul, timpul de lucru și prețurile — tu verifici și ajustezi."
+        }
+      }
     },
     "cta": {
       "title": "Începe gratuit acum",
@@ -193,6 +251,92 @@
     "toProjects": "La proiecte",
     "orderReceived": "Comandă primită"
   },
+  "angebote": {
+    "sectionTitle": "Oferte",
+    "generateButton": "Creează ofertă cu AI",
+    "generating": "AI creează oferta…",
+    "generatingHint": "Analizăm pozele, dimensiunile și notițele. Poate dura un moment.",
+    "generateError": "Oferta nu a putut fi creată. Încercați din nou.",
+    "untitled": "Fără titlu",
+    "noneDesc": "Creați cu un clic o ofertă AI din datele proiectului.",
+    "openOffer": "Deschide oferta",
+    "listTitle": "Oferte",
+    "listDescription": "Toate ofertele create, dintr-o privire.",
+    "searchPlaceholder": "Caută ofertă…",
+    "listEmpty": "Încă nicio ofertă",
+    "listEmptyDesc": "Deschideți un șantier și creați o ofertă cu AI.",
+    "noResultsDesc": "Încercați alt termen de căutare.",
+    "toProjects": "La proiecte",
+    "backToProject": "Înapoi la șantier",
+    "notFound": "Oferta nu a fost găsită",
+    "notFoundDesc": "Această ofertă nu mai există.",
+    "title": "Titlul ofertei",
+    "statusLabel": "Status",
+    "summary": "Rezumatul proiectului",
+    "serviceDescription": "Descrierea serviciilor",
+    "positions": "Poziții",
+    "laborHours": "Ore de muncă estimate: {hours}",
+    "paymentTerm": "Termen de plată (zile)",
+    "validity": "Valabilitate (zile)",
+    "notes": "Note interne",
+    "notesPlaceholder": "Doar pentru dvs. – nu apare în PDF.",
+    "saved": "Salvat",
+    "deleteTitle": "Ștergeți oferta?",
+    "deleteMessage": "„{number}” va fi ștearsă. Această acțiune nu poate fi anulată.",
+    "colType": "Tip",
+    "colDescription": "Denumire",
+    "colQty": "Cantitate",
+    "colUnit": "Unitate",
+    "colPrice": "Preț unitar",
+    "colTotal": "Total",
+    "detailPlaceholder": "Descriere suplimentară (opțional)",
+    "deletePosition": "Șterge poziția",
+    "addMaterial": "Material",
+    "addLabor": "Manoperă",
+    "addOther": "Altă poziție",
+    "net": "Valoare netă",
+    "vat": "TVA ({rate}%)",
+    "gross": "Total general",
+    "pdfSection": "Ofertă PDF",
+    "downloadPdf": "Descarcă PDF",
+    "preparingPdf": "Se pregătește PDF-ul…",
+    "showPreview": "Afișează previzualizarea",
+    "hidePreview": "Ascunde previzualizarea",
+    "art": {
+      "material": "Material",
+      "arbeit": "Manoperă",
+      "fahrt": "Deplasare",
+      "sonstige": "Altele"
+    },
+    "status": {
+      "entwurf": "Ciornă",
+      "versendet": "Trimisă",
+      "angenommen": "Acceptată",
+      "abgelehnt": "Respinsă"
+    },
+    "pdf": {
+      "offer": "Ofertă",
+      "offerNumber": "Număr ofertă",
+      "date": "Data",
+      "customer": "Client",
+      "site": "Șantier",
+      "pos": "Poz.",
+      "description": "Denumire",
+      "qty": "Cant.",
+      "unit": "Unit.",
+      "unitPrice": "Preț unitar",
+      "total": "Total",
+      "net": "Valoare netă",
+      "vat": "plus TVA {rate}%",
+      "gross": "Total general",
+      "serviceDescription": "Descrierea serviciilor",
+      "paymentTerms": "Condiții de plată",
+      "paymentTermsText": "Plata în {days} zile, fără reduceri.",
+      "validityText": "Această ofertă este valabilă {days} zile.",
+      "thanks": "Vă mulțumim pentru solicitare. Așteptăm cu interes colaborarea.",
+      "vatId": "Cod TVA"
+    }
+  },
   "settings": {
     "title": "Setări",
     "description": "Adaptați aplicația afacerii dvs.",
@@ -266,7 +410,7 @@
   "auth": {
     "login": {
       "title": "Autentificare",
-      "subtitle": "Bine ai revenit la Trockenbau AI",
+      "subtitle": "Bine ai revenit la HandwerkerOS",
       "email": "E-mail",
       "password": "Parolă",
       "forgotPassword": "Ai uitat parola?",
@@ -298,6 +442,6 @@
   "legal": {
     "impressum": { "title": "Impressum", "content": "Date conform § 5 TMG. Date complete în curând." },
     "privacy": { "title": "Confidențialitate", "content": "Informații despre prelucrarea datelor în curând." },
-    "contact": { "title": "Contact", "content": "Întrebări: kontakt@trockenbau-ai.de" }
+    "contact": { "title": "Contact", "content": "Întrebări: kontakt@handwerkeros.de" }
   }
 }

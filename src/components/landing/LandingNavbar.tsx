@@ -15,6 +15,8 @@ export function LandingNavbar() {
   const links = [
     { href: "#features", label: t("nav.features") },
     { href: "#how-it-works", label: t("nav.howItWorks") },
+    { href: "#demo", label: t("nav.demo") },
+    { href: "#faq", label: t("nav.faq") },
   ];
 
   return (

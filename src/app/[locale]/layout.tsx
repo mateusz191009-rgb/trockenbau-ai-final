@@ -18,11 +18,11 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Trockenbau AI",
-    template: "%s · Trockenbau AI",
+    default: "HandwerkerOS",
+    template: "%s · HandwerkerOS",
   },
   description:
-    "Einfache Verwaltung für Trockenbau-Betriebe: Kunden, Baustellen, Dateien und Angebote.",
+    "Das Betriebssystem für Handwerksbetriebe: Kunden, Aufträge, Dateien und Angebote.",
 };
 
 export function generateStaticParams() {

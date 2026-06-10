@@ -1,4 +1,4 @@
-import type { DateiTyp, ProjektStatus } from "@/types";
+import type { AngebotStatus, DateiTyp, ProjektStatus } from "@/types";
 
 interface StatusStyle {
   className: string;
@@ -35,6 +35,35 @@ export const projektStatusReihenfolge: ProjektStatus[] = [
   "angebot",
   "in_arbeit",
   "fertig",
+];
+
+export const angebotStatusStyles: Record<AngebotStatus, StatusStyle> = {
+  entwurf: {
+    className:
+      "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
+    dot: "bg-slate-400",
+  },
+  versendet: {
+    className:
+      "bg-amber-100 text-amber-800 dark:bg-amber-500/15 dark:text-amber-300",
+    dot: "bg-amber-500",
+  },
+  angenommen: {
+    className:
+      "bg-emerald-100 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-300",
+    dot: "bg-emerald-500",
+  },
+  abgelehnt: {
+    className: "bg-red-100 text-red-800 dark:bg-red-500/15 dark:text-red-300",
+    dot: "bg-red-500",
+  },
+};
+
+export const angebotStatusReihenfolge: AngebotStatus[] = [
+  "entwurf",
+  "versendet",
+  "angenommen",
+  "abgelehnt",
 ];
 
 /** @deprecated Use useStatusLabels */

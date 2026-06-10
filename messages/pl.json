@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Trockenbau AI",
+    "appName": "HandwerkerOS",
     "tagline": "Prosto. Szybko.",
     "save": "Zapisz",
     "saving": "Zapisywanie…",
@@ -37,16 +37,18 @@
   "nav": {
     "features": "Funkcje",
     "howItWorks": "Jak to działa",
+    "demo": "Demo",
+    "faq": "FAQ",
     "login": "Logowanie",
     "tryFree": "Wypróbuj za darmo"
   },
   "landing": {
     "hero": {
-      "title": "Oferty na suche zabudowy w minuty, nie godziny",
+      "title": "Oferty dla rzemieślników w minuty, nie godziny",
       "subtitle": "Prześlij zdjęcia, wymiary i opisy — oferty tworzą się automatycznie.",
       "cta": "Wypróbuj za darmo",
       "login": "Logowanie",
-      "trusted": "Dla profesjonalistów suchej zabudowy w Niemczech"
+      "trusted": "Dla firm rzemieślniczych w Niemczech"
     },
     "features": {
       "title": "Wszystko dla Twojej firmy",
@@ -77,6 +79,62 @@
       "dashboard": "Panel",
       "projects": "Projekty",
       "offers": "Oferty"
+    },
+    "calculator": {
+      "badge": "Demo na żywo",
+      "title": "Wypróbuj sam",
+      "subtitle": "Przesuń suwak — zobacz od razu, jak szybko powstaje oferta.",
+      "projectScope": "Wielkość projektu",
+      "projectScopeValue": "Poziom {scope}",
+      "jobType": "Typ zlecenia",
+      "jobTypes": {
+        "residential": "Dom",
+        "commercial": "Firma",
+        "renovation": "Remont"
+      },
+      "includeMaterials": "Uwzględnij materiał",
+      "hourlyRate": "Twoja stawka godzinowa",
+      "manualTime": "Ręcznie",
+      "manualTimeValue": "~{hours} godz.",
+      "withAi": "Z HandwerkerOS",
+      "withAiValue": "~{minutes} min",
+      "offerPreview": "Podgląd oferty na żywo",
+      "offerLabel": "Numer oferty",
+      "lineMaterial": "Materiał (szacunkowo)",
+      "lineLabor": "Czas pracy ({hours} godz. × {rate} €/h)",
+      "estimatedPrice": "Cena orientacyjna",
+      "disclaimer": "Szacunek demo — prawdziwe wartości po rejestracji z Twoich ustawień.",
+      "uploadImage": "Prześlij zdjęcie do szacowania AI",
+      "uploadImageHint": "Zdjęcie z budowy — dostępne po zalogowaniu",
+      "createPdf": "Utwórz ofertę jako PDF",
+      "locked": "Zablokowane",
+      "loginRequired": "Zaloguj się, aby skorzystać z tej funkcji.",
+      "loginAction": "Zaloguj się",
+      "registerAction": "Zarejestruj się za darmo",
+      "cta": "Wypróbuj za darmo"
+    },
+    "faq": {
+      "badge": "FAQ",
+      "title": "Często zadawane pytania",
+      "subtitle": "Krótko i jasno — wszystko, co ważne.",
+      "items": {
+        "1": {
+          "q": "Czy wersja testowa jest naprawdę darmowa?",
+          "a": "Tak. Możesz testować HandwerkerOS za darmo — bez karty kredytowej. Dodaj klientów i budowy i wypróbuj wszystkie główne funkcje."
+        },
+        "2": {
+          "q": "Czy potrzebuję wiedzy technicznej?",
+          "a": "Nie. Aplikacja jest zaprojektowana na budowę: duże przyciski, proste teksty i łatwe kroki — także z telefonu."
+        },
+        "3": {
+          "q": "Jakie języki są obsługiwane?",
+          "a": "Aplikacja jest dostępna w 9 językach — m.in. po niemiecku, polsku, rumuńsku, turecku i arabsku. Idealna dla międzynarodowych zespołów."
+        },
+        "4": {
+          "q": "Jak AI pomaga przy ofertach?",
+          "a": "Zbierasz zdjęcia, wymiary i opisy na budowie. AI szacuje materiał, czas pracy i ceny — Ty sprawdzasz i korygujesz."
+        }
+      }
     },
     "cta": {
       "title": "Zacznij za darmo",
@@ -193,6 +251,92 @@
     "toProjects": "Do projektów",
     "orderReceived": "Zlecenie otrzymane"
   },
+  "angebote": {
+    "sectionTitle": "Oferty",
+    "generateButton": "Utwórz ofertę z AI",
+    "generating": "AI tworzy ofertę…",
+    "generatingHint": "Analizujemy zdjęcia, wymiary i notatki. To może chwilę potrwać.",
+    "generateError": "Nie udało się utworzyć oferty. Spróbuj ponownie.",
+    "untitled": "Bez tytułu",
+    "noneDesc": "Jednym kliknięciem utwórz ofertę AI na podstawie danych projektu.",
+    "openOffer": "Otwórz ofertę",
+    "listTitle": "Oferty",
+    "listDescription": "Wszystkie utworzone oferty w jednym miejscu.",
+    "searchPlaceholder": "Szukaj oferty…",
+    "listEmpty": "Brak ofert",
+    "listEmptyDesc": "Otwórz budowę i utwórz ofertę z AI.",
+    "noResultsDesc": "Spróbuj innego wyszukiwania.",
+    "toProjects": "Do projektów",
+    "backToProject": "Powrót do budowy",
+    "notFound": "Nie znaleziono oferty",
+    "notFoundDesc": "Ta oferta już nie istnieje.",
+    "title": "Tytuł oferty",
+    "statusLabel": "Status",
+    "summary": "Podsumowanie projektu",
+    "serviceDescription": "Opis usług",
+    "positions": "Pozycje",
+    "laborHours": "Szacowane godziny pracy: {hours}",
+    "paymentTerm": "Termin płatności (dni)",
+    "validity": "Ważność (dni)",
+    "notes": "Notatki wewnętrzne",
+    "notesPlaceholder": "Tylko dla Ciebie – nie pojawia się w PDF.",
+    "saved": "Zapisano",
+    "deleteTitle": "Usunąć ofertę?",
+    "deleteMessage": "„{number}” zostanie usunięta. Tej operacji nie można cofnąć.",
+    "colType": "Rodzaj",
+    "colDescription": "Nazwa",
+    "colQty": "Ilość",
+    "colUnit": "Jednostka",
+    "colPrice": "Cena jedn.",
+    "colTotal": "Suma",
+    "detailPlaceholder": "Dodatkowy opis (opcjonalnie)",
+    "deletePosition": "Usuń pozycję",
+    "addMaterial": "Materiał",
+    "addLabor": "Robocizna",
+    "addOther": "Inna pozycja",
+    "net": "Kwota netto",
+    "vat": "VAT ({rate}%)",
+    "gross": "Kwota brutto",
+    "pdfSection": "Oferta PDF",
+    "downloadPdf": "Pobierz PDF",
+    "preparingPdf": "Przygotowywanie PDF…",
+    "showPreview": "Pokaż podgląd",
+    "hidePreview": "Ukryj podgląd",
+    "art": {
+      "material": "Materiał",
+      "arbeit": "Robocizna",
+      "fahrt": "Dojazd",
+      "sonstige": "Inne"
+    },
+    "status": {
+      "entwurf": "Wersja robocza",
+      "versendet": "Wysłana",
+      "angenommen": "Zaakceptowana",
+      "abgelehnt": "Odrzucona"
+    },
+    "pdf": {
+      "offer": "Oferta",
+      "offerNumber": "Numer oferty",
+      "date": "Data",
+      "customer": "Klient",
+      "site": "Budowa",
+      "pos": "Lp.",
+      "description": "Nazwa",
+      "qty": "Ilość",
+      "unit": "Jedn.",
+      "unitPrice": "Cena jedn.",
+      "total": "Razem",
+      "net": "Kwota netto",
+      "vat": "plus VAT {rate}%",
+      "gross": "Kwota brutto",
+      "serviceDescription": "Opis usług",
+      "paymentTerms": "Warunki płatności",
+      "paymentTermsText": "Płatne w ciągu {days} dni bez potrąceń.",
+      "validityText": "Oferta ważna {days} dni.",
+      "thanks": "Dziękujemy za zapytanie. Cieszymy się na współpracę.",
+      "vatId": "NIP"
+    }
+  },
   "settings": {
     "title": "Ustawienia",
     "description": "Dostosuj aplikację do swojej firmy.",
@@ -266,7 +410,7 @@
   "auth": {
     "login": {
       "title": "Logowanie",
-      "subtitle": "Witaj ponownie w Trockenbau AI",
+      "subtitle": "Witaj ponownie w HandwerkerOS",
       "email": "E-mail",
       "password": "Hasło",
       "forgotPassword": "Zapomniałeś hasła?",
@@ -298,6 +442,6 @@
   "legal": {
     "impressum": { "title": "Impressum", "content": "Dane zgodnie z § 5 TMG. Pełne dane wkrótce." },
     "privacy": { "title": "Ochrona danych", "content": "Informacje o przetwarzaniu danych osobowych wkrótce." },
-    "contact": { "title": "Kontakt", "content": "Pytania: kontakt@trockenbau-ai.de" }
+    "contact": { "title": "Kontakt", "content": "Pytania: kontakt@handwerkeros.de" }
   }
 }

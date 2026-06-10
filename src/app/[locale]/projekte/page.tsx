@@ -12,50 +12,32 @@ import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 import { ProjektForm } from "@/components/projekte/ProjektForm";
 import { ProjektKarte } from "@/components/projekte/ProjektKarte";
 import { useData } from "@/store/DataContext";
-import { useStatusLabels } from "@/hooks/useStatusLabels";
-import { projektStatusReihenfolge } from "@/lib/status";
-import { cn } from "@/lib/utils";
-import type { Projekt, ProjektStatus } from "@/types";
-
-type Filter = "alle" | ProjektStatus;
+import type { Projekt } from "@/types";
 
 export default function ProjektePage() {
   const t = useTranslations("projects");
   const tc = useTranslations("common");
-  const { projektStatusLabel } = useStatusLabels();
   const { projekte, kundenName, projektLoeschen } = useData();
   const [suche, setSuche] = React.useState("");
-  const [filter, setFilter] = React.useState<Filter>("alle");
   const [formOffen, setFormOffen] = React.useState(false);
   const [bearbeiten, setBearbeiten] = React.useState<Projekt | null>(null);
   const [loeschen, setLoeschen] = React.useState<Projekt | null>(null);
 
   const gefiltert = React.useMemo(() => {
     const q = suche.trim().toLowerCase();
-    return projekte.filter((p) => {
-      const passtStatus = filter === "alle" || p.status === filter;
-      const passtSuche =
-        !q ||
-        [p.projektname, p.baustellenadresse, kundenName(p.kundeId)]
-          .join(" ")
-          .toLowerCase()
-          .includes(q);
-      return passtStatus && passtSuche;
-    });
-  }, [projekte, filter, suche, kundenName]);
+    if (!q) return projekte;
+    return projekte.filter((p) =>
+      [p.projektname, p.baustellenadresse, kundenName(p.kundeId)]
+        .join(" ")
+        .toLowerCase()
+        .includes(q),
+    );
+  }, [projekte, suche, kundenName]);
 
   const neu = () => {
     setBearbeiten(null);
     setFormOffen(true);
   };
-
-  const filterTabs: { value: Filter; label: string }[] = [
-    { value: "alle", label: tc("all") },
-    ...projektStatusReihenfolge.map((s) => ({
-      value: s,
-      label: projektStatusLabel(s),
-    })),
-  ];
 
   return (
     <div className="space-y-6">
@@ -72,40 +54,6 @@ export default function ProjektePage() {
 
       <div className="max-w-xl">
         <SearchField value={suche} onChange={setSuche} placeholder={t("search")} />
-      </div>
-
-      <div className="flex flex-wrap gap-2">
-        {filterTabs.map((tab) => {
-          const aktiv = filter === tab.value;
-          const anzahl =
-            tab.value === "alle"
-              ? projekte.length
-              : projekte.filter((p) => p.status === tab.value).length;
-          return (
-            <button
-              key={tab.value}
-              onClick={() => setFilter(tab.value)}
-              className={cn(
-                "inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-base font-semibold transition-colors",
-                aktiv
-                  ? "bg-brand-500 text-white"
-                  : "border-2 border-slate-200 bg-white text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800",
-              )}
-            >
-              {tab.label}
-              <span
-                className={cn(
-                  "rounded-full px-2 text-sm",
-                  aktiv
-                    ? "bg-white/25"
-                    : "bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400",
-                )}
-              >
-                {anzahl}
-              </span>
-            </button>
-          );
-        })}
       </div>
 
       {gefiltert.length === 0 ? (

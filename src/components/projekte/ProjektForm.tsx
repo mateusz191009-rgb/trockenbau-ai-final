@@ -8,9 +8,7 @@ import { Field } from "@/components/ui/Field";
 import { Input, Textarea, Select } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { useData } from "@/store/DataContext";
-import { useStatusLabels } from "@/hooks/useStatusLabels";
-import { projektStatusReihenfolge } from "@/lib/status";
-import type { Projekt, ProjektStatus } from "@/types";
+import type { Projekt } from "@/types";
 
 interface ProjektFormProps {
   open: boolean;
@@ -24,7 +22,6 @@ interface FormWerte {
   kundeId: string;
   baustellenadresse: string;
   beschreibung: string;
-  status: ProjektStatus;
   startdatum: string;
   enddatum: string;
 }
@@ -34,7 +31,6 @@ const leer: FormWerte = {
   kundeId: "",
   baustellenadresse: "",
   beschreibung: "",
-  status: "anfrage",
   startdatum: "",
   enddatum: "",
 };
@@ -47,7 +43,6 @@ export function ProjektForm({
 }: ProjektFormProps) {
   const t = useTranslations("projects");
   const tc = useTranslations("common");
-  const { projektStatusLabel } = useStatusLabels();
   const { kunden, projektAnlegen, projektAktualisieren } = useData();
   const [werte, setWerte] = React.useState<FormWerte>(leer);
   const [laedt, setLaedt] = React.useState(false);
@@ -62,7 +57,6 @@ export function ProjektForm({
         kundeId: projekt.kundeId,
         baustellenadresse: projekt.baustellenadresse,
         beschreibung: projekt.beschreibung,
-        status: projekt.status,
         startdatum: projekt.startdatum ? projekt.startdatum.slice(0, 10) : "",
         enddatum: projekt.enddatum ? projekt.enddatum.slice(0, 10) : "",
       });
@@ -78,10 +72,14 @@ export function ProjektForm({
     setFehler(null);
     try {
       if (projekt) {
-        await projektAktualisieren(projekt.id, werte);
+        await projektAktualisieren(projekt.id, {
+          ...werte,
+          status: projekt.status,
+        });
       } else {
         await projektAnlegen({
           ...werte,
+          status: "anfrage",
           masse: {
             wandflaeche: "",
             deckenflaeche: "",
@@ -177,25 +175,6 @@ export function ProjektForm({
             }
             placeholder={t("descriptionPlaceholder")}
           />
-        </Field>
-
-        <Field label={tc("status")} htmlFor="status">
-          <Select
-            id="status"
-            value={werte.status}
-            onChange={(e) =>
-              setWerte((w) => ({
-                ...w,
-                status: e.target.value as ProjektStatus,
-              }))
-            }
-          >
-            {projektStatusReihenfolge.map((s) => (
-              <option key={s} value={s}>
-                {projektStatusLabel(s)}
-              </option>
-            ))}
-          </Select>
         </Field>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">

@@ -1,7 +1,7 @@
 {
   "common": {
-    "appName": "Trockenbau AI",
-    "tagline": "Einfach. Schnell.",
+    "appName": "HandwerkerOS",
+    "tagline": "Für Ihren Betrieb.",
     "save": "Speichern",
     "saving": "Speichern…",
     "cancel": "Abbrechen",
@@ -78,7 +78,7 @@
     "formEdit": "Baustelle bearbeiten",
     "formNew": "Neue Baustelle",
     "name": "Projektname",
-    "namePlaceholder": "z. B. Trockenbau Bürogebäude 2. OG",
+    "namePlaceholder": "z. B. Badezimmer-Sanierung Müller",
     "customer": "Kunde",
     "noCustomers": "Noch keine Kunden vorhanden.",
     "addCustomerFirst": "Zuerst einen Kunden anlegen",
@@ -134,6 +134,92 @@
     "toProjects": "Zu den Projekten",
     "orderReceived": "Auftrag erhalten"
   },
+  "angebote": {
+    "sectionTitle": "Angebote",
+    "generateButton": "Angebot mit KI erstellen",
+    "generating": "KI erstellt Angebot…",
+    "generatingHint": "Fotos, Maße und Notizen werden ausgewertet. Das kann einen Moment dauern.",
+    "generateError": "Angebot konnte nicht erstellt werden. Bitte erneut versuchen.",
+    "untitled": "Ohne Titel",
+    "noneDesc": "Erstellen Sie mit einem Klick ein KI-Angebot aus den Projektdaten.",
+    "openOffer": "Angebot öffnen",
+    "listTitle": "Angebote",
+    "listDescription": "Alle erstellten Angebote auf einen Blick.",
+    "searchPlaceholder": "Angebot suchen…",
+    "listEmpty": "Noch keine Angebote",
+    "listEmptyDesc": "Öffnen Sie eine Baustelle und erstellen Sie ein Angebot mit KI.",
+    "noResultsDesc": "Versuchen Sie einen anderen Suchbegriff.",
+    "toProjects": "Zu den Projekten",
+    "backToProject": "Zurück zur Baustelle",
+    "notFound": "Angebot nicht gefunden",
+    "notFoundDesc": "Dieses Angebot existiert nicht (mehr).",
+    "title": "Angebotstitel",
+    "statusLabel": "Status",
+    "summary": "Projektzusammenfassung",
+    "serviceDescription": "Leistungsbeschreibung",
+    "positions": "Positionen",
+    "laborHours": "Geschätzte Arbeitsstunden: {hours}",
+    "paymentTerm": "Zahlungsziel (Tage)",
+    "validity": "Gültigkeit (Tage)",
+    "notes": "Interne Notizen",
+    "notesPlaceholder": "Nur für Sie – erscheint nicht im PDF.",
+    "saved": "Gespeichert",
+    "deleteTitle": "Angebot löschen?",
+    "deleteMessage": "„{number}“ wird gelöscht. Das kann nicht rückgängig gemacht werden.",
+    "colType": "Art",
+    "colDescription": "Bezeichnung",
+    "colQty": "Menge",
+    "colUnit": "Einheit",
+    "colPrice": "Einzelpreis",
+    "colTotal": "Summe",
+    "detailPlaceholder": "Zusatzbeschreibung (optional)",
+    "deletePosition": "Position löschen",
+    "addMaterial": "Material",
+    "addLabor": "Arbeit",
+    "addOther": "Sonstige Position",
+    "net": "Nettobetrag",
+    "vat": "MwSt ({rate}%)",
+    "gross": "Gesamtbetrag",
+    "pdfSection": "PDF-Angebot",
+    "downloadPdf": "PDF herunterladen",
+    "preparingPdf": "PDF wird vorbereitet…",
+    "showPreview": "Vorschau anzeigen",
+    "hidePreview": "Vorschau ausblenden",
+    "art": {
+      "material": "Material",
+      "arbeit": "Arbeit",
+      "fahrt": "Anfahrt",
+      "sonstige": "Sonstige"
+    },
+    "status": {
+      "entwurf": "Entwurf",
+      "versendet": "Versendet",
+      "angenommen": "Angenommen",
+      "abgelehnt": "Abgelehnt"
+    },
+    "pdf": {
+      "offer": "Angebot",
+      "offerNumber": "Angebotsnummer",
+      "date": "Datum",
+      "customer": "Kunde",
+      "site": "Baustelle",
+      "pos": "Pos.",
+      "description": "Bezeichnung",
+      "qty": "Menge",
+      "unit": "Einheit",
+      "unitPrice": "Einzelpreis",
+      "total": "Gesamt",
+      "net": "Nettobetrag",
+      "vat": "zzgl. MwSt {rate}%",
+      "gross": "Gesamtbetrag",
+      "serviceDescription": "Leistungsbeschreibung",
+      "paymentTerms": "Zahlungsbedingungen",
+      "paymentTermsText": "Zahlbar innerhalb von {days} Tagen ohne Abzug.",
+      "validityText": "Dieses Angebot ist {days} Tage gültig.",
+      "thanks": "Vielen Dank für Ihre Anfrage. Wir freuen uns auf die Zusammenarbeit.",
+      "vatId": "USt-ID"
+    }
+  },
   "settings": {
     "title": "Einstellungen",
     "description": "Passen Sie die App an Ihren Betrieb an.",
@@ -143,7 +229,7 @@
     "dark": "Dunkel",
     "system": "Automatisch",
     "myCompany": "Meine Firma",
-    "companyPlaceholder": "z. B. Mustermann Trockenbau",
+    "companyPlaceholder": "z. B. Mustermann Handwerk GmbH",
     "saved": "Gespeichert",
     "account": "Konto",
     "signedInAs": "Angemeldet als",
@@ -201,16 +287,18 @@
   "nav": {
     "features": "Funktionen",
     "howItWorks": "So funktioniert's",
+    "demo": "Demo",
+    "faq": "FAQ",
     "login": "Login",
     "tryFree": "Kostenlos testen"
   },
   "landing": {
     "hero": {
-      "title": "Angebote für Trockenbau in Minuten statt Stunden",
+      "title": "Angebote für Handwerker in Minuten statt Stunden",
       "subtitle": "Fotos, Maße und Beschreibungen hochladen und automatisch Angebote erstellen.",
       "cta": "Kostenlos testen",
       "login": "Login",
-      "trusted": "Für Trockenbau-Profis in Deutschland"
+      "trusted": "Für Handwerksbetriebe in Deutschland"
     },
     "features": {
       "title": "Alles für Ihren Betrieb",
@@ -274,6 +362,62 @@
       "projects": "Projekte",
       "offers": "Angebote"
     },
+    "calculator": {
+      "badge": "Live-Demo",
+      "title": "Probieren Sie es selbst aus",
+      "subtitle": "Schieben Sie den Regler — sehen Sie sofort, wie schnell ein Angebot entstehen kann.",
+      "projectScope": "Projektgröße",
+      "projectScopeValue": "Stufe {scope}",
+      "jobType": "Auftragstyp",
+      "jobTypes": {
+        "residential": "Privat",
+        "commercial": "Gewerbe",
+        "renovation": "Renovierung"
+      },
+      "includeMaterials": "Material einschließen",
+      "hourlyRate": "Ihr Stundenlohn",
+      "manualTime": "Manuell",
+      "manualTimeValue": "~{hours} Std.",
+      "withAi": "Mit HandwerkerOS",
+      "withAiValue": "~{minutes} Min.",
+      "offerPreview": "Live-Angebotsvorschau",
+      "offerLabel": "Angebotsnummer",
+      "lineMaterial": "Material (geschätzt)",
+      "lineLabor": "Arbeitszeit ({hours} Std. × {rate} €/h)",
+      "estimatedPrice": "Richtpreis",
+      "disclaimer": "Demo-Schätzung — echte Werte nach Registrierung aus Ihren Einstellungen.",
+      "uploadImage": "Foto für KI-Schätzung hochladen",
+      "uploadImageHint": "Baustellenfoto — nach Anmeldung verfügbar",
+      "createPdf": "Angebot als PDF erstellen",
+      "locked": "Gesperrt",
+      "loginRequired": "Bitte melden Sie sich an, um diese Funktion zu nutzen.",
+      "loginAction": "Anmelden",
+      "registerAction": "Kostenlos registrieren",
+      "cta": "Jetzt kostenlos testen"
+    },
+    "faq": {
+      "badge": "FAQ",
+      "title": "Häufige Fragen",
+      "subtitle": "Kurz und klar — alles Wichtige auf einen Blick.",
+      "items": {
+        "1": {
+          "q": "Ist die Testversion wirklich kostenlos?",
+          "a": "Ja. Sie können HandwerkerOS kostenlos testen — ohne Kreditkarte. Legen Sie Kunden und Baustellen an und probieren Sie alle Kernfunktionen aus."
+        },
+        "2": {
+          "q": "Brauche ich technisches Wissen?",
+          "a": "Nein. Die App ist für den Baustellenalltag gemacht: große Buttons, klare Texte und einfache Abläufe — auch vom Handy aus."
+        },
+        "3": {
+          "q": "Welche Sprachen werden unterstützt?",
+          "a": "Die App ist in 9 Sprachen verfügbar — unter anderem Deutsch, Polnisch, Rumänisch, Türkisch und Arabisch. Ideal für internationale Teams."
+        },
+        "4": {
+          "q": "Wie hilft die KI bei Angeboten?",
+          "a": "Sie erfassen Fotos, Maße und Beschreibungen auf der Baustelle. Die KI schätzt Material, Arbeitszeit und Preise — Sie prüfen und passen an."
+        }
+      }
+    },
     "cta": {
       "title": "Jetzt kostenlos starten",
       "subtitle": "Keine Kreditkarte nötig. In 2 Minuten eingerichtet.",
@@ -320,7 +464,7 @@
   "auth": {
     "login": {
       "title": "Anmelden",
-      "subtitle": "Willkommen zurück bei Trockenbau AI",
+      "subtitle": "Willkommen zurück bei HandwerkerOS",
       "email": "E-Mail",
       "password": "Passwort",
       "forgotPassword": "Passwort vergessen?",
@@ -360,7 +504,7 @@
     },
     "contact": {
       "title": "Kontakt",
-      "content": "Bei Fragen erreichen Sie uns unter kontakt@trockenbau-ai.de"
+      "content": "Bei Fragen erreichen Sie uns unter kontakt@handwerkeros.de"
     }
   }
 }

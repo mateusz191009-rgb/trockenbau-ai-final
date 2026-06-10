@@ -32,7 +32,7 @@ export function ScreenshotsSection() {
                   <span className="h-3 w-3 rounded-full bg-amber-400" />
                   <span className="h-3 w-3 rounded-full bg-emerald-400" />
                   <span className="ms-2 text-xs font-medium text-slate-400">
-                    trockenbau-ai.de
+                    handwerkeros.de
                   </span>
                 </div>
 

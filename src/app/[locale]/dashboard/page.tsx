@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Users, HardHat, FileText, Hammer, ArrowRight } from "lucide-react";
+import { Users, HardHat, ArrowRight } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { StatKachel } from "@/components/dashboard/StatKachel";
 import { LetzteAktivitaeten } from "@/components/dashboard/LetzteAktivitaeten";
@@ -21,11 +21,6 @@ export default function DashboardPage() {
   const t = useTranslations("dashboard");
   const { kunden, projekte, aktivitaeten, firmendaten } = useData();
 
-  const offeneAngebote = projekte.filter((p) => p.status === "angebot").length;
-  const aktiveBaustellen = projekte.filter(
-    (p) => p.status === "in_arbeit",
-  ).length;
-
   const letzteProjekte = [...projekte]
     .sort((a, b) => b.erstelltAm.localeCompare(a.erstelltAm))
     .slice(0, 4);
@@ -38,7 +33,7 @@ export default function DashboardPage() {
     <div className="space-y-8">
       <PageHeader title={t("title")} description={begruessung} />
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <StatKachel
           label={t("stats.customers")}
           wert={kunden.length}
@@ -49,18 +44,6 @@ export default function DashboardPage() {
           label={t("stats.projects")}
           wert={projekte.length}
           icon={HardHat}
-          href="/projekte"
-        />
-        <StatKachel
-          label={t("stats.openOffers")}
-          wert={offeneAngebote}
-          icon={FileText}
-          href="/angebote"
-        />
-        <StatKachel
-          label={t("stats.activeSites")}
-          wert={aktiveBaustellen}
-          icon={Hammer}
           href="/projekte"
         />
       </div>

@@ -2,16 +2,16 @@ import { useTranslations } from "next-intl";
 import { Building2 } from "lucide-react";
 
 const COMPANIES = [
-  "Müller Trockenbau",
-  "Knauf Partner Süd",
-  "Rigips Profis",
-  "BauTeam Berlin",
-  "Drywall Express",
+  "Schmidt Elektrotechnik",
+  "Müller Sanitär GmbH",
+  "Bauer Malerbetrieb",
+  "Weber Haustechnik",
+  "Fischer Dachdecker",
   "Handwerk Schmidt",
-  "ProWand GmbH",
-  "Trocken & Fertig",
-  "Wandwerk Hamburg",
-  "Meister Putz",
+  "ProFliesen GmbH",
+  "Meister Holz",
+  "Renova Team Berlin",
+  "Klein SHK Service",
 ];
 
 export function TrustedBySection() {

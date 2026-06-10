@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Trockenbau AI",
+    "appName": "HandwerkerOS",
     "tagline": "بسيط. سريع.",
     "save": "حفظ",
     "saving": "جارٍ الحفظ…",
@@ -37,16 +37,18 @@
   "nav": {
     "features": "الميزات",
     "howItWorks": "كيف يعمل",
+    "demo": "تجربة",
+    "faq": "الأسئلة",
     "login": "تسجيل الدخول",
     "tryFree": "جرّب مجاناً"
   },
   "landing": {
     "hero": {
-      "title": "عروض أسعار الجبس في دقائق بدلاً من ساعات",
+      "title": "عروض للحرفيين في دقائق بدلاً من ساعات",
       "subtitle": "ارفع الصور والقياسات والوصف — ويتم إنشاء العروض تلقائياً.",
       "cta": "جرّب مجاناً",
       "login": "تسجيل الدخول",
-      "trusted": "للمحترفين في أعمال الجبس في ألمانيا"
+      "trusted": "للشركات الحرفية في ألمانيا"
     },
     "features": {
       "title": "كل ما تحتاجه لعملك",
@@ -77,6 +79,62 @@
       "dashboard": "لوحة التحكم",
       "projects": "المشاريع",
       "offers": "العروض"
+    },
+    "calculator": {
+      "badge": "عرض مباشر",
+      "title": "جرّبه بنفسك",
+      "subtitle": "حرّك المنزلق — وشاهد فوراً سرعة إنشاء العرض.",
+      "projectScope": "حجم المشروع",
+      "projectScopeValue": "المستوى {scope}",
+      "jobType": "نوع العمل",
+      "jobTypes": {
+        "residential": "سكني",
+        "commercial": "تجاري",
+        "renovation": "تجديد"
+      },
+      "includeMaterials": "تضمين المواد",
+      "hourlyRate": "أجرك بالساعة",
+      "manualTime": "يدوياً",
+      "manualTimeValue": "~{hours} ساعة",
+      "withAi": "مع HandwerkerOS",
+      "withAiValue": "~{minutes} دقيقة",
+      "offerPreview": "معاينة العرض المباشرة",
+      "offerLabel": "رقم العرض",
+      "lineMaterial": "المواد (تقدير)",
+      "lineLabor": "وقت العمل ({hours} ساعة × {rate} €/س)",
+      "estimatedPrice": "السعر التقديري",
+      "disclaimer": "تقدير تجريبي — القيم الحقيقية بعد التسجيل من إعداداتك.",
+      "uploadImage": "رفع صورة للتقدير بالذكاء الاصطناعي",
+      "uploadImageHint": "صورة من موقع البناء — متاح بعد تسجيل الدخول",
+      "createPdf": "إنشاء العرض كملف PDF",
+      "locked": "مقفل",
+      "loginRequired": "يرجى تسجيل الدخول لاستخدام هذه الميزة.",
+      "loginAction": "تسجيل الدخول",
+      "registerAction": "التسجيل مجاناً",
+      "cta": "جرّب مجاناً"
+    },
+    "faq": {
+      "badge": "الأسئلة",
+      "title": "أسئلة شائعة",
+      "subtitle": "باختصار ووضوح — كل ما يهم.",
+      "items": {
+        "1": {
+          "q": "هل النسخة التجريبية مجانية فعلاً؟",
+          "a": "نعم. يمكنك تجربة HandwerkerOS مجاناً — بدون بطاقة ائتمان. أضف العملاء والمواقع وجرّب جميع الوظائف الأساسية."
+        },
+        "2": {
+          "q": "هل أحتاج معرفة تقنية؟",
+          "a": "لا. التطبيق مصمم لموقع البناء: أزرار كبيرة ونصوص واضحة وخطوات بسيطة — حتى من الهاتف."
+        },
+        "3": {
+          "q": "ما اللغات المدعومة؟",
+          "a": "التطبيق متاح بـ 9 لغات — منها الألمانية والبولندية والرومانية والتركية والعربية. مثالي للفرق الدولية."
+        },
+        "4": {
+          "q": "كيف يساعد الذكاء الاصطناعي في العروض؟",
+          "a": "تجمع الصور والقياسات والوصف في الموقع. يقدّر الذكاء الاصطناعي المواد ووقت العمل والأسعار — وأنت تراجع وتعدّل."
+        }
+      }
     },
     "cta": {
       "title": "ابدأ مجاناً الآن",
@@ -193,6 +251,92 @@
     "toProjects": "إلى المشاريع",
     "orderReceived": "تم استلام الطلب"
   },
+  "angebote": {
+    "sectionTitle": "العروض",
+    "generateButton": "إنشاء عرض بالذكاء الاصطناعي",
+    "generating": "يقوم الذكاء الاصطناعي بإنشاء العرض…",
+    "generatingHint": "تتم معالجة الصور والقياسات والملاحظات. قد يستغرق ذلك لحظة.",
+    "generateError": "تعذّر إنشاء العرض. يرجى المحاولة مرة أخرى.",
+    "untitled": "بدون عنوان",
+    "noneDesc": "أنشئ عرضًا بالذكاء الاصطناعي من بيانات المشروع بنقرة واحدة.",
+    "openOffer": "فتح العرض",
+    "listTitle": "العروض",
+    "listDescription": "جميع العروض المُنشأة في مكان واحد.",
+    "searchPlaceholder": "البحث عن عرض…",
+    "listEmpty": "لا توجد عروض بعد",
+    "listEmptyDesc": "افتح موقع عمل وأنشئ عرضًا بالذكاء الاصطناعي.",
+    "noResultsDesc": "جرّب كلمة بحث أخرى.",
+    "toProjects": "إلى المشاريع",
+    "backToProject": "العودة إلى موقع العمل",
+    "notFound": "لم يتم العثور على العرض",
+    "notFoundDesc": "هذا العرض لم يعد موجودًا.",
+    "title": "عنوان العرض",
+    "statusLabel": "الحالة",
+    "summary": "ملخص المشروع",
+    "serviceDescription": "وصف الخدمات",
+    "positions": "البنود",
+    "laborHours": "ساعات العمل المقدّرة: {hours}",
+    "paymentTerm": "مدة السداد (أيام)",
+    "validity": "الصلاحية (أيام)",
+    "notes": "ملاحظات داخلية",
+    "notesPlaceholder": "لك وحدك – لا تظهر في ملف PDF.",
+    "saved": "تم الحفظ",
+    "deleteTitle": "حذف العرض؟",
+    "deleteMessage": "سيتم حذف «{number}». لا يمكن التراجع عن ذلك.",
+    "colType": "النوع",
+    "colDescription": "البيان",
+    "colQty": "الكمية",
+    "colUnit": "الوحدة",
+    "colPrice": "سعر الوحدة",
+    "colTotal": "الإجمالي",
+    "detailPlaceholder": "وصف إضافي (اختياري)",
+    "deletePosition": "حذف البند",
+    "addMaterial": "مواد",
+    "addLabor": "عمالة",
+    "addOther": "بند آخر",
+    "net": "المبلغ الصافي",
+    "vat": "ضريبة القيمة المضافة ({rate}%)",
+    "gross": "المبلغ الإجمالي",
+    "pdfSection": "عرض PDF",
+    "downloadPdf": "تنزيل PDF",
+    "preparingPdf": "يتم تجهيز PDF…",
+    "showPreview": "عرض المعاينة",
+    "hidePreview": "إخفاء المعاينة",
+    "art": {
+      "material": "مواد",
+      "arbeit": "عمالة",
+      "fahrt": "الانتقال",
+      "sonstige": "أخرى"
+    },
+    "status": {
+      "entwurf": "مسودة",
+      "versendet": "مُرسل",
+      "angenommen": "مقبول",
+      "abgelehnt": "مرفوض"
+    },
+    "pdf": {
+      "offer": "عرض",
+      "offerNumber": "رقم العرض",
+      "date": "التاريخ",
+      "customer": "العميل",
+      "site": "موقع العمل",
+      "pos": "م",
+      "description": "البيان",
+      "qty": "الكمية",
+      "unit": "الوحدة",
+      "unitPrice": "سعر الوحدة",
+      "total": "الإجمالي",
+      "net": "المبلغ الصافي",
+      "vat": "زائد ضريبة القيمة المضافة {rate}%",
+      "gross": "المبلغ الإجمالي",
+      "serviceDescription": "وصف الخدمات",
+      "paymentTerms": "شروط الدفع",
+      "paymentTermsText": "تُدفع خلال {days} يومًا دون خصم.",
+      "validityText": "هذا العرض صالح لمدة {days} يومًا.",
+      "thanks": "شكرًا لطلبكم. نتطلع إلى التعاون معكم.",
+      "vatId": "الرقم الضريبي"
+    }
+  },
   "settings": {
     "title": "الإعدادات",
     "description": "خصّص التطبيق لعملك.",
@@ -266,7 +410,7 @@
   "auth": {
     "login": {
       "title": "تسجيل الدخول",
-      "subtitle": "مرحباً بعودتك إلى Trockenbau AI",
+      "subtitle": "مرحباً بعودتك إلى HandwerkerOS",
       "email": "البريد الإلكتروني",
       "password": "كلمة المرور",
       "forgotPassword": "نسيت كلمة المرور؟",
@@ -298,6 +442,6 @@
   "legal": {
     "impressum": { "title": "البيانات القانونية", "content": "بيانات وفق § 5 TMG. البيانات الكاملة قريباً." },
     "privacy": { "title": "حماية البيانات", "content": "معلومات معالجة البيانات الشخصية قريباً." },
-    "contact": { "title": "اتصل بنا", "content": "للاستفسارات: kontakt@trockenbau-ai.de" }
+    "contact": { "title": "اتصل بنا", "content": "للاستفسارات: kontakt@handwerkeros.de" }
   }
 }
